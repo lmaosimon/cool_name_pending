@@ -1,4 +1,5 @@
 require "./deck.rb"
+require "./card.rb"
 
 d = Deck.new
 
