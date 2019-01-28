@@ -10,10 +10,10 @@ class Deck
 
 		i = 0
 
-		for color in [0..2]
-			for shape in [0..2]
-				for shading in [0..2]
-					for number in [0..2]
+		for color in 0..2
+			for shape in 0..2
+				for shading in 0..2
+					for number in 0..2
 						@deck[i] = Card.new
 						@deck[i].color = color
 						@deck[i].shape = shape
