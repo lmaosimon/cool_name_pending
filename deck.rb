@@ -1,3 +1,5 @@
+require "./card.rb"
+
 class Deck
 
 	# Think about algorithm for figuring out if a table has a set on it.
@@ -22,6 +24,10 @@ class Deck
 				end
 			end
 		end
+	end
+
+	def deck
+		@deck
 	end
 
 	def shuffle
