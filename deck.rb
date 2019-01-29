@@ -34,4 +34,8 @@ class Deck
 		@deck.shuffle!
 	end
 
+	def pop
+		@deck.pop
+	end
+
 end
