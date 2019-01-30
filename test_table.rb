@@ -7,3 +7,7 @@ d.shuffle
 t = Table.new(d)
 
 t.printTable
+
+found = t.findSet?
+
+puts "#{found}"
