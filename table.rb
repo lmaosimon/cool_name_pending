@@ -5,7 +5,7 @@ class Table
 
 	@@colorH = { 0 => "Red",
 	    	1 => "Green",
-		2 => "Purple" }
+		2 => "Blue" }
 
 	@@shadingH = { 0 => "Solid",
 	    	1 => "Striped",
@@ -29,10 +29,10 @@ class Table
 
 	def printTable
 
-		puts "#{@@colorH[@table[0].color]}"
+		printf("       %-7s  %-9s  %-10s  %-8s\n", "COLOR:", "SHADING:", "SHAPE:", "NUMBER:")
 
 		for i in 0..11
-			puts "Color: #{@@colorH[@table[i].color]} Shading: #{@@shadingH[@table[i].shading]} Shape: #{@@colorH[@table[i].color]} Number: #{@@numberH[@table[i].number]}"
+			printf("%2d.    %-7s  %-9s  %-10s  %-8s\n", (i + 1), @@colorH[@table[i].color], @@shadingH[@table[i].shading], @@shapeH[@table[i].shape], @@numberH[@table[i].number])
 		end
 
 	end
