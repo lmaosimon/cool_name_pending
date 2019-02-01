@@ -1,2 +1,2 @@
-# CSE3901
-A private repository for group projects in CSE 3901.
+# cool_name_pending
+Cool Name Pending Group Project
