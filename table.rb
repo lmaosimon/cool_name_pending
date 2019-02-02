@@ -8,12 +8,12 @@ class Table
 		2 => "Blue" }
 
 	@@shadingH = { 0 => "Solid",
-	    	1 => "Striped",
+	    	1 => "Dotted",
 		2 => "Empty" }
 
-	@@shapeH = { 0 => "Squiggle",
+	@@shapeH = { 0 => "Star",
 	    	1 => "Oval",
-		2 => "Diamond" }
+		2 => "Triangle" }
 
 	@@numberH = { 0 => "One",
 	    	1 => "Two",
