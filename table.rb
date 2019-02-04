@@ -129,9 +129,9 @@ Returns true if a set is found, false otherwise.
 
 	def getCardSet(set)
 		cardSet = []
-		cardSet[0] = @table[set[0] - 1]
-		cardSet[1] = @table[set[1] - 1]
-		cardSet[2] = @table[set[2] - 1]
+		for i in 0..2
+			cardSet[i] = @table[set[i] - 1]
+		end
 		return cardSet
 	end
 
