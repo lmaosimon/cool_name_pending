@@ -32,13 +32,15 @@ t = Table.new(d)
 finished = false
 
 while !finished
-	t.setExist(d)
 
 	t.printTable	
 
 	puts # Print a new line
-	puts "Press Enter when you find a set!"
-	gets
+	puts "Press Enter when you find a set! (type \"hint\" for a hint)"
+	input = gets.chomp
+	if (input == "hint")
+		puts(t.provideHint(d))
+	end
 	puts # Print a new line
 	print "Enter your name: "
 	name = gets.chomp
