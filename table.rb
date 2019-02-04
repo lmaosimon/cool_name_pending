@@ -110,8 +110,7 @@ Returns true if a set is found, false otherwise.
 				while k < @table.length
 					set[2] = @table[k]
 					if self.isSet?(set) # Pass set of 3 cards to isSet?
- 						# If true, set is found so return true						
-						puts "#{i + 1} #{j + 1} #{k + 1}"
+ 						# If true, set is found so return true			
 						return true
 					end
 					k += 1
@@ -150,5 +149,34 @@ Returns true if a set is found, false otherwise.
 		end
 	end
 
-end
+
+	def provideHint(deck)
+		set = []
+		
+		# Nested while loops used to iterate through each card combination.
+		i = 0
+		while i < @table.length
+			set[0] = @table[i]
+			# Setting j = i + 1 to make sure a duplicate combination is not tested
+			j = i + 1 
+			while j < @table.length
+				set[1] = @table[j]
+				# Setting k = j + 1 to make sure a duplicate combination is nt tested
+				k = j + 1
+				while k < @table.length
+					set[2] = @table[k]
+					if self.isSet?(set) # Pass set of 3 cards to isSet?
+ 						# If true, set is found, create array of first two cards and return set hint						
+						setHint = "#{i+1}, #{j+1}"
+						return setHint
+					end
+					k += 1
+				end
+				j += 1
+			end
+			i += 1
+		end
+
+	end
+end	
 
