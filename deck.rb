@@ -68,4 +68,8 @@ It takes the last card from the deck and returns it to the caller.
 		@deck.pop
 	end
 
+	def size
+		@deck.length
+	end
+
 end

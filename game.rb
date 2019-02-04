@@ -57,7 +57,9 @@ while !finished
 			correctGuess = true
 			scoreHash[name] += 1
 			t.removeCardSet(set)
-			t.add3Cards(d)
+			if (d.size != 0)
+				t.add3Cards(d)
+			end
 			puts # Print a new line
 		else
 			puts "This is not a set. Please try again."
@@ -74,5 +76,14 @@ while !finished
 	puts "Press enter to continue."
 	gets
 	puts # Print a new line
+
+	if (d.size == 0 && t.findSet? == false)
+		finished = true
+		puts "Game over!"
+		puts "The final score is:"
+		for i in 0...playerCount
+			printf "%s has %d\n", playerNames[i], scoreHash[playerNames[i]]
+		end
+	end
 
 end
