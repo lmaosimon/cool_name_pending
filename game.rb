@@ -20,7 +20,7 @@ end
 puts # Print a new line
 
 puts "Directions for entering a set during the game:"
-puts "In order to enter a set, you must press the enter key. You will then be prompted to enter your name, and then the number of each card in the set."
+puts "In order to enter a set, you must press the enter key. You will then be prompted to enter your name, and then the number of each card in the set, separated by numbers and commas (E.g. 1, 2, 3)."
 puts # Print a new line
 puts "Press Enter when you are ready to begin."
 gets
@@ -29,34 +29,50 @@ puts # Print a new line
 d = Deck.new
 d.shuffle
 t = Table.new(d)
+finished = false
 
-t.setExist(d)
+while !finished
+	t.setExist(d)
 
-t.printTable	# Will probably need to put in a loop at some point so that
-		# each round starts with printing the table.
+	t.printTable	
 
+	puts # Print a new line
+	puts "Press Enter when you find a set!"
+	gets
+	puts # Print a new line
+	print "Enter your name: "
+	name = gets.chomp
+	puts # Print a new line
+	print "Enter the cards in the set: "
 
+	correctGuess = false;
+	while !correctGuess
+		setGuess = gets.chomp
+		set = setGuess.scan(/\d+/)
+		set = set.map { |card| card.to_i }
+		cardSet = t.getCardSet(set)
+		isSet = t.isSet?(cardSet)
+		if (isSet)
+			puts "Congratulations! You've found a set."
+			correctGuess = true
+			scoreHash[name] += 1
+			t.removeCardSet(set)
+			t.add3Cards(d)
+			puts # Print a new line
+		else
+			puts "This is not a set. Please try again."
+			puts # Print a new line
+			print "Enter the cards in the set: "
+		end
+	end
 
-puts # Print a new line
-puts "Press enter when you find a set!"
-gets
-puts # Print a new line
-puts "Enter your name:"
-name = gets.chomp
-puts # Print a new line
-puts "Enter the cards in the set:"
-setGuess = gets.chomp
-set = setGuess.scan(/\d+/)
-set = set.map { |card| card.to_i }
-cardSet = t.getCardSet(set)
-isSet = t.isSet?(cardSet)
-if (isSet)
-	puts "Congratulations! You've found a set."
-	scoreHash[name] += 1
-	puts "#{scoreHash[name]}"
-	t.removeCardSet(set)
-	t.add3Cards(d)
-	t.printTable
-else
-	puts "This is not a set. Please try again."
+	puts "Here is the current score:"
+	for i in 0...playerCount
+		printf "%s has %d\n", playerNames[i], scoreHash[playerNames[i]]
+	end
+	puts # Print a new line
+	puts "Press enter to continue."
+	gets
+	puts # Print a new line
+
 end

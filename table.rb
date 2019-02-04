@@ -102,7 +102,7 @@ Returns true if a set is found, false otherwise.
 					set[2] = @table[k]
 					if self.isSet?(set) # Pass set of 3 cards to isSet?
  						# If true, set is found so return true						
-						puts "#{i} #{j} #{k}"
+						puts "#{i + 1} #{j + 1} #{k + 1}"
 						return true
 					end
 					k += 1
@@ -129,15 +129,15 @@ Returns true if a set is found, false otherwise.
 
 	def getCardSet(set)
 		cardSet = []
-		cardSet[0] = @table[set[0]]
-		cardSet[1] = @table[set[1]]
-		cardSet[2] = @table[set[2]]
+		cardSet[0] = @table[set[0] - 1]
+		cardSet[1] = @table[set[1] - 1]
+		cardSet[2] = @table[set[2] - 1]
 		return cardSet
 	end
 
 	def removeCardSet(set)
 		for i in 0..2
-			@table.delete_at(set[i])
+			@table.delete_at(set[i] - 1 - i)
 		end
 	end
 
