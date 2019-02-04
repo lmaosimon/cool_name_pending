@@ -11,3 +11,13 @@ t.printTable
 found = t.findSet?
 
 puts "#{found}"
+
+if !found
+
+	t.setExist?(d)
+	found = t.findSet?
+	puts "#{found}"
+end
+
+t.printTable
+

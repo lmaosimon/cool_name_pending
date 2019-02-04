@@ -55,7 +55,7 @@ It prints out the current cards on the table so players can try to find a set.
 
 		printf("       %-7s  %-9s  %-10s  %-8s\n", "COLOR:", "SHADING:", "SHAPE:", "NUMBER:")
 
-		for i in 0..11
+		for i in 0...@table.length
 			printf("%2d.    %-7s  %-9s  %-10s  %-8s\n", (i + 1), @@colorH[@table[i].color], @@shadingH[@table[i].shading], @@shapeH[@table[i].shape], @@numberH[@table[i].number])
 		end
 
@@ -112,6 +112,14 @@ Returns true if a set is found, false otherwise.
 		end
 
 		return false # Set has not been found so return false
+	end
+		
+	def setExist?(deck)
+		while self.findSet? == false
+			for i in 0..2
+				@table[@table.length] = deck.pop
+			end
+		end
 	end
 
 end
