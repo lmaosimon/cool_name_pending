@@ -39,7 +39,10 @@ while !finished
 	puts "Press Enter when you find a set! (type \"hint\" for a hint)"
 	input = gets.chomp
 	if (input == "hint")
-		puts(t.provideHint(d))
+		puts("The cards {" + t.provideHint(d) + "} are subset of a valid set")
+		puts
+		puts "Press Enter when you find a set!"
+		gets
 	end
 	puts # Print a new line
 	print "Enter your name: "
