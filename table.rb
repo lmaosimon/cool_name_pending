@@ -101,7 +101,8 @@ Returns true if a set is found, false otherwise.
 				while k < @table.length
 					set[2] = @table[k]
 					if self.isSet?(set) # Pass set of 3 cards to isSet?
- 						# If true, set is found so return true
+ 						# If true, set is found so return true						
+						puts "#{i} #{j} #{k}"
 						return true
 					end
 					k += 1
@@ -113,12 +114,30 @@ Returns true if a set is found, false otherwise.
 
 		return false # Set has not been found so return false
 	end
+
+	def add3Cards(deck)
+		for i in 0..2
+			@table[@table.length] = deck.pop
+		end
+	end
 		
-	def setExist?(deck)
+	def setExist(deck)
 		while self.findSet? == false
-			for i in 0..2
-				@table[@table.length] = deck.pop
-			end
+			self.add3Cards(deck)
+		end
+	end
+
+	def getCardSet(set)
+		cardSet = []
+		cardSet[0] = @table[set[0]]
+		cardSet[1] = @table[set[1]]
+		cardSet[2] = @table[set[2]]
+		return cardSet
+	end
+
+	def removeCardSet(set)
+		for i in 0..2
+			@table.delete_at(set[i])
 		end
 	end
 

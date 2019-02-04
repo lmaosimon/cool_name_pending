@@ -30,7 +30,7 @@ d = Deck.new
 d.shuffle
 t = Table.new(d)
 
-t.setExist?(d)
+t.setExist(d)
 
 t.printTable	# Will probably need to put in a loop at some point so that
 		# each round starts with printing the table.
@@ -48,10 +48,15 @@ puts "Enter the cards in the set:"
 setGuess = gets.chomp
 set = setGuess.scan(/\d+/)
 set = set.map { |card| card.to_i }
-
-isSet = t.isSet?(set)
+cardSet = t.getCardSet(set)
+isSet = t.isSet?(cardSet)
 if (isSet)
 	puts "Congratulations! You've found a set."
+	scoreHash[name] += 1
+	puts "#{scoreHash[name]}"
+	t.removeCardSet(set)
+	t.add3Cards(d)
+	t.printTable
 else
 	puts "This is not a set. Please try again."
 end
