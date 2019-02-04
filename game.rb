@@ -42,6 +42,14 @@ while !finished
 	puts # Print a new line
 	print "Enter your name: "
 	name = gets.chomp
+	
+	while !scoreHash.has_key?(name)
+		puts "Player #{name} does not exist."
+		puts
+		print "Enter your name: "
+		name = gets.chomp
+	end
+
 	puts # Print a new line
 	print "Enter the cards in the set: "
 
@@ -49,6 +57,19 @@ while !finished
 	while !correctGuess
 		setGuess = gets.chomp
 		set = setGuess.scan(/\d+/)
+
+		offTable = 0
+		set.each { |x| if x.to_i < 1 || x.to_i > t.size then offTable += 1 end}
+		while offTable > 0
+			puts "#{offTable} of these cards is not on the table. Please try again."
+			puts
+			print "Enter the cards in the set: "
+			setGuess = gets.chomp
+                	set = setGuess.scan(/\d+/)
+			offTable = 0
+			set.each { |x| if x.to_i < 1 || x.to_i > t.size then offTable += 1 end}
+		end
+		
 		set = set.map { |card| card.to_i }
 		cardSet = t.getCardSet(set)
 		isSet = t.isSet?(cardSet)

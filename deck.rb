@@ -5,7 +5,7 @@ require "./card.rb"
 =begin
 
 Class: Deck
-The purpose of the Deck class is to create a deck of 81 card objects, and give each of the four states of each card object a value from 0 to 2. Each card will have a unique combination of of state values so that every card is different. This class also contains methods for getting the deck, shuffling the deck, and taking a card out from the deck.
+The purpose of the Deck class is to create a deck of 81 card objects, and give each of the four states of each card object a value from 0 to 2. Each card will have a unique combination of state values so that every card is different. This class also contains methods for getting the deck, shuffling the deck, and taking a card out from the deck.
 
 =end
 class Deck

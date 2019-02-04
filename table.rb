@@ -45,6 +45,14 @@ It initializes a table instance variable to hold the 12+ cards that the players 
 		end
 	end
 
+
+#Returns the number of cards on the table using the array.length method
+ 
+	def size
+		@table.length
+	end
+
+
 =begin
 
 The printTable instance method takes no parameters as input.
@@ -60,6 +68,7 @@ It prints out the current cards on the table so players can try to find a set.
 		end
 
 	end
+
 
 =begin
 
@@ -142,6 +151,4 @@ Returns true if a set is found, false otherwise.
 	end
 
 end
-
-
 
