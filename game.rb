@@ -53,7 +53,7 @@ while !finished	 # While loop that iterates through each round of the game
 		# If the user requests a hint, call provideHint Table instance method to get a hint string
 		if (input == "hint")
 			# Note: We currently have provideHint written to give 2 cards of a set
-			puts("The cards {" + t.provideHint(d) + "} are a subset of a valid set")
+			puts("The cards {" + t.provideHint + "} are a subset of a valid set")
 			puts
 			print "Press Enter when you find a set!"
 			gets

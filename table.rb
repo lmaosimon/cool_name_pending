@@ -45,9 +45,11 @@ It initializes a table instance variable to hold the 12+ cards that the players 
 		end
 	end
 
+=begin
 
-#Returns the number of cards on the table using the array.length method
- 
+The size instance method returns the number of cards on the table using the array.length method. This method is needed to determine if more than 12 cards are on the table (dealt to make some set exist).
+
+=end
 	def size
 		@table.length
 	end
@@ -124,18 +126,33 @@ Returns true if a set is found, false otherwise.
 		return false # Set has not been found so return false
 	end
 
+=begin
+
+The instance method add3Cards draws the top 3 cards from the Deck array and adds them to the Table array. This method will be used after a player finds a correct set and cards must be replaced, or in the scenario when there are no sets on the table and cards must be added.
+
+=end
 	def add3Cards(deck)
 		for i in 0..2
 			@table[@table.length] = deck.pop
 		end
 	end
-		
+
+=begin
+
+The setExist instance method ensures that there is some set on the Table. The method first determines if the current table has a possible set, and if not, repeatedly adds 3 cards at a time to the Table until some set exists. The method takes a Deck object as a parameter from which it draws Cards if necessary. 
+
+=end	
 	def setExist(deck)
 		while self.findSet? == false
 			self.add3Cards(deck)
 		end
 	end
 
+=begin
+
+The getCardSet instance method takes a set as a parameter, passed as an array of card-identifying integers, andcreates another array of the corresponding Card objects. For example, once a player finds a set and identifies the cards by the card numbers printed in the console, this method determines the actual Card objects these numbers correspond to. The Card objects are then returned in an array.
+
+=end
 	def getCardSet(set)
 		cardSet = []
 		for i in 0..2
@@ -144,14 +161,23 @@ Returns true if a set is found, false otherwise.
 		return cardSet
 	end
 
+=begin
+
+The removeCardSet instance method removes a confirmed set from the current Table. The method takes a set as a parameter and then removes the specified Cards from the Table.
+
+=end
 	def removeCardSet(set)
 		for i in 0..2
 			@table.delete_at(set[i] - 1 - i)
 		end
 	end
 
+=begin
 
-	def provideHint(deck)
+The provideHint instance method is a player-helping mechanism designed to make the game easier to play. The method prints 2 integers corresponding to the first 2 cards of an existing set on the current table. During the game, the players have the option to request a hint before any player has identified a set. Once a hint is requested, any player can hint enter to then identify the set.
+
+=end
+	def provideHint
 		set = []
 		
 		# Nested while loops used to iterate through each card combination.
