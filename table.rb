@@ -111,6 +111,7 @@ Returns true if a set is found, false otherwise.
 					set[2] = @table[k]
 					if self.isSet?(set) # Pass set of 3 cards to isSet?
  						# If true, set is found so return true			
+						puts "#{i + 1} #{j + 1} #{k + 1}"
 						return true
 					end
 					k += 1
