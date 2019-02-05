@@ -2,6 +2,8 @@ require "./card.rb"
 require "./deck.rb"
 require "./table.rb"
 
+# Authors: Patrick Hubbell, Gino Detore, and Sean Bower
+
 puts  # Print a line
 puts "Hello! This is The Game of Set!"
 puts "How many players are there?"
@@ -47,13 +49,13 @@ while !finished	 # While loop that iterates through each round of the game
 		t.printTable  # Print the current table of cards
 		puts 	      # Print a line
 
-		print "Press Enter when you find a set! (type \"hint\" for a hint) "
+		print "Press Enter when you find a set!\n(For a hint, type \"hint #\", where # is a number from 1-3 which specifies how many cards of a set you want revealed) "
 		input = gets.chomp  # Get Enter or hint input from user
 		
 		# If the user requests a hint, call provideHint Table instance method to get a hint string
-		if (input == "hint")
+		if (input.include?("hint"))
 			# Note: We currently have provideHint written to give 2 cards of a set
-			puts("The cards {" + t.provideHint + "} are a subset of a valid set")
+			puts("The cards {" + t.provideHint(input[input.size - 1].to_i) + "} are a subset of a valid set")
 			puts
 			print "Press Enter when you find a set!"
 			gets

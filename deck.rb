@@ -68,6 +68,12 @@ It takes the last card from the deck and returns it to the caller.
 		@deck.pop
 	end
 
+=begin
+
+The size instance method takes no parameters as input.
+It gets the length of the deck array and returns it to the caller.
+
+=end
 	def size
 		@deck.length
 	end

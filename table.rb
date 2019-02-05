@@ -113,7 +113,6 @@ Returns true if a set is found, false otherwise.
 					set[2] = @table[k]
 					if self.isSet?(set) # Pass set of 3 cards to isSet?
  						# If true, set is found so return true			
-						puts "#{i + 1} #{j + 1} #{k + 1}"
 						return true
 					end
 					k += 1
@@ -177,7 +176,7 @@ The removeCardSet instance method removes a confirmed set from the current Table
 The provideHint instance method is a player-helping mechanism designed to make the game easier to play. The method prints 2 integers corresponding to the first 2 cards of an existing set on the current table. During the game, the players have the option to request a hint before any player has identified a set. Once a hint is requested, any player can hint enter to then identify the set.
 
 =end
-	def provideHint
+	def provideHint(level)
 		set = []
 		
 		# Nested while loops used to iterate through each card combination.
@@ -193,8 +192,15 @@ The provideHint instance method is a player-helping mechanism designed to make t
 				while k < @table.length
 					set[2] = @table[k]
 					if self.isSet?(set) # Pass set of 3 cards to isSet?
- 						# If true, set is found, create array of first two cards and return set hint						
-						setHint = "#{i+1}, #{j+1}"
+ 						# If true, set is found, create array of cards based on level of hint and return set hint			
+						case level
+						when 1
+							setHint = "#{i + 1}"
+						when 2
+							setHint = "#{i + 1}, #{j + 1}"
+						when 3
+							setHint = "#{i + 1}, #{j + 1}, #{k + 1}"
+						end
 						return setHint
 					end
 					k += 1
@@ -203,7 +209,5 @@ The provideHint instance method is a player-helping mechanism designed to make t
 			end
 			i += 1
 		end
-
 	end
-end	
-
+end
