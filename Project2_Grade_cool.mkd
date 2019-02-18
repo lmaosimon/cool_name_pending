@@ -1,0 +1,33 @@
+Grade for Project 2 Cool Name Pending
+============================
+77/100
+
+## Implementation ##
+Most important section. Graded based on how well your project works. Takes into account things such as amount of features, ease of playing the game, and lack of bugs.
+
+* Game will *crash* if the player incorrectly inputs a set. This can very easily kill an entire game by accident.
+* Incorrect hint input can *crash* game
+* Includes a modular hint function
+* Players can enter the same name, this doesnt break it but creates unexpected behavior and should be caught.
+* Entering no players soft locks game.
+* Any number of players can play the game.
+* Bug when player enters the same card 3 times. It will register as a solved set.
+* Game works mostly correctly when directions are followed. When extra cards are dealt the amount of cards does not go back down. hint can only be called after the table prints.
+* Does have basic directions
+* Game is simple and hard to play, formatted ok.
+
+
+## Style ##
+Includes cleanliness of code, organization of code, and efficient use of the language.
+
+* logically split into classes
+* Table deck and card files are organized well
+* game.rb is slightly cluttered, could be made to be more readable.
+* decent use of ruby, good use of attr_accessor for color in 0..2 could be 3.each
+
+## Documentation ##
+How well your code is documented. Includes things such as comments, file headers detailing the file, and a useful readme.
+
+* Lack of a Readme entirely
+* Code is well commented throughout
+* Authors are listed at the top of each file along with code description
