@@ -6,17 +6,28 @@ agent = Mechanize.new
 page = agent.get(url)
 
 button = page.link_with(id: 'searchBooksLink');
-puts button.class
 
 page = button.click
 
 forms = page.forms
 searchInput = forms[1];
 
-searchInput.q = "mythology"
+puts
+puts "Welcome to the OSU Library Website!"
+puts "Input a keyword, author, title, subject, or number that you want to search for."
+searchInput.q = gets.chomp
 
 pp searchInput
 
 page = agent.submit(searchInput);
 
-pp page
+test = page.css(".save").text
+
+if test != ""
+	puts "You're on a book page!"
+elsif
+	puts "You're on a list page!"
+end
+
+searchLinks = page.links
+
