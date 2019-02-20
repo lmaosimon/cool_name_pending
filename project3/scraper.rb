@@ -1,25 +1,24 @@
 require "mechanize"
+require "book"
 
-def getTableInfo(table)
-	bookHash = Hash.new
-	entries = table.css(".bibItemsEntry td")
-	bookHash["location"] = entries[0].text
-	bookHash["status"] = entries[3].text
-	return bookHash
-end
 
-def getAuthor(bookDetails, bookHash)
-	if (bookDetails.css(".bibInfoLabel")[0].text == "Author")
-		puts "Author is there."
-		bookHash["author"] =  bookDetails.css(".bibInfoData")[0].text
-		bookHash["title"] =  bookDetails.css(".bibInfoData")[1].text
-	else
-		puts "Author is not there."
-		bookHash["title"] =  bookDetails.css(".bibInfoData")[0].text
+def printResults(bookArray)
+	puts
+	puts "Here are your search results:"
+
+	i = 0
+	until i = bookArray.length
+		book = bookArray[i]
+		puts
+		puts "Title: " + book["title"]
+		puts "Author: " + book["author"]
+		puts "Location: " + book["location"]
+		puts "Status: " + book["status"]
+		puts "URL: " + book["url"]
+		puts i
+		i += 1
 	end
-	return bookHash
 end
-
 
 
 url = "https://library.osu.edu"
@@ -46,21 +45,25 @@ page = agent.submit(searchInput);
 
 checkBookOrList = page.css(".save")
 
+bookArr = []
+
 if !checkBookOrList.empty? # Book page
-	bookHash = Hash.new
+	bookArr[0] = Book.new
 	table = page.css(".bibItems");
 	bookHash = getTableInfo(table);
 	bookDetails = page.css(".bibDetail")[0]
 	getAuthor(bookDetails, bookHash);
-	puts bookHash
+	#bookPath = results.css('a')[i]["href"]
+	#bookLink = "https://library.ohio-state.edu" + 
+	#puts bookHash
 	bookHash.transform_values! { |k| k.gsub(/\n/, "") }
-	puts bookHash
+	#puts bookHash
 elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
 	puts "Page is empty."
 else # List page
 	# Array to hold book hashes.
 	puts "List page."
-	bookArr = []
+
 	results = page.css(".briefcitTitle")
 
 	i = 0
@@ -69,6 +72,8 @@ else # List page
 		bookLink = "https://library.ohio-state.edu" + bookPath
 		nextPage = agent.get(bookLink)
 		bookArr[i] = Hash.new
+		bookArr[i]["url"] = bookLink
+
 		table = page.css(".bibItems");
 		bookArr[i] = getTableInfo(table);
 		bookDetails = nextPage.css(".bibDetail")[0]
@@ -80,4 +85,7 @@ else # List page
 
 end
 
-
+puts
+printResults(bookArr)
+puts #Empty line separator
+puts "Finished!"
