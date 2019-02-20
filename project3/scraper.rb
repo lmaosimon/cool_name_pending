@@ -1,24 +1,20 @@
 require "mechanize"
 require "book"
 
+def scrapeInfo(bookArr, page, link,  i = 0)
+	bookArr[i] = Book.new
+	table = page.css(".bibItems");
+	bookArr[i].getTableInfo(table);
 
-def printResults(bookArray)
-	puts
-	puts "Here are your search results:"
+	bookDetails = page.css(".bibDetail")[0]
+	bookArr[i].getAuthor(bookDetails, bookArr[i]);
 
-	i = 0
-	until i = bookArray.length
-		book = bookArray[i]
-		puts
-		puts "Title: " + book["title"]
-		puts "Author: " + book["author"]
-		puts "Location: " + book["location"]
-		puts "Status: " + book["status"]
-		puts "URL: " + book["url"]
-		puts i
-		i += 1
-	end
+	bookArr[i].uri = link
+	
+	#Fix this in book
+	####bookArr[i].transform_values! { |k| k.gsub(/\n/, "") }
 end
+
 
 
 url = "https://library.osu.edu"
@@ -39,31 +35,26 @@ puts "Input a keyword, author, title, subject, or number that you want to search
 searchInput.q = gets.chomp
 puts
 
-#pp searchInput
-
+#Submits the user query to the search bar on the page
 page = agent.submit(searchInput);
 
+#Looks for a specific CSS node identifying whether or not
+#the query resulted in a book or link page
 checkBookOrList = page.css(".save")
 
 bookArr = []
 
 if !checkBookOrList.empty? # Book page
-	bookArr[0] = Book.new
-	table = page.css(".bibItems");
-	bookHash = getTableInfo(table);
-	bookDetails = page.css(".bibDetail")[0]
-	getAuthor(bookDetails, bookHash);
-	#bookPath = results.css('a')[i]["href"]
-	#bookLink = "https://library.ohio-state.edu" + 
-	#puts bookHash
-	bookHash.transform_values! { |k| k.gsub(/\n/, "") }
-	#puts bookHash
+	bookLink = page.link.uri
+	scrapeInfo(bookArr, page, bookLink)
+	puts bookArr[0]
 elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
 	puts "Page is empty."
 else # List page
 	# Array to hold book hashes.
 	puts "List page."
 
+	#Creates a CSS array of every node with a title
 	results = page.css(".briefcitTitle")
 
 	i = 0
@@ -71,14 +62,8 @@ else # List page
 		bookPath = results.css('a')[i]["href"]
 		bookLink = "https://library.ohio-state.edu" + bookPath
 		nextPage = agent.get(bookLink)
-		bookArr[i] = Hash.new
-		bookArr[i]["url"] = bookLink
-
-		table = page.css(".bibItems");
-		bookArr[i] = getTableInfo(table);
-		bookDetails = nextPage.css(".bibDetail")[0]
-		getAuthor(bookDetails, bookArr[i]);
-		bookArr[i].transform_values! { |k| k.gsub(/\n/, "") }
+		
+		scrapeInfo(bookArr, nextPage, bookLink, i)
 		pp bookArr[i]
 		i += 1
 	end
@@ -89,3 +74,4 @@ puts
 printResults(bookArr)
 puts #Empty line separator
 puts "Finished!"
+
