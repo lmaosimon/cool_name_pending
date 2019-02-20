@@ -1,5 +1,5 @@
 require "mechanize"
-require "book"
+require "./book.rb"
 
 def scrapeInfo(bookArr, page, link,  i = 0)
 	bookArr[i] = Book.new
@@ -7,12 +7,11 @@ def scrapeInfo(bookArr, page, link,  i = 0)
 	bookArr[i].getTableInfo(table);
 
 	bookDetails = page.css(".bibDetail")[0]
-	bookArr[i].getAuthor(bookDetails, bookArr[i]);
+	bookArr[i].getAuthor(bookDetails);
 
 	bookArr[i].uri = link
 	
-	#Fix this in book
-	####bookArr[i].transform_values! { |k| k.gsub(/\n/, "") }
+	bookArr[i].transformValues
 end
 
 
@@ -64,14 +63,12 @@ else # List page
 		nextPage = agent.get(bookLink)
 		
 		scrapeInfo(bookArr, nextPage, bookLink, i)
-		pp bookArr[i]
+		pp bookArr[i].title
 		i += 1
 	end
 
 end
 
-puts
-printResults(bookArr)
 puts #Empty line separator
 puts "Finished!"
 

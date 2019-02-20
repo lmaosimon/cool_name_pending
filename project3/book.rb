@@ -9,9 +9,7 @@ The Book class is designed to keep track of the various pieces of information fo
 class Book
 	
 	# Creates getter and setter methods
-	attr_accessor :title, :author, :location, :status. :uri
-
-end
+	attr_accessor :title, :author, :location, :status, :uri
 
 
 =begin
@@ -41,3 +39,17 @@ def getAuthor(bookDetails)
 	end
 end
 
+
+=begin
+
+
+
+=end
+def transformValues
+	@title.gsub!(/\n/, "")
+	@author.gsub!(/\n/, "")
+	@location.gsub!(/\n/, "")
+	@status.gsub!(/\n/, "")
+end
+
+end
