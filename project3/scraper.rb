@@ -18,9 +18,25 @@ def sendEmail(bodyStr)
 	Mail.deliver do
 		to 'hubbell.64@osu.edu'
 		from 'osulibfor3901@gmail.com'
-		subject 'Test'
+		subject 'OSU Library Search Results'
 		body bodyStr
+		content_type 'text/plain; charset=UTF-8'
 	end
+end
+
+def getBooksStr(bookArr, pageLink)
+	bookStr = ""
+	i = 0
+	until i == bookArr.length
+		bookStr = bookStr + "Title: " + bookArr[i].title + "\n"
+		bookStr = bookStr + "Author: " + bookArr[i].author + "\n"
+		bookStr = bookStr + "Location: " + bookArr[i].location + "\n"
+		bookStr = bookStr + "Status: " + bookArr[i].status + "\n"
+		bookStr = bookStr + "URI: " + bookArr[i].uri + "\n\n"
+		i += 1
+	end
+	bookStr = bookStr + "Link to results page: " + pageLink + "\n"
+	return bookStr
 end
 
 def scrapeInfo(bookArr, page, link,  i = 0)
@@ -35,7 +51,6 @@ def scrapeInfo(bookArr, page, link,  i = 0)
 	
 	bookArr[i].transformValues
 end
-
 
 
 url = "https://library.osu.edu"
@@ -58,6 +73,7 @@ puts
 
 #Submits the user query to the search bar on the page
 page = agent.submit(searchInput);
+pageURI = page.link.resolved_uri.to_s
 
 #Looks for a specific CSS node identifying whether or not
 #the query resulted in a book or link page
@@ -70,27 +86,35 @@ if !checkBookOrList.empty? # Book page
 	scrapeInfo(bookArr, page, bookLink)
 	puts bookArr[0]
 elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
-	puts "Page is empty."
+	puts "Page is empty. No search results found."
 else # List page
-	# Array to hold book hashes.
-	puts "List page."
 
 	#Creates a CSS array of every node with a title
 	results = page.css(".briefcitTitle")
+	
+	puts "Loading your search results..."
 
 	i = 0
-	until i == 5
+	until i == 10 || i == results.length
 		bookPath = results.css('a')[i]["href"]
 		bookLink = "https://library.ohio-state.edu" + bookPath
 		nextPage = agent.get(bookLink)
 		
 		scrapeInfo(bookArr, nextPage, bookLink, i)
-		pp bookArr[i].title
+		#pp bookArr[i].title
 		i += 1
 	end
 end
 
-sendEmail("Hello\nWorld!");
-puts #Empty line separator
-puts "Finished!"
+if bookArr.length != 0 
+	#Gets a string containing info for all books from search result
+	allBooks = getBooksStr(bookArr, pageURI)
 
+	#Sends an email containing the query results to the user
+	sendEmail(allBooks);
+
+	puts #Empty line separator
+	puts "An email has been sent to your account with the search results."
+end
+
+puts "Goodbye!"
