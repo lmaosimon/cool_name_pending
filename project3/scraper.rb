@@ -125,7 +125,6 @@ if bookArr.length != 0
 	#Sends an email containing the query results to the user
 	sendEmail(allBooks);
 
-	puts #Empty line separator
 	puts "An email has been sent to your account with the search results."
 end
 
