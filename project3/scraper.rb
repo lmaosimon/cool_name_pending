@@ -8,6 +8,19 @@ def getTableInfo(table)
 	return bookHash
 end
 
+def getAuthor(bookDetails, bookHash)
+	if (bookDetails.css(".bibInfoLabel")[0].text == "Author")
+		puts "Author is there."
+		bookHash["author"] =  bookDetails.css(".bibInfoData")[0].text
+		bookHash["title"] =  bookDetails.css(".bibInfoData")[1].text
+	else
+		puts "Author is not there."
+		bookHash["title"] =  bookDetails.css(".bibInfoData")[0].text
+	end
+	return bookHash
+end
+
+
 
 url = "https://library.osu.edu"
 
@@ -25,35 +38,46 @@ puts
 puts "Welcome to the OSU Library Website!"
 puts "Input a keyword, author, title, subject, or number that you want to search for."
 searchInput.q = gets.chomp
+puts
 
 #pp searchInput
 
 page = agent.submit(searchInput);
 
-test = page.css(".save").text
-test2 = page.css("a")
-#puts test2.class
+checkBookOrList = page.css(".save")
 
-if !test.empty?
+if !checkBookOrList.empty? # Book page
 	bookHash = Hash.new
-	puts "You're on a book page!"
 	table = page.css(".bibItems");
 	bookHash = getTableInfo(table);
-elsif
-	puts "You're on a list page!"
-	a = [] #Array to hold book hashes.
+	bookDetails = page.css(".bibDetail")[0]
+	getAuthor(bookDetails, bookHash);
+	puts bookHash
+	bookHash.transform_values! { |k| k.gsub(/\n/, "") }
+	puts bookHash
+elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
+	puts "Page is empty."
+else # List page
+	# Array to hold book hashes.
+	puts "List page."
+	bookArr = []
+	results = page.css(".briefcitTitle")
+
+	i = 0
+	until i == 5
+		bookPath = results.css('a')[i]["href"]
+		bookLink = "https://library.ohio-state.edu" + bookPath
+		nextPage = agent.get(bookLink)
+		bookArr[i] = Hash.new
+		table = page.css(".bibItems");
+		bookArr[i] = getTableInfo(table);
+		bookDetails = nextPage.css(".bibDetail")[0]
+		getAuthor(bookDetails, bookArr[i]);
+		bookArr[i].transform_values! { |k| k.gsub(/\n/, "") }
+		pp bookArr[i]
+		i += 1
+	end
+
 end
 
-#searchLinks = page.links
 
-results = page.css(".briefcitTitle")
-
-i = 0
-until i == 5
-	bookPath = results.css('a')[i]["href"]
-	bookLink = "https://library.ohio-state.edu" + bookPath
-	nextPage = agent.get(bookLink)
-	
-	
-	i += 1
-end
