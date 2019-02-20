@@ -1,5 +1,26 @@
 require "mechanize"
-require "net/smtp"
+require "mail"
+
+def sendEmail(bodyStr)
+
+	options = { :address              => "smtp.gmail.com",
+	    	    :port                 => 587,
+	    	    :user_name            => 'osulibfor3901@gmail.com',
+	    	    :password             => 'GoBucks!',
+	    	    :authentication       => 'plain',
+	    	    :enable_starttls_auto => true  }
+
+	Mail.defaults do
+		delivery_method :smtp, options
+	end
+
+	Mail.deliver do
+		to 'hubbell.64@osu.edu'
+		from 'osulibfor3901@gmail.com'
+		subject 'Test'
+		body bodyStr
+	end
+end
 
 def scrapeInfo(bookArr, page, i = 0)
 	bookArr[i] = Hash.new
@@ -77,5 +98,6 @@ else # List page
 		pp bookArr[i]
 		i += 1
 	end
-
 end
+
+sendEmail("Hello\nWorld!");
