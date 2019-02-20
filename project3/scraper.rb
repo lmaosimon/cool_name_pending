@@ -1,5 +1,14 @@
 require "mechanize"
 
+def scrapeInfo(bookArr, page, i = 0)
+	bookArr[i] = Hash.new
+	table = page.css(".bibItems");
+	bookArr[i] = getTableInfo(table);
+	bookDetails = page.css(".bibDetail")[0]
+	getAuthor(bookDetails, bookArr[i]);
+	bookArr[i].transform_values! { |k| k.gsub(/\n/, "") }
+end
+
 def getTableInfo(table)
 	bookHash = Hash.new
 	entries = table.css(".bibItemsEntry td")
@@ -43,18 +52,13 @@ puts
 #pp searchInput
 
 page = agent.submit(searchInput);
+bookArr = []
 
 checkBookOrList = page.css(".save")
 
 if !checkBookOrList.empty? # Book page
-	bookHash = Hash.new
-	table = page.css(".bibItems");
-	bookHash = getTableInfo(table);
-	bookDetails = page.css(".bibDetail")[0]
-	getAuthor(bookDetails, bookHash);
-	puts bookHash
-	bookHash.transform_values! { |k| k.gsub(/\n/, "") }
-	puts bookHash
+	scrapeInfo(bookArr, page)
+	puts bookArr[0]
 elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
 	puts "Page is empty."
 else # List page
@@ -68,12 +72,7 @@ else # List page
 		bookPath = results.css('a')[i]["href"]
 		bookLink = "https://library.ohio-state.edu" + bookPath
 		nextPage = agent.get(bookLink)
-		bookArr[i] = Hash.new
-		table = page.css(".bibItems");
-		bookArr[i] = getTableInfo(table);
-		bookDetails = nextPage.css(".bibDetail")[0]
-		getAuthor(bookDetails, bookArr[i]);
-		bookArr[i].transform_values! { |k| k.gsub(/\n/, "") }
+		scrapeInfo(bookArr, nextPage, i)
 		pp bookArr[i]
 		i += 1
 	end
