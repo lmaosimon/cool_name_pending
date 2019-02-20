@@ -1,5 +1,6 @@
 require "mechanize"
 require "mail"
+require "./book.rb"
 
 def sendEmail(bodyStr)
 
@@ -22,33 +23,17 @@ def sendEmail(bodyStr)
 	end
 end
 
-def scrapeInfo(bookArr, page, i = 0)
-	bookArr[i] = Hash.new
+def scrapeInfo(bookArr, page, link,  i = 0)
+	bookArr[i] = Book.new
 	table = page.css(".bibItems");
-	bookArr[i] = getTableInfo(table);
+	bookArr[i].getTableInfo(table);
+
 	bookDetails = page.css(".bibDetail")[0]
-	getAuthor(bookDetails, bookArr[i]);
-	bookArr[i].transform_values! { |k| k.gsub(/\n/, "") }
-end
+	bookArr[i].getAuthor(bookDetails);
 
-def getTableInfo(table)
-	bookHash = Hash.new
-	entries = table.css(".bibItemsEntry td")
-	bookHash["location"] = entries[0].text
-	bookHash["status"] = entries[3].text
-	return bookHash
-end
-
-def getAuthor(bookDetails, bookHash)
-	if (bookDetails.css(".bibInfoLabel")[0].text == "Author")
-		puts "Author is there."
-		bookHash["author"] =  bookDetails.css(".bibInfoData")[0].text
-		bookHash["title"] =  bookDetails.css(".bibInfoData")[1].text
-	else
-		puts "Author is not there."
-		bookHash["title"] =  bookDetails.css(".bibInfoData")[0].text
-	end
-	return bookHash
+	bookArr[i].uri = link
+	
+	bookArr[i].transformValues
 end
 
 
@@ -71,22 +56,26 @@ puts "Input a keyword, author, title, subject, or number that you want to search
 searchInput.q = gets.chomp
 puts
 
-#pp searchInput
-
+#Submits the user query to the search bar on the page
 page = agent.submit(searchInput);
-bookArr = []
 
+#Looks for a specific CSS node identifying whether or not
+#the query resulted in a book or link page
 checkBookOrList = page.css(".save")
 
+bookArr = []
+
 if !checkBookOrList.empty? # Book page
-	scrapeInfo(bookArr, page)
+	bookLink = page.link.uri
+	scrapeInfo(bookArr, page, bookLink)
 	puts bookArr[0]
 elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
 	puts "Page is empty."
 else # List page
 	# Array to hold book hashes.
 	puts "List page."
-	bookArr = []
+
+	#Creates a CSS array of every node with a title
 	results = page.css(".briefcitTitle")
 
 	i = 0
@@ -94,10 +83,14 @@ else # List page
 		bookPath = results.css('a')[i]["href"]
 		bookLink = "https://library.ohio-state.edu" + bookPath
 		nextPage = agent.get(bookLink)
-		scrapeInfo(bookArr, nextPage, i)
-		pp bookArr[i]
+		
+		scrapeInfo(bookArr, nextPage, bookLink, i)
+		pp bookArr[i].title
 		i += 1
 	end
 end
 
 sendEmail("Hello\nWorld!");
+puts #Empty line separator
+puts "Finished!"
+
