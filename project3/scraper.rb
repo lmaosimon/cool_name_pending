@@ -4,6 +4,18 @@ require "./book.rb"
 
 def sendEmail(bodyStr)
 
+	puts
+	print "Input an email address to send your search results to: "
+	userEmail = gets.chomp
+	puts
+
+	until userEmail =~ /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+		puts "An invalid email was inputted."
+		puts "Input an email address to send your search results to: "
+		userEmail = gets.chomp
+		puts
+	end
+
 	options = { :address              => "smtp.gmail.com",
 	    	    :port                 => 587,
 	    	    :user_name            => 'osulibfor3901@gmail.com',
@@ -16,7 +28,7 @@ def sendEmail(bodyStr)
 	end
 
 	Mail.deliver do
-		to 'hubbell.64@osu.edu'
+		to userEmail
 		from 'osulibfor3901@gmail.com'
 		subject 'Test'
 		body bodyStr
