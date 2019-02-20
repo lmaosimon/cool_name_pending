@@ -120,14 +120,17 @@ else # List page
 	puts "Loading your search results..."
 
 	i = 0
-	until i == 10 || i == results.length
+	until i == results.length
 		bookPath = results.css('a')[i]["href"]
 		bookLink = "https://library.ohio-state.edu" + bookPath
 		nextPage = agent.get(bookLink)
-		
+		if i % 5 == 0 && i != 0
+			puts "Loaded #{i} results..."
+		end
 		scrapeInfo(bookArr, nextPage, bookLink, i)
 		i += 1
 	end
+	puts "Successfully loaded #{i} results."
 end
 
 #Ensures that some results were found from the user's query before sending
