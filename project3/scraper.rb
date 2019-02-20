@@ -2,6 +2,10 @@ require "mechanize"
 require "mail"
 require "./book.rb"
 
+=begin
+
+
+=end
 def sendEmail(bodyStr)
 
 	puts
@@ -36,6 +40,10 @@ def sendEmail(bodyStr)
 	end
 end
 
+=begin
+
+
+=end
 def getBooksStr(bookArr, pageLink)
 	bookStr = ""
 	i = 0
@@ -51,6 +59,10 @@ def getBooksStr(bookArr, pageLink)
 	return bookStr
 end
 
+=begin
+
+
+=end
 def scrapeInfo(bookArr, page, link,  i = 0)
 	bookArr[i] = Book.new
 	table = page.css(".bibItems");
@@ -64,7 +76,7 @@ def scrapeInfo(bookArr, page, link,  i = 0)
 	bookArr[i].transformValues
 end
 
-
+#The URL for the OSU library website that we will use
 url = "https://library.osu.edu"
 
 agent = Mechanize.new
@@ -91,12 +103,13 @@ pageURI = page.link.resolved_uri.to_s
 #the query resulted in a book or link page
 checkBookOrList = page.css(".save")
 
+#Initializes the array that will hold book objects for each search result
 bookArr = []
 
-if !checkBookOrList.empty? # Book page
-	bookLink = page.link.uri
+if !checkBookOrList.empty? # Scrapes the info for a page with a single book
+	puts "Loading your search results..."
+	bookLink = page.link.resolved_uri.to_s
 	scrapeInfo(bookArr, page, bookLink)
-	puts bookArr[0]
 elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
 	puts "Page is empty. No search results found."
 else # List page
@@ -113,11 +126,11 @@ else # List page
 		nextPage = agent.get(bookLink)
 		
 		scrapeInfo(bookArr, nextPage, bookLink, i)
-		#pp bookArr[i].title
 		i += 1
 	end
 end
 
+#Ensures that some results were found from the user's query before sending
 if bookArr.length != 0 
 	#Gets a string containing info for all books from search result
 	allBooks = getBooksStr(bookArr, pageURI)
