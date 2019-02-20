@@ -1,4 +1,5 @@
 require "mechanize"
+require "net/smtp"
 
 def scrapeInfo(bookArr, page, i = 0)
 	bookArr[i] = Hash.new
@@ -78,5 +79,3 @@ else # List page
 	end
 
 end
-
-
