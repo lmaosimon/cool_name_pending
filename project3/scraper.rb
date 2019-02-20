@@ -26,13 +26,13 @@ puts "Welcome to the OSU Library Website!"
 puts "Input a keyword, author, title, subject, or number that you want to search for."
 searchInput.q = gets.chomp
 
-pp searchInput
+#pp searchInput
 
 page = agent.submit(searchInput);
 
 test = page.css(".save").text
 test2 = page.css("a")
-puts test2.class
+#puts test2.class
 
 if !test.empty?
 	bookHash = Hash.new
@@ -44,5 +44,16 @@ elsif
 	a = [] #Array to hold book hashes.
 end
 
-searchLinks = page.links
+#searchLinks = page.links
 
+results = page.css(".briefcitTitle")
+
+i = 0
+until i == 5
+	bookPath = results.css('a')[i]["href"]
+	bookLink = "https://library.ohio-state.edu" + bookPath
+	nextPage = agent.get(bookLink)
+	
+	
+	i += 1
+end
