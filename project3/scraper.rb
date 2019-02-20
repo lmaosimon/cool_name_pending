@@ -2,10 +2,6 @@ require "mechanize"
 require "mail"
 require "./book.rb"
 
-=begin
-
-
-=end
 def sendEmail(bodyStr)
 
 	puts
@@ -40,10 +36,6 @@ def sendEmail(bodyStr)
 	end
 end
 
-=begin
-
-
-=end
 def getBooksStr(bookArr, pageLink)
 	bookStr = ""
 	i = 0
@@ -59,10 +51,6 @@ def getBooksStr(bookArr, pageLink)
 	return bookStr
 end
 
-=begin
-
-
-=end
 def scrapeInfo(bookArr, page, link,  i = 0)
 	bookArr[i] = Book.new
 	table = page.css(".bibItems");
