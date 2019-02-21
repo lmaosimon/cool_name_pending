@@ -107,7 +107,7 @@ while searchAgain
 		scrapeInfo(bookArr, page, bookLink)
 		searchAgain = false
 	elsif emptyResultCheck == "NO ENTRIES FOUND" || emptyResultCheck == "You must enter data to search by."  # No search results.
-		puts "Page is empty. No search results found."
+		puts "No search results found."
 	else # List page
 
 		#Creates a CSS array of every node with a title
