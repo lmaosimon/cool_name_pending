@@ -14,7 +14,9 @@ class Book
 
 =begin
 
-
+The getTableInfo instance method is given a html table from an individual book page and 
+gets the location and status of the book using the given css selector. This is done
+using the Nokigiri css method which returns a node set.
 
 =end
 def getTableInfo(table)
@@ -26,23 +28,26 @@ end
 
 =begin
 
-
+The getAuthor instance method is given table "bookDetails" to set the author and title of 
+the book. Since a book may not have an author (such as a video or WebBook) so we check
+if the label of the first table entry has the text of "Author".
 
 =end
 def getAuthor(bookDetails)
 	if (bookDetails.css(".bibInfoLabel")[0].text == "Author")
-		@author =  bookDetails.css(".bibInfoData")[0].text
-		@title =  bookDetails.css(".bibInfoData")[1].text
+		@author = bookDetails.css(".bibInfoData")[0].text
+		@title = bookDetails.css(".bibInfoData")[1].text
 	else
 		@author = "No author."
-		@title =  bookDetails.css(".bibInfoData")[0].text
+		@title = bookDetails.css(".bibInfoData")[0].text
 	end
 end
 
 
 =begin
 
-
+The instance method Transform values removes the newline characters from the instance
+variables of the book.
 
 =end
 def transformValues
