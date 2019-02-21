@@ -93,12 +93,13 @@ checkBookOrList = page.css(".save")
 
 #Initializes the array that will hold book objects for each search result
 bookArr = []
+emptyResultCheck = page.css("h2")[2].text
 
 if !checkBookOrList.empty? # Scrapes the info for a page with a single book
 	puts "Loading your search results..."
 	bookLink = page.link.resolved_uri.to_s
 	scrapeInfo(bookArr, page, bookLink)
-elsif page.css("h2")[2].text == "NO ENTRIES FOUND" # No search results.
+elsif emptyResultCheck == "NO ENTRIES FOUND" || emptyResultCheck == "You must enter data to search by."  # No search results.
 	puts "Page is empty. No search results found."
 else # List page
 
