@@ -67,59 +67,68 @@ end
 #The URL for the OSU library website that we will use
 url = "https://library.osu.edu"
 
-agent = Mechanize.new
-page = agent.get(url)
-
-button = page.link_with(id: 'searchBooksLink');
-
-page = button.click
-
-forms = page.forms
-searchInput = forms[1];
+searchAgain = true
 
 puts
 puts "Welcome to the OSU Library Website!"
-puts "Input a keyword, author, title, subject, or number that you want to search for."
-searchInput.q = gets.chomp
-puts
 
-#Submits the user query to the search bar on the page
-page = agent.submit(searchInput);
-pageURI = page.link.resolved_uri.to_s
+while searchAgain
 
-#Looks for a specific CSS node identifying whether or not
-#the query resulted in a book or link page
-checkBookOrList = page.css(".save")
+	agent = Mechanize.new
+	page = agent.get(url)
 
-#Initializes the array that will hold book objects for each search result
-bookArr = []
-emptyResultCheck = page.css("h2")[2].text
+	button = page.link_with(id: 'searchBooksLink');
 
-if !checkBookOrList.empty? # Scrapes the info for a page with a single book
-	puts "Loading your search results..."
-	bookLink = page.link.resolved_uri.to_s
-	scrapeInfo(bookArr, page, bookLink)
-elsif emptyResultCheck == "NO ENTRIES FOUND" || emptyResultCheck == "You must enter data to search by."  # No search results.
-	puts "Page is empty. No search results found."
-else # List page
+	page = button.click
 
-	#Creates a CSS array of every node with a title
-	results = page.css(".briefcitTitle")
+	forms = page.forms
+	searchInput = forms[1];
+
+	puts
+	puts "Input a keyword, author, title, subject, or number that you want to search for."
+	searchInput.q = gets.chomp
+	puts
+
+	#Submits the user query to the search bar on the page
+	page = agent.submit(searchInput);
+	pageURI = page.link.resolved_uri.to_s
+
+	#Looks for a specific CSS node identifying whether or not
+	#the query resulted in a book or link page
+	checkBookOrList = page.css(".save")
+
+	#Initializes the array that will hold book objects for each search result
+	bookArr = []
+	emptyResultCheck = page.css("h2")[2].text
+
+	if !checkBookOrList.empty? # Scrapes the info for a page with a single book
+		puts "Loading your search results..."
+		bookLink = page.link.resolved_uri.to_s
+		scrapeInfo(bookArr, page, bookLink)
+		searchAgain = false
+	elsif emptyResultCheck == "NO ENTRIES FOUND" || emptyResultCheck == "You must enter data to search by."  # No search results.
+		puts "Page is empty. No search results found."
+	else # List page
+
+		#Creates a CSS array of every node with a title
+		results = page.css(".briefcitTitle")
 	
-	puts "Loading your search results..."
+		puts "Loading your search results..."
 
-	i = 0
-	until i == results.length
-		bookPath = results.css('a')[i]["href"]
-		bookLink = "https://library.ohio-state.edu" + bookPath
-		nextPage = agent.get(bookLink)
-		if i % 5 == 0 && i != 0
-			puts "Loaded #{i} results..."
+		i = 0
+		until i == results.length
+			bookPath = results.css('a')[i]["href"]
+			bookLink = "https://library.ohio-state.edu" + bookPath
+			nextPage = agent.get(bookLink)
+			if i % 5 == 0 && i != 0
+				puts "Loaded #{i} results..."
+			end
+			scrapeInfo(bookArr, nextPage, bookLink, i)
+			i += 1
 		end
-		scrapeInfo(bookArr, nextPage, bookLink, i)
-		i += 1
+		puts "Successfully loaded #{i} results."
+		searchAgain = false
 	end
-	puts "Successfully loaded #{i} results."
 end
 
 #Ensures that some results were found from the user's query before sending
