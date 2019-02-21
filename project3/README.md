@@ -81,6 +81,16 @@ Test Cases
 
 		Test Successful
 
+	Test Case 4 for Catalogue Search:
+
+		 Input: Breed predispositions to disease in dogs and cats / Alex Gough, Alison Thomas, Dan O'Neill
+
+		 Expected Output: Email with 1 search result
+
+		 Actual Output: Email with one search result
+
+		 Test Successful
+
 	Test Case 1 for Email:
 
 		Input: bower.205osu.edu
@@ -120,4 +130,12 @@ Test Cases
 		Actual Output: An invalid email was inputted (Prompt user again)
 
 		Test Successful
+
+NOTE
+
+	When testing, we found out that if you copy and paste a full title from a
+	list of searches that you previously made, the OSU Library Catalogue might say that
+	there are no results. We are not sure why their website does this, but if you try this
+	and our program asks you to re-input a search, even if that is a full title of a book,
+	it is because of OSU Library's website behavior, not because of the program.
 
