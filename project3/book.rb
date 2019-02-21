@@ -1,4 +1,4 @@
-# Author: Gino Detore 
+# Author: Gino Detore and Sean Bower
 
 =begin
 

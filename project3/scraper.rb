@@ -2,6 +2,8 @@ require "mechanize"
 require "mail"
 require "./book.rb"
 
+# Authors: Patrick Hubbell, Gino Detore, and Sean Bower
+
 # ******** METHODS ********
 
 =begin
