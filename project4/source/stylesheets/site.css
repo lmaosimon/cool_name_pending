@@ -25,3 +25,8 @@ ul {
   overflow: hidden;
   background-color: #BB0000;
 }
+
+.title-bar {
+  background-color: #222222;
+  color: white;
+}
