@@ -33,12 +33,16 @@ body {
   color: white;
 }
 
+.image-pad {
+  margin: 10px 14px 0px 35px;
+}
+
 #prof-name {
   color: #555555;
   float: left;
   font-size: 40px;
   font-style: bold;
-  margin: 27px 0px 0px 14px;
+  margin: 27px 0px 0px 18px;
 }
 
 #org-name {
@@ -52,4 +56,8 @@ body {
   margin: 0px;
 }
 
-
+#prof-bio {
+  font-size: 20px;
+  font-style: normal;
+  position: relative;
+}
