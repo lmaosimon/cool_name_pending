@@ -55,12 +55,19 @@ body {
   background-color: #F1F4F5;
   border: 5px solid #bb0000;
   border-radius: 20px;
-  margin: 46px 135px 46px 135px;
+  margin: auto;
+  margin-bottom: 46px;
+  margin-top: 46px;
   padding: 0px 45px 0px 45px;
+  width: 65%;
 }
 
 .info-box li {
   margin: 0px 0px 30px 0px;
+}
+
+.info-box a {
+  color: #bb0000;
 }
 
 
