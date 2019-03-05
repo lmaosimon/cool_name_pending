@@ -30,7 +30,6 @@ body {
   width: 100%;
   height: 100px;
   background: linear-gradient(to bottom, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%);
-  color: white;
 }
 
 #prof-name {
@@ -50,6 +49,18 @@ body {
   background-color: grey;
   height: 5px;
   margin: 0px;
+}
+
+.info-box {
+  background-color: #F1F4F5;
+  border: 5px solid #bb0000;
+  border-radius: 20px;
+  margin: 46px 135px 46px 135px;
+  padding: 0px 45px 0px 45px;
+}
+
+.info-box li {
+  margin: 0px 0px 30px 0px;
 }
 
 
