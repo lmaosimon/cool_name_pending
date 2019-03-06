@@ -122,3 +122,18 @@ body {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+#prof-pic {
+  border-radius: 10px;
+  height: 400px;
+  width: auto;
+}
+
+#index-box {
+  margin: 46px auto;
+  width: 50%;
+}
+
+#index-box p {
+  left: 30px;
+  top: 50px;
+}
