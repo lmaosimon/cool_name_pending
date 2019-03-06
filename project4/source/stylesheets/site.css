@@ -60,7 +60,7 @@ body {
   font-style: normal;
   position: relative;
 }
-=======
+
 .info-box {
   background-color: #F1F4F5;
   border: 5px solid #bb0000;
@@ -78,4 +78,20 @@ body {
 
 .info-box a {
   color: #bb0000;
+}
+
+#prof-pic {
+  border-radius: 10px;
+  height: 400px;
+  width: auto;
+}
+
+#index-box {
+  margin: 46px auto;
+  width: 50%;
+}
+
+#index-box p {
+  left: 30px;
+  top: 50px;
 }
