@@ -4,11 +4,20 @@
 </div>
 <div class="navbar">
     <ul>
-        <li><%= link_to '<i class="fas fa-home"></i>', '../build/index.html' %>
-        <li><%= link_to 'News', '../build/news.html' %>
-        <li><%= link_to 'Research', '../build/research.html' %>
-        <li><%= link_to 'Teaching', '../build/teaching.html' %>
-        <li><%= link_to 'Miscellaneous', '../build/misc.html' %>
+        <li><%= link_to '<i class="fas fa-home"></i>', '../build/index.html' %></li>
+        <li><%= link_to 'News', '../build/news.html' %></li>
+        <li><%= link_to 'Research', '../build/research.html' %></li>
+        <li><%= link_to 'Teaching', '../build/teaching.html' %></li>
+        <!--<li><%= link_to 'Miscellaneous', '../build/misc.html' %></li>-->
+        <div class="dropdown">
+            <li><button class="dropbtn">Miscellaneous
+                <i class="fa fa-caret-down"></i></li>
+            </button>
+            <div class="dropdown-content">
+                <a href="../build/misc.html#activities">Activities</a>
+            </div>
+        </div>
     </ul>
+
 </div>
 <hr id="stripe">
