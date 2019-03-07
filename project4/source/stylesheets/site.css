@@ -1,88 +1,96 @@
+/* Sets font of everything in body to Ubuntu */
 body {
   font-family: 'Ubuntu', sans-serif;
 }
 
+/* All li's nested in div with class navbar float themselves to the left of the container */
 .navbar li {
   float: left;
 }
 
 .navbar li a {
   color: white;
-  display: block;
+  display: block; /* Allows the whole link area to be clickable, rather than just text */
   padding: 18px 16px;
   text-align: center;
-  text-decoration: none;
+  text-decoration: none; /* Removes underline on links */
 }
 
+/* Change the link background to grey when the mouse is hovering over it */
 .navbar li a:hover {
   background-color: gray;
 }
 
+
 .navbar ul {
   background-color: #BB0000;
-  list-style-type: none;
+  list-style-type: none; /* Gets rid of bullet points */
   margin: 0;
-  overflow: hidden;
+  overflow: hidden; /* Clips content if there is overflow */
   padding: 0;
 }
 
 .title-bar {
   width: 100%;
   height: 100px;
+  /* Gives the background of the title area above the navbar a gradient */
   background: linear-gradient(to bottom, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%);
-}
-
-.image-pad {
-  margin: 15px 14px 0px 35px;
 }
 
 #prof-name {
   color: #555555;
-  float: left;
+  float: left; /* Position professor's name to the left in div */
   font-size: 40px;
   font-style: bold;
   margin: 27px 0px 0px 18px;
 }
 
 #org-name {
-  float: right;
+  float: right; /* Position OSU CSE image to the right in div */
   margin: 4px 30px 0px 0px;
 }
 
+/* Add a grey stripe under the navbar */
 #stripe {
   background-color: grey;
   height: 5px;
   margin: 0px;
 }
 
-#prof-bio {
-  font-size: 20px;
-  font-style: normal;
-  font-weight: bold;
-  position: relative;
-}
-
+/* The info box class is used on every page except for the index to have a common
+ * style for the content on each page */
 .info-box {
   background-color: #F1F4F5;
   border: 5px solid #bb0000;
   border-radius: 20px;
-  margin: auto;
+  margin: auto; /* Centers the div since a width is specified */
   margin-bottom: 46px;
   margin-top: 46px;
   padding: 0px 45px 0px 45px;
   width: 65%;
 }
 
+/* Put 30px of space between each list element */
 .info-box li {
   margin: 0px 0px 30px 0px;
 }
 
-.info-box a {
+.info-box a, .info-box h1 {
   color: #bb0000;
 }
 
-/* Dropdown Button */
-.dropbtn {
+.info-box table, .info-box th, .info-box td {
+  border: 1px solid black;
+  border-collapse: collapse; /* Collapse borders so there are only single lines outlining the table */
+}
+
+.info-box table {
+  margin: auto; /* Center the table relative to the div containing it */
+  margin-bottom: 30px;
+}
+
+/* Style the Miscellaneous link in the navbar to be used for as dropdown button */
+.misc-drop {
   background-color: #BB0000;
   color: white;
   padding: 18px 16px;
@@ -90,14 +98,14 @@ body {
   border: none;
 }
 
-/* The container <div> - needed to position the dropdown content */
+/* The div used to position the dropdown box content */
 .dropdown {
   position: absolute;
   display: inline-block;
 }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
+/* The div used to style the actual content in the dropdown box */
+.dropdown-box {
   display: none;
   position: absolute;
   background-color: #BB0000;
@@ -107,40 +115,47 @@ body {
   z-index: 1;
 }
 
-/* Links inside the dropdown */
-.dropdown-content a {
+/* Style the links inside the dropdown */
+.dropdown-box a {
   color: white;
   padding: 0px 40px 0px 40px;
   text-decoration: none;
   display: block;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
+/* Change color of the links to grey when hovering */
+.dropdown-box a:hover {
   background-color: grey;
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+/* Display the dropdown links box when hovering */
+.dropdown:hover .dropdown-box {
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
+/* Change the background color of the dropdown link to grey when the dropdown content is being shown */
 .dropdown:hover .dropbtn {
   background-color: grey;
 }
+
+/* Resize professor picture and give rounded corners */
 #prof-pic {
   border-radius: 10px;
   height: 400px;
   width: auto;
 }
 
+/* Center the image and professior bio on the home page */
 #index-box {
   margin: 46px auto;
   width: 50%;
 }
 
-#index-box p {
-  left: 30px;
-  top: 50px;
+#prof-bio {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: bold;
+  position: relative; /* Allows the p tag content to be positioned relative to its normal position */
+  left: 30px; /* Moved from the left 30px */
+  top: 50px; /* Moved from the top 50px */
 }

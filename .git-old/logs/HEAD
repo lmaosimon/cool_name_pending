@@ -1,0 +1,48 @@
+0000000000000000000000000000000000000000 0fd13f7262bc1173d11fac7c85c6298904247647 pat-hubbs <hubbell.64@osu.edu> 1550178874 -0500	clone: from git@github.com:cse-3901-sp2019-1800/cool_name_pending.git
+0fd13f7262bc1173d11fac7c85c6298904247647 267227e4148a984b3bb883772cb442c6c23d92c4 pat-hubbs <hubbell.64@osu.edu> 1550179190 -0500	commit: add bundler files to manage gem versions
+267227e4148a984b3bb883772cb442c6c23d92c4 a65f956d3089b2e5627f328dc6b7ef11f4aa202b pat-hubbs <hubbell.64@osu.edu> 1550442635 -0500	commit: Initialized mechanize object and tested giving input to search query
+a65f956d3089b2e5627f328dc6b7ef11f4aa202b 06797d236fa1d0ca0b855b78439df170a72fd18d pat-hubbs <hubbell.64@osu.edu> 1550536169 -0500	merge origin/master: Fast-forward
+06797d236fa1d0ca0b855b78439df170a72fd18d 2986ccb7a0f4ee84ec8e1f93a156effbb7609d7e pat-hubbs <hubbell.64@osu.edu> 1550538416 -0500	commit: Created a project2 directory and put all project 2 files in it.
+2986ccb7a0f4ee84ec8e1f93a156effbb7609d7e 6f5b3fb714d4bba8db5306ab02a84898ccb90b61 pat-hubbs <hubbell.64@osu.edu> 1550542947 -0500	commit: Figured out how to find out if a single book is found or if a list of books is found
+6f5b3fb714d4bba8db5306ab02a84898ccb90b61 0897aa66403875e6bedf316849364d8166e18fa7 pat-hubbs <hubbell.64@osu.edu> 1550546562 -0500	commit: Created function to retrieve table data.
+0897aa66403875e6bedf316849364d8166e18fa7 8b5903839d4fa604491f3bfc7ec754e20e406783 pat-hubbs <hubbell.64@osu.edu> 1550630545 -0500	commit: finished extracting info from a book page
+8b5903839d4fa604491f3bfc7ec754e20e406783 6940095ca948c9a086260a5a745de68e2cb6df10 pat-hubbs <hubbell.64@osu.edu> 1550631518 -0500	merge origin/master: Fast-forward
+6940095ca948c9a086260a5a745de68e2cb6df10 cfdfc31e5213d4aad91c4ffc0bb85e8ecb0342ce pat-hubbs <hubbell.64@osu.edu> 1550633242 -0500	commit: Factored out code for scraping book page info into function scrapeInfo
+cfdfc31e5213d4aad91c4ffc0bb85e8ecb0342ce af6c19ac20fda3326d770c41460d7db02caadd47 pat-hubbs <hubbell.64@osu.edu> 1550693781 -0500	commit: Deleted email code because could not get to work
+af6c19ac20fda3326d770c41460d7db02caadd47 8091a662e6036cf1354b6dc6e3c6851447f4ed4d pat-hubbs <hubbell.64@osu.edu> 1550696501 -0500	commit: Fixed email code
+8091a662e6036cf1354b6dc6e3c6851447f4ed4d 8fed214c3f3a46619fabef17c50659901c52094e pat-hubbs <hubbell.64@osu.edu> 1550696661 -0500	commit (merge): Merged Gino's book class file and scraper modifications
+8fed214c3f3a46619fabef17c50659901c52094e beed54ed42352a4b495246491d12e71ffe04f875 pat-hubbs <hubbell.64@osu.edu> 1550697709 -0500	commit: Fixed email code to not allow invalid email addresses. Delete test_email.rb
+beed54ed42352a4b495246491d12e71ffe04f875 56f5bf628ed30fa4102473e393983b04136a7749 pat-hubbs <hubbell.64@osu.edu> 1550700614 -0500	commit: Updated Gemfile
+56f5bf628ed30fa4102473e393983b04136a7749 3744d82054b242bb852cc12ead603c7ed122b961 pat-hubbs <hubbell.64@osu.edu> 1550700766 -0500	merge origin/master: Fast-forward
+3744d82054b242bb852cc12ead603c7ed122b961 7557149c7792f5c4dc133937c9d615c6aa520da8 pat-hubbs <hubbell.64@osu.edu> 1550703635 -0500	merge origin/master: Fast-forward
+7557149c7792f5c4dc133937c9d615c6aa520da8 eb9e0e4b7cccb04d5d6df1c925e7b589933f26dc pat-hubbs <hubbell.64@osu.edu> 1550704064 -0500	commit: Started README
+eb9e0e4b7cccb04d5d6df1c925e7b589933f26dc 18ab29317347708d568821d4163df7a8b5abb706 pat-hubbs <hubbell.64@osu.edu> 1550777999 -0500	commit: Fixed output for when user enters no text in a search
+18ab29317347708d568821d4163df7a8b5abb706 8884c34ee49eb0d43aab0770febe14e5ac0a207f pat-hubbs <hubbell.64@osu.edu> 1550779619 -0500	commit: Added loop for when user inputs a search that gives no results
+8884c34ee49eb0d43aab0770febe14e5ac0a207f 40f0604bf4d2d01838e253df3b850fde76566bb0 pat-hubbs <hubbell.64@osu.edu> 1550779645 -0500	merge origin/master: Merge made by the 'recursive' strategy.
+40f0604bf4d2d01838e253df3b850fde76566bb0 2d8b6f46e91f2c7a129248910c1810fa9c8bcc8e pat-hubbs <hubbell.64@osu.edu> 1550783373 -0500	commit: Added comments to scraper.rb
+2d8b6f46e91f2c7a129248910c1810fa9c8bcc8e 3965b9e94b12cb8a9f8f7f195c61211082f3fcef pat-hubbs <hubbell.64@osu.edu> 1550783933 -0500	commit (merge): Updated the README
+3965b9e94b12cb8a9f8f7f195c61211082f3fcef 46b818746de15334406e8f621adadc0ad93e0e0f pat-hubbs <hubbell.64@osu.edu> 1550784680 -0500	commit: Finalized comments in book.rb and scraper.rb
+46b818746de15334406e8f621adadc0ad93e0e0f 0c1af283e0deaa08ca6023e509723111f36d289f pat-hubbs <hubbell.64@osu.edu> 1551298174 -0500	merge origin/master: Fast-forward
+0c1af283e0deaa08ca6023e509723111f36d289f 9ae17d6f306d18803fbbd11f5823c4b177bcb4a2 pat-hubbs <hubbell.64@osu.edu> 1551298241 -0500	commit: Tried to remove project4 again
+9ae17d6f306d18803fbbd11f5823c4b177bcb4a2 ef6c8bcaa9086c41e3d6e23ca134d9afdc6813b1 pat-hubbs <hubbell.64@osu.edu> 1551298391 -0500	commit: Created project4 subdirectory using 'middleman init project4' as command
+ef6c8bcaa9086c41e3d6e23ca134d9afdc6813b1 dbe744ebca4e078451b8fcb67b168d7dfacc1e0f pat-hubbs <hubbell.64@osu.edu> 1551473963 -0500	merge origin/master: Fast-forward
+dbe744ebca4e078451b8fcb67b168d7dfacc1e0f 5495dd0e9c18237df4bf5cdfc98d6ce0721d5973 pat-hubbs <hubbell.64@osu.edu> 1551478035 -0500	merge origin/master: Fast-forward
+5495dd0e9c18237df4bf5cdfc98d6ce0721d5973 35b1fdc37e59d0e704e68d89c6c3c559a7a054ea pat-hubbs <hubbell.64@osu.edu> 1551478766 -0500	commit: Starting working on site css file
+35b1fdc37e59d0e704e68d89c6c3c559a7a054ea 328ef11b7c54ae165561fed023dceffefa9bf090 pat-hubbs <hubbell.64@osu.edu> 1551479986 -0500	commit: fixed css to link with html files
+328ef11b7c54ae165561fed023dceffefa9bf090 2cfd12bad4ca1b653cfb329fefc7772eaac5fbb2 pat-hubbs <hubbell.64@osu.edu> 1551498250 -0500	commit: added home button in navbar. added hover color change. changed navbar color. changed body font.
+2cfd12bad4ca1b653cfb329fefc7772eaac5fbb2 fa6c57d253c51fe8789aeb65fa489fbf36e14ed3 pat-hubbs <hubbell.64@osu.edu> 1551499185 -0500	commit: working on putting title above navbar
+fa6c57d253c51fe8789aeb65fa489fbf36e14ed3 2bd0b79ab5b042da3958d3c95c58b29891ca868b pat-hubbs <hubbell.64@osu.edu> 1551673187 -0500	commit: Updated the navbar.
+2bd0b79ab5b042da3958d3c95c58b29891ca868b a0119adbc7716587d210d956478c631a83a4d392 pat-hubbs <hubbell.64@osu.edu> 1551735543 -0500	merge origin/master: Fast-forward
+a0119adbc7716587d210d956478c631a83a4d392 9a681fdcfd6180161276bcfa3a1e8a6f9421f76e pat-hubbs <hubbell.64@osu.edu> 1551735563 -0500	commit: Started working on news page.
+9a681fdcfd6180161276bcfa3a1e8a6f9421f76e e30f96901b8e437d0ac8bb044a4b824fe5ff57a5 pat-hubbs <hubbell.64@osu.edu> 1551740145 -0500	merge origin/master: Fast-forward
+e30f96901b8e437d0ac8bb044a4b824fe5ff57a5 e3f890e4723a268d15857f58b0a9a89b14b65d1d pat-hubbs <hubbell.64@osu.edu> 1551751666 -0500	commit: Finished styling for news page.
+e3f890e4723a268d15857f58b0a9a89b14b65d1d d106fac7b7890956171a8d1cea5f38d48f49b158 pat-hubbs <hubbell.64@osu.edu> 1551754044 -0500	commit: fixed width of info-box on news page.
+d106fac7b7890956171a8d1cea5f38d48f49b158 46c0942547401d749b7566a0461471c3a9d31fae pat-hubbs <hubbell.64@osu.edu> 1551906571 -0500	merge origin/master: Fast-forward
+46c0942547401d749b7566a0461471c3a9d31fae eb36dab53e83eedf27efbccef2618360356ae4d0 pat-hubbs <hubbell.64@osu.edu> 1551908566 -0500	commit: Styled the home page
+eb36dab53e83eedf27efbccef2618360356ae4d0 1128ba5fe4c92dcfe95da57b2b1c433d5dd3dc4e pat-hubbs <hubbell.64@osu.edu> 1551908669 -0500	commit (merge): Merged index
+1128ba5fe4c92dcfe95da57b2b1c433d5dd3dc4e 7d78ea9c4847dbd74ad116cfdbe5ad42fa31e6ae pat-hubbs <hubbell.64@osu.edu> 1551908699 -0500	merge origin/master: Merge made by the 'recursive' strategy.
+7d78ea9c4847dbd74ad116cfdbe5ad42fa31e6ae bd9ba7dae9cd260f980c1c5a6d6aecd5b20d896f pat-hubbs <hubbell.64@osu.edu> 1551911099 -0500	commit: Merging
+bd9ba7dae9cd260f980c1c5a6d6aecd5b20d896f d68f9c49cc0d8b1ac0e0409cabf465b775b910e4 pat-hubbs <hubbell.64@osu.edu> 1551911105 -0500	merge origin/master: Merge made by the 'recursive' strategy.
+d68f9c49cc0d8b1ac0e0409cabf465b775b910e4 09085cb9dd7b1b6c9ef9ea8b147baf31f74ad730 pat-hubbs <hubbell.64@osu.edu> 1551912055 -0500	commit: Working on dropdown css
+09085cb9dd7b1b6c9ef9ea8b147baf31f74ad730 067337b10966296ed587c65a7aafd2d445fffbe0 pat-hubbs <hubbell.64@osu.edu> 1551912102 -0500	merge origin/master: Merge made by the 'recursive' strategy.
+067337b10966296ed587c65a7aafd2d445fffbe0 1f4b4a671443c2f20c2fca653aa5e1bc41428629 pat-hubbs <hubbell.64@osu.edu> 1551912988 -0500	commit: Fixed drop down
