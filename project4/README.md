@@ -27,3 +27,9 @@ Getting Started
 Authors
 
     Patrick Hubbell, Gino Detore, and Sean Bower.
+
+    Sean worked on adding HTML content to research and teaching pages, created the dropdown box for the Miscellaneous button in the navbar including adding the CSS rules to to the CSS file, and commented the navigation partial and layout file.
+
+    Patrick created and styled the navbar including the title area with the professor's name, styled the index page, created the styling for anything within a div with class info-box, tweaked the CSS style rules for the dropdown box, and commented the CSS file.
+
+    Gino added HTML content to the index and miscellaneous page, helped Sean figure out the dropdown box for the miscellaneous button, added divs with class info-box to style the pages, and commented the HTML files.
