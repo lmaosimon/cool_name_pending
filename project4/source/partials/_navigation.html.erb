@@ -1,18 +1,26 @@
+<!-- Title Bar -->
 <div class="title-bar">
+    <!-- Title -->
     <p id="prof-name">Michael D. Bond</p>
+    <!-- OSU CSE logo image -->
     <img id="org-name" src="http://web.cse.ohio-state.edu/~parent.1/include/cse-logo.jpg">
 </div>
+
+<!-- Navbar -->
 <div class="navbar">
     <ul>
+        <!-- Individual Navbar items/links  -->
         <li><%= link_to '<i class="fas fa-home"></i>', '../build/index.html' %></li>
         <li><%= link_to 'News', '../build/news.html' %></li>
         <li><%= link_to 'Research', '../build/research.html' %></li>
         <li><%= link_to 'Teaching', '../build/teaching.html' %></li>
-
+        <!-- Final Navbar list item is a dropdown -->
         <div class="dropdown">
             <li><button class="dropbtn">Miscellaneous
                 <i class="fa fa-caret-down"></i>
             </button></li>
+            <!-- Dropdown content includes 4 links that lead to
+                 the miscellaneous page and start at the anchor location -->
             <div class="dropdown-content">
                 <a href="../build/misc.html#teaching">Teaching</a>
                 <a href="../build/misc.html#activities">Activities</a>
