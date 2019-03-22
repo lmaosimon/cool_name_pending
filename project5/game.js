@@ -1,4 +1,3 @@
-
 var numCards = 12;
 
 var deck = [];
@@ -16,7 +15,7 @@ function createCardListeners() {
     var cards = document.querySelectorAll(".card");
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
-            this.classList.add("selected");
+            this.classList.toggle("selected");
         });
     }
 
@@ -42,7 +41,6 @@ function createDeck(deck) {
                 
 createCardListeners();
 createDeck(deck);
-console.log(deck);
 
 var colorEnum = {
     RED = 0,
