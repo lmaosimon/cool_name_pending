@@ -21,27 +21,6 @@ function createCardListeners() {
 
 }
 
-function createDeck(deck) {
-
-    for (var i = 0; i <= 2; i++) {
-        for (var j = 0; j <= 2; j++) {
-            for (var k = 0; k <= 2; k++) {
-                for (var l = 0; l <= 2; l++) {
-                    var card = { color: i,
-                                 shape: j,
-                                 size: k,
-                                 number: l };
-                    deck.push(card);
-                }
-            }
-        }
-    }
-
-}
-                
-createCardListeners();
-createDeck(deck);
-
 var colorEnum = {
     RED = 0,
     GREEN = 1,
@@ -85,3 +64,26 @@ var numberEnum = {
         2: {value: "2", code: "3"}
     }
 }
+
+function createDeck(deck) {
+
+    for (var i = 0; i <= 2; i++) {
+        for (var j = 0; j <= 2; j++) {
+            for (var k = 0; k <= 2; k++) {
+                for (var l = 0; l <= 2; l++) {
+                    var card = { color: i,
+                                 shape: j,
+                                 size: k,
+                                 number: l,
+                                 // png: colorEnum.properties.+ ".png"
+                                };
+                    deck.push(card);
+                }
+            }
+        }
+    }
+
+}
+
+createDeck(deck);
+console.log(deck);
