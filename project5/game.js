@@ -1,3 +1,26 @@
+var numCards = 12;
+
+var deck = [];
+
+document.getElementById("reset").addEventListener("click", function(){
+    document.getElementById("message").innerHTML = "You have reset the game.";
+});
+
+document.getElementById("hint").addEventListener("click", function(){
+    document.getElementById("message").innerHTML = "Here is a hint.";
+});
+
+function createCardListeners() {
+
+    var cards = document.querySelectorAll(".card");
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener("click", function() {
+            this.classList.toggle("selected");
+        });
+    }
+
+}
+
 var colorEnum = {
     RED = 0,
     GREEN = 1,
@@ -40,29 +63,6 @@ var numberEnum = {
         1: {value: "1", code: "2"},
         2: {value: "2", code: "3"}
     }
-}
-
-var numCards = 12;
-
-var deck = [];
-
-document.getElementById("reset").addEventListener("click", function(){
-    document.getElementById("message").innerHTML = "You have reset the game.";
-});
-
-document.getElementById("hint").addEventListener("click", function(){
-    document.getElementById("message").innerHTML = "Here is a hint.";
-});
-
-function createCardListeners() {
-
-    var cards = document.querySelectorAll(".card");
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener("click", function() {
-            this.classList.toggle("selected");
-        });
-    }
-
 }
 
 function createDeck(deck) {
