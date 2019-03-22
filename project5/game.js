@@ -1,4 +1,4 @@
-var cards = document.querySelectorAll(".card");
+
 var numCards = 12;
 
 var deck = [];
@@ -11,10 +11,15 @@ document.getElementById("hint").addEventListener("click", function(){
     document.getElementById("message").innerHTML = "Here is a hint.";
 });
 
-for (var i = 0; i < cards.length; i++) {
-    cards[i].addEventListener("click", function() {
-        this.classList.add("selected");
-    });
+function createCardListeners() {
+
+    var cards = document.querySelectorAll(".card");
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener("click", function() {
+            this.classList.add("selected");
+        });
+    }
+
 }
 
 var colorEnum = {
