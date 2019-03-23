@@ -1,5 +1,5 @@
 var numCards = 12;
-
+var selectedCount = 0;
 var deck = [];
 
 document.getElementById("reset").addEventListener("click", function(){
@@ -15,7 +15,17 @@ function createCardListeners() {
     var cards = document.querySelectorAll(".card");
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
+            if (this.classList.contains("hint")) {
+                this.classList.remove("hint");
+            }
+            if (this.classList.contains("selected")) {
+                selectedCount--;
+            }
+            else {
+                selectedCount++;
+            }
             this.classList.toggle("selected");
+            console.log(selectedCount);
         });
     }
 
