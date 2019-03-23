@@ -1,6 +1,7 @@
 var numCards = 12;
 var selectedCount = 0;
 var deck = [];
+var cardImages = ["BCE1.png", "BCE2.png", "BCE3.png", "BCF1.png", "BCF2.png", "BCF3.png", "BCS1.png", "BCS2.png", "BCS3.png", "BSE1.png", "BSE2.png", "BSE3.png", "BSF1.png", "BSF2.png", "BSF3.png", "BSS1.png", "BSS2.png", "BSS3.png", "BTE1.png", "BTE2.png", "BTE3.png", "BTF1.png", "BTF2.png", "BTF3.png", "BTS1.png", "BTS2.png", "BTS3.png", "GCE1.png", "GCE2.png", "GCE3.png", "GCF1.png", "GCF2.png", "GCF3.png", "GCS1.png", "GCS2.png", "GCS3.png", "GSE1.png", "GSE2.png", "GSE3.png", "GSF1.png", "GSF2.png", "GSF3.png", "GSS1.png", "GSS2.png", "GSS3.png", "GTE1.png", "GTE2.png", "GTE3.png", "GTF1.png", "GTF2.png", "GTF3.png", "GTS1.png", "GTS2.png", "GTS3.png", "RCE1.png", "RCE2.png", "RCE3.png", "RCF1.png", "RCF2.png", "RCF3.png", "RCS1.png", "RCS2.png", "RCS3.png", "RSE1.png", "RSE2.png", "RSE3.png", "RSF1.png", "RSF2.png", "RSF3.png", "RSS1.png", "RSS2.png", "RSS3.png", "RTE1.png", "RTE2.png", "RTE3.png", "RTF1.png", "RTF2.png", "RTF3.png", "RTS1.png", "RTS2.png", "RTS3.png"];
 
 document.getElementById("reset").addEventListener("click", function(){
     document.getElementById("message").innerHTML = "You have reset the game.";
@@ -9,6 +10,27 @@ document.getElementById("reset").addEventListener("click", function(){
 document.getElementById("hint").addEventListener("click", function(){
     document.getElementById("message").innerHTML = "Here is a hint.";
 });
+
+// Currently written to display the first 12 cards in the cardImages array
+// Will have to be changed to display shuffled cards
+function getImages() {
+    for (var i = 0; i < numCards; i++) {
+        var img = document.createElement("img");
+        img.src = "card_images/" + cardImages[i];
+        img.classList.add("card");
+        var src = document.getElementById("table-grid");
+        src.appendChild(img);
+    }
+}
+
+function deselectCards(cards) {
+    for (var i = 0; i < cards.length; i++) {
+        if (cards[i].classList.contains("selected")) {
+            cards[i].classList.remove("selected");
+        }
+    }
+    return 0;
+}
 
 function createCardListeners() {
 
@@ -25,6 +47,11 @@ function createCardListeners() {
                 selectedCount++;
             }
             this.classList.toggle("selected");
+            if (selectedCount == 3) {
+                window.alert("You have selected a set.");
+                // Check if 3 cards are actually a set here
+                selectedCount = deselectCards(cards);
+            }
             console.log(selectedCount);
         });
     }
@@ -95,6 +122,7 @@ function createDeck(deck) {
 
 }
 
+getImages();
 createCardListeners();
 createDeck(deck);
 console.log(deck);
