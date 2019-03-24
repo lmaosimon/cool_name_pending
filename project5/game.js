@@ -11,7 +11,15 @@ document.getElementById("hint").addEventListener("click", function(){
     document.getElementById("message").innerHTML = "Here is a hint.";
 });
 
-// Currently written to display the first 12 cards in the cardImages array
+// Function that creates a Card object
+function Card(color, shape, shading, number) {
+    this.color = color;
+    this.shape = shape;
+    this.shading = shading;
+    this.number = number;
+}
+
+// Currently written to display the first 12 cards in the cardImages deck
 // Will have to be changed to display shuffled cards
 function getImages() {
     for (var i = 0; i < numCards; i++) {
@@ -108,13 +116,13 @@ function createDeck(deck) {
         for (var j = 0; j <= 2; j++) {
             for (var k = 0; k <= 2; k++) {
                 for (var l = 0; l <= 2; l++) {
-                    var card = { color: i,
+                    /* var card = { color: i,
                                  shape: j,
                                  size: k,
                                  number: l,
                                  // png: colorEnum.properties.+ ".png"
-                                };
-                    deck.push(card);
+                                }; */
+                    deck.push(new Card(i, j, k, l));
                 }
             }
         }
@@ -122,7 +130,28 @@ function createDeck(deck) {
 
 }
 
+function shuffleDeck(deck) {
+    var currentI = deck.length, tempVal, randI;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentI) {
+  
+      // Pick a remaining element...
+      randI = Math.floor(Math.random() * currentI);
+      currentI -= 1;
+  
+      // And swap it with the current element.
+      tempVal = deck[currentI];
+      deck[currentI] = deck[randI];
+      deck[randI] = tempVal;
+    }
+  
+    return deck;
+  }
+  
+
 getImages();
 createCardListeners();
 createDeck(deck);
+shuffleDeck(deck);
 console.log(deck);
