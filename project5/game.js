@@ -1,6 +1,7 @@
 var numCards = 12;
 var selectedCount = 0;
 var deck = [];
+var table = [];
 /*var cardImages = ["BCE1.png", "BCE2.png", "BCE3.png", "BCF1.png", "BCF2.png", "BCF3.png", "BCS1.png", "BCS2.png", "BCS3.png",
  "BSE1.png", "BSE2.png", "BSE3.png", "BSF1.png", "BSF2.png", "BSF3.png", "BSS1.png", "BSS2.png", "BSS3.png", "BTE1.png", "BTE2.png",
   "BTE3.png", "BTF1.png", "BTF2.png", "BTF3.png", "BTS1.png", "BTS2.png", "BTS3.png", "GCE1.png", "GCE2.png", "GCE3.png", "GCF1.png",
@@ -29,13 +30,16 @@ function Card(color, shape, shading, number, png) {
 
 // Currently written to display the first 12 cards in the cardImages deck
 // Will have to be changed to display shuffled cards
-function getImages() {
-    for (var i = 0; i < numCards; i++) {
+function createTable() {
+    var i = 0;
+    while (i < numCards) {
         var img = document.createElement("img");
-        img.src = "card_images/" + deck[i].png;
+        img.src = "card_images/" + deck[0].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
         src.appendChild(img);
+        table[i] = deck.shift(); // Move card from deck to table
+        i++;
     }
 }
 
@@ -50,9 +54,11 @@ function deselectCards(cards) {
 
 function createCardListeners() {
 
+    var cardHand = []; // Holds indexes of cards selected
     var cards = document.querySelectorAll(".card");
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
+            cardHand.push(i);
             if (this.classList.contains("hint")) {
                 this.classList.remove("hint");
             }
@@ -111,8 +117,10 @@ function shuffleDeck(deck) {
     return deck;
   }
   
-createCardListeners();
+
 createDeck(deck);
 shuffleDeck(deck);
-getImages();
+createTable();
+createCardListeners();
+console.log(table);
 console.log(deck);
