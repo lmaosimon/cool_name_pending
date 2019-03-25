@@ -50,6 +50,8 @@ function deselectCards(cards) {
 
 function createCardListeners() {
 
+    var currentIndex = 0;
+    var cardHand = [];
     var cards = document.querySelectorAll(".card");
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
@@ -57,21 +59,38 @@ function createCardListeners() {
                 this.classList.remove("hint");
             }
             if (this.classList.contains("selected")) {
+                cardHand[currentIndex] = cardHand.splice(currentIndex, 1);
+                console.log(cardHand[currentIndex]);
+                console.log(cards[currentIndex]);
                 selectedCount--;
+                currentIndex;
             }
             else {
+                cardHand[currentIndex] = cards[currentIndex];
+                console.log(cardHand[currentIndex]);
+                console.log(cards[currentIndex]);
                 selectedCount++;
+                currentIndex;
             }
             this.classList.toggle("selected");
             if (selectedCount == 3) {
                 window.alert("You have selected a set.");
-                // Check if 3 cards are actually a set here
                 selectedCount = deselectCards(cards);
             }
             console.log(selectedCount);
         });
     }
 
+}
+
+function isASet(cardHand) {
+    if ((cardHand[0].color + cardHand[1].color + cardHand[2].color) % 3 == 0 && 
+    (cardHand[0].shape + cardHand[1].shape + cardHand[2].shape) % 3 == 0 && 
+    (cardHand[0].shade + cardHand[1].shade + cardHand[2].shade) % 3 == 0 &&
+    (cardHand[0].number + cardHand[1].number + cardHand[2].number) % 3 == 0) {
+        return true;
+    } 
+    return false;
 }
 
 var colorCode = ["R", "G", "B"];
@@ -111,8 +130,8 @@ function shuffleDeck(deck) {
     return deck;
   }
   
-createCardListeners();
 createDeck(deck);
 shuffleDeck(deck);
 getImages();
+createCardListeners();
 console.log(deck);
