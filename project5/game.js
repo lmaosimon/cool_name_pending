@@ -2,7 +2,7 @@ var numCards = 12;
 var selectedCount = 0;
 var deck = [];
 var table = [];
-/*var cardImages = ["BCE1.png", "BCE2.png", "BCE3.png", "BCF1.png", "BCF2.png", "BCF3.png", "BCS1.png", "BCS2.png", "BCS3.png",
+/*var cardButtons = ["BCE1.png", "BCE2.png", "BCE3.png", "BCF1.png", "BCF2.png", "BCF3.png", "BCS1.png", "BCS2.png", "BCS3.png",
  "BSE1.png", "BSE2.png", "BSE3.png", "BSF1.png", "BSF2.png", "BSF3.png", "BSS1.png", "BSS2.png", "BSS3.png", "BTE1.png", "BTE2.png",
   "BTE3.png", "BTF1.png", "BTF2.png", "BTF3.png", "BTS1.png", "BTS2.png", "BTS3.png", "GCE1.png", "GCE2.png", "GCE3.png", "GCF1.png",
    "GCF2.png", "GCF3.png", "GCS1.png", "GCS2.png", "GCS3.png", "GSE1.png", "GSE2.png", "GSE3.png", "GSF1.png", "GSF2.png", "GSF3.png",
@@ -28,7 +28,7 @@ function Card(color, shape, shading, number, png) {
     this.png = png;
 }
 
-// Currently written to display the first 12 cards in the cardImages deck
+// Currently written to display the first 12 cards in the cardButtons deck
 // Will have to be changed to display shuffled cards
 function createTable() {
     var i = 0;
@@ -55,37 +55,68 @@ function deselectCards(cards) {
 function createCardListeners() {
 
     var currentIndex = 0;
-    var cardHand = []; // Holds indexes of cards selected
+    var cardButtons = []; // Holds tags of cards selected
+    var cardHand = []; // Holds hand of cards selected
     var cards = document.querySelectorAll(".card");
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
-            cardHand.push(i);
+            cardButtons.push(this);
             if (this.classList.contains("hint")) {
                 this.classList.remove("hint");
             }
             if (this.classList.contains("selected")) {
-                cardHand[currentIndex] = cardHand.splice(currentIndex, 1);
-                console.log(cardHand[currentIndex]);
-                console.log(cards[currentIndex]);
+                removeCardFromHand(cardButtons[currentIndex], cardHand);
                 selectedCount--;
-                currentIndex;
+                currentIndex++;
             }
             else {
-                cardHand[currentIndex] = cards[currentIndex];
-                console.log(cardHand[currentIndex]);
-                console.log(cards[currentIndex]);
+                addToCardHand(cardButtons[currentIndex], cardHand);
                 selectedCount++;
-                currentIndex;
+                currentIndex++;
             }
             this.classList.toggle("selected");
             if (selectedCount == 3) {
-                window.alert("You have selected a set.");
+                if (isASet(cardHand)){
+                    window.alert("You have selected a set.");
+                }
+                window.alert("Sorry, this is not a set.");
                 selectedCount = deselectCards(cards);
+                currentIndex -= 3;
             }
             console.log(selectedCount);
         });
     }
 
+}
+
+function removeCardFromHand(cardButton, cardHand) {
+    console.log("BEFORE");
+    console.log("0 : " + cardHand[0]);
+    console.log("1 : " + cardHand[1]);
+    console.log("2 : " + cardHand[2]);
+    for (var i = 0; i < cardHand.length; i++) {
+        var cardCode = decodeCard(cardButton.src);
+        if (cardCode == cardHand[i].png) {
+            cardHand[i] = null;
+        }
+    }
+    console.log("AFTER");
+    console.log("0 : " + cardHand[0]);
+    console.log("1 : " + cardHand[1]);
+    console.log("2 : " + cardHand[2]);
+}
+
+function addToCardHand(cardButton, cardHand) {
+    var cardCode = decodeCard(cardButton.src);
+    if (cardCode == cardHand.png) {
+        cardHand.push(table[cardButton]);
+    }
+}
+
+function decodeCard(cardButton) {
+    var str = cardButton;
+    var res = str.slice(-8);
+    return res;
 }
 
 function isASet(cardHand) {
