@@ -29,7 +29,6 @@ function Card(color, shape, shading, number, png) {
 }
 
 // Currently written to display the first 12 cards in the cardImages deck
-// Will have to be changed to display shuffled cards
 function createTable() {
     var i = 0;
     while (i < numCards) {
@@ -52,50 +51,89 @@ function deselectCards(cards) {
     return 0;
 }
 
+function getTableIndex(cards, clicked) {
+    var tableIndex;
+    cards.forEach(function(card, i) {
+        if (clicked == card) {
+            tableIndex = i;
+        }
+    });
+    return tableIndex;
+}
+
+function removeTableIndex(tableIndices, tableIndex) {
+    tableIndices.forEach(function(elem, i) {
+        if (elem == tableIndex) {
+            console.log(i);
+            tableIndices.splice(i, 1);
+        }
+    });
+}
+
+function removeSetFromTable (set) {
+    var spliceI;
+    var i = 0;
+    while (i < 3) {
+        table.forEach(function(elem, j) {
+            if (set[i] == table[j]) {
+                spliceI = j;
+            }
+        });
+        table.splice(spliceI, 1);
+        i++;
+    }
+}
+
 function createCardListeners() {
 
-    var currentIndex = 0;
-    var cardHand = []; // Holds indexes of cards selected
+    
     var cards = document.querySelectorAll(".card");
+    var tableIndices = [];
+    console.log(cards);
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
-            cardHand.push(i);
-            if (this.classList.contains("hint")) {
-                this.classList.remove("hint");
+
+            if (this.classList.contains("selected")) { // If deselecting a card
+                this.classList.remove("selected");
+                removeTableIndex(tableIndices, getTableIndex(cards, this));
+                console.log(tableIndices);
             }
-            if (this.classList.contains("selected")) {
-                cardHand[currentIndex] = cardHand.splice(currentIndex, 1);
-                console.log(cardHand[currentIndex]);
-                console.log(cards[currentIndex]);
-                selectedCount--;
-                currentIndex;
+            else { // If selecting a card
+                if (this.classList.contains("hint")) {
+                    this.classList.remove("hint");
+                }
+                this.classList.add("selected");
+                tableIndices.push(getTableIndex(cards, this));
+                console.log(tableIndices);
+                if (tableIndices.length == 3) {
+                    var aaSetSet = false;
+                    window.alert("You have selected a set.");
+                    aSet = isASet(tableIndices);
+                    console.log(table);
+                    if (aSet) {
+                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
+                        removeSetFromTable(set);
+                    }
+                    console.log(table);
+                    selectedCount = deselectCards(cards);
+                    tableIndices = [];
+                }
             }
-            else {
-                cardHand[currentIndex] = cards[currentIndex];
-                console.log(cardHand[currentIndex]);
-                console.log(cards[currentIndex]);
-                selectedCount++;
-                currentIndex;
-            }
-            this.classList.toggle("selected");
-            if (selectedCount == 3) {
-                window.alert("You have selected a set.");
-                selectedCount = deselectCards(cards);
-            }
-            console.log(selectedCount);
+            
         });
     }
 
 }
 
-function isASet(cardHand) {
-    if ((cardHand[0].color + cardHand[1].color + cardHand[2].color) % 3 == 0 && 
-    (cardHand[0].shape + cardHand[1].shape + cardHand[2].shape) % 3 == 0 && 
-    (cardHand[0].shade + cardHand[1].shade + cardHand[2].shade) % 3 == 0 &&
-    (cardHand[0].number + cardHand[1].number + cardHand[2].number) % 3 == 0) {
-        return true;
+function isASet(tableIndices) {
+    var isASet = false;
+    if (((table[tableIndices[0]].color + table[tableIndices[1]].color + table[tableIndices[2]].color) % 3 == 0) && 
+    ((table[tableIndices[0]].shape + table[tableIndices[1]].shape + table[tableIndices[2]].shape) % 3 == 0) && 
+    ((table[tableIndices[0]].shading + table[tableIndices[1]].shading + table[tableIndices[2]].shading) % 3 == 0) &&
+    ((table[tableIndices[0]].number + table[tableIndices[1]].number + table[tableIndices[2]].number) % 3 == 0)) {
+        isASet = true;
     } 
-    return false;
+    return isASet;
 }
 
 var colorCode = ["R", "G", "B"];
