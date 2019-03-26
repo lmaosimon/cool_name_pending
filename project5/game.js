@@ -1,7 +1,9 @@
 var numCards = 12;
-var selectedCount = 0;
-var deck = [];
-var table = [];
+var deck;
+var table;
+var colorCode = ["R", "G", "B"];
+var shapeCode = ["C", "S", "T"];
+var shadeCode = ["E", "F", "S"];
 /*var cardImages = ["BCE1.png", "BCE2.png", "BCE3.png", "BCF1.png", "BCF2.png", "BCF3.png", "BCS1.png", "BCS2.png", "BCS3.png",
  "BSE1.png", "BSE2.png", "BSE3.png", "BSF1.png", "BSF2.png", "BSF3.png", "BSS1.png", "BSS2.png", "BSS3.png", "BTE1.png", "BTE2.png",
   "BTE3.png", "BTF1.png", "BTF2.png", "BTF3.png", "BTS1.png", "BTS2.png", "BTS3.png", "GCE1.png", "GCE2.png", "GCE3.png", "GCF1.png",
@@ -12,6 +14,8 @@ var table = [];
        "RTF1.png", "RTF2.png", "RTF3.png", "RTS1.png", "RTS2.png", "RTS3.png"];*/
 
 document.getElementById("reset").addEventListener("click", function(){
+    removeTable();
+    startGame();
     document.getElementById("message").innerHTML = "You have reset the game.";
 });
 
@@ -28,6 +32,50 @@ function Card(color, shape, shading, number, png) {
     this.png = png;
 }
 
+function startGame() {
+    numCards = 12;
+    deck = [];
+    table = [];
+    createDeck(deck);
+    createTable();
+    createCardListeners();
+}
+
+function createDeck(deck) {
+
+    for (var i = 0; i <= 2; i++) {
+        for (var j = 0; j <= 2; j++) {
+            for (var k = 0; k <= 2; k++) {
+                for (var l = 1; l <= 3; l++) {
+                    var png = colorCode[i] + shapeCode[j] + shadeCode[k] + l + ".png";
+                    deck.push(new Card(i, j, k, l, png));
+                }
+            }
+        }
+    }
+    shuffleDeck(deck);
+
+}
+
+function shuffleDeck(deck) {
+    var currentI = deck.length, tempVal, randI;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentI) {
+  
+      // Pick a remaining element...
+      randI = Math.floor(Math.random() * currentI);
+      currentI -= 1;
+  
+      // And swap it with the current element.
+      tempVal = deck[currentI];
+      deck[currentI] = deck[randI];
+      deck[randI] = tempVal;
+    }
+  
+    return deck;
+}
+
 // Currently written to display the first 12 cards in the cardImages deck
 function createTable() {
     var i = 0;
@@ -40,6 +88,66 @@ function createTable() {
         table[i] = deck.shift(); // Move card from deck to table
         i++;
     }
+}
+
+function removeTable() {
+    var imgDiv = document.getElementById("table-grid");
+    while (imgDiv.firstChild) {
+        imgDiv.removeChild(imgDiv.firstChild);
+    }
+}
+
+function add3Cards() {
+    deck.splice(0, 3).push(table);
+}
+
+function createCardListeners() {
+
+    var cards = document.querySelectorAll(".card");
+    var tableIndices = [];
+    console.log(cards);
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener("click", function() {
+
+            if (this.classList.contains("selected")) { // If deselecting a card
+                this.classList.remove("selected");
+                removeTableIndex(tableIndices, getTableIndex(cards, this));
+                console.log(tableIndices);
+            }
+            else { // If selecting a card
+                if (this.classList.contains("hint")) {
+                    this.classList.remove("hint");
+                }
+                this.classList.add("selected");
+                tableIndices.push(getTableIndex(cards, this));
+                console.log(tableIndices);
+                if (tableIndices.length == 3) {
+                    var aaSetSet = false;
+                    aSet = isASet(tableIndices);
+                    console.log(table);
+                    if (aSet) {
+                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
+                        removeSetFromTable(set);
+                        document.getElementById("message").innerHTML = "You have found a set!";
+                        removeTable();
+                        add3Cards();
+                        createTable();
+                    }
+                    else {
+                        document.getElementById("message").innerHTML = "That is not a set. Try again!";
+                    }
+                    console.log(table);
+                    selectedCount = deselectCards(cards);
+                    tableIndices = [];
+                }
+            }
+            
+        });
+    }
+}
+
+function click() {
+    
 }
 
 function deselectCards(cards) {
@@ -84,50 +192,6 @@ function removeSetFromTable (set) {
     }
 }
 
-function createCardListeners() {
-
-    
-    var cards = document.querySelectorAll(".card");
-    var tableIndices = [];
-    console.log(cards);
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener("click", function() {
-
-            if (this.classList.contains("selected")) { // If deselecting a card
-                this.classList.remove("selected");
-                removeTableIndex(tableIndices, getTableIndex(cards, this));
-                console.log(tableIndices);
-            }
-            else { // If selecting a card
-                if (this.classList.contains("hint")) {
-                    this.classList.remove("hint");
-                }
-                this.classList.add("selected");
-                tableIndices.push(getTableIndex(cards, this));
-                console.log(tableIndices);
-                if (tableIndices.length == 3) {
-                    var aaSetSet = false;
-                    aSet = isASet(tableIndices);
-                    console.log(table);
-                    if (aSet) {
-                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
-                        removeSetFromTable(set);
-                        document.getElementById("message").innerHTML = "You have found a set!";
-                    }
-                    else {
-                        document.getElementById("message").innerHTML = "That is not a set. Try again!";
-                    }
-                    console.log(table);
-                    selectedCount = deselectCards(cards);
-                    tableIndices = [];
-                }
-            }
-            
-        });
-    }
-
-}
-
 function isASet(tableIndices) {
     var isASet = false;
     if (((table[tableIndices[0]].color + table[tableIndices[1]].color + table[tableIndices[2]].color) % 3 == 0) && 
@@ -138,48 +202,6 @@ function isASet(tableIndices) {
     } 
     return isASet;
 }
-
-var colorCode = ["R", "G", "B"];
-var shapeCode = ["C", "S", "T"];
-var shadeCode = ["E", "F", "S"];
-
-function createDeck(deck) {
-
-    for (var i = 0; i <= 2; i++) {
-        for (var j = 0; j <= 2; j++) {
-            for (var k = 0; k <= 2; k++) {
-                for (var l = 1; l <= 3; l++) {
-                    var png = colorCode[i] + shapeCode[j] + shadeCode[k] + l + ".png";
-                    deck.push(new Card(i, j, k, l, png));
-                }
-            }
-        }
-    }
-}
-
-function shuffleDeck(deck) {
-    var currentI = deck.length, tempVal, randI;
   
-    // While there remain elements to shuffle...
-    while (0 !== currentI) {
-  
-      // Pick a remaining element...
-      randI = Math.floor(Math.random() * currentI);
-      currentI -= 1;
-  
-      // And swap it with the current element.
-      tempVal = deck[currentI];
-      deck[currentI] = deck[randI];
-      deck[randI] = tempVal;
-    }
-  
-    return deck;
-  }
-  
+startGame();
 
-createDeck(deck);
-shuffleDeck(deck);
-createTable();
-createCardListeners();
-console.log(table);
-console.log(deck);
