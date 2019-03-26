@@ -107,12 +107,15 @@ function createCardListeners() {
                 console.log(tableIndices);
                 if (tableIndices.length == 3) {
                     var aaSetSet = false;
-                    window.alert("You have selected a set.");
                     aSet = isASet(tableIndices);
                     console.log(table);
                     if (aSet) {
                         var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
                         removeSetFromTable(set);
+                        document.getElementById("message").innerHTML = "You have found a set!";
+                    }
+                    else {
+                        document.getElementById("message").innerHTML = "That is not a set. Try again!";
                     }
                     console.log(table);
                     selectedCount = deselectCards(cards);
