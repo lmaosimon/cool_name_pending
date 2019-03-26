@@ -1,6 +1,8 @@
 var numCards = 12;
 var deck;
 var table;
+var cardsOnTable;
+var tableIndices;
 var colorCode = ["R", "G", "B"];
 var shapeCode = ["C", "S", "T"];
 var shadeCode = ["E", "F", "S"];
@@ -36,6 +38,7 @@ function startGame() {
     numCards = 12;
     deck = [];
     table = [];
+    tableIndices = [];
     createDeck(deck);
     createTable();
     createCardListeners();
@@ -76,7 +79,7 @@ function shuffleDeck(deck) {
     return deck;
 }
 
-// Currently written to display the first 12 cards in the cardImages deck
+// Currently written to display the first 12 cardsOnTable in the cardImages deck
 function createTable() {
     var i = 0;
     while (i < numCards) {
@@ -97,71 +100,72 @@ function removeTable() {
     }
 }
 
+function setTableForNextRound() {
+    removeTable();
+    add3Cards();
+    createTable();
+    createCardListeners();
+}
+
 function add3Cards() {
     deck.splice(0, 3).push(table);
 }
 
 function createCardListeners() {
-
-    var cards = document.querySelectorAll(".card");
-    var tableIndices = [];
-    console.log(cards);
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener("click", function() {
-
-            if (this.classList.contains("selected")) { // If deselecting a card
-                this.classList.remove("selected");
-                removeTableIndex(tableIndices, getTableIndex(cards, this));
-                console.log(tableIndices);
-            }
-            else { // If selecting a card
-                if (this.classList.contains("hint")) {
-                    this.classList.remove("hint");
-                }
-                this.classList.add("selected");
-                tableIndices.push(getTableIndex(cards, this));
-                console.log(tableIndices);
-                if (tableIndices.length == 3) {
-                    var aaSetSet = false;
-                    aSet = isASet(tableIndices);
-                    console.log(table);
-                    if (aSet) {
-                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
-                        removeSetFromTable(set);
-                        document.getElementById("message").innerHTML = "You have found a set!";
-                        removeTable();
-                        add3Cards();
-                        createTable();
-                    }
-                    else {
-                        document.getElementById("message").innerHTML = "That is not a set. Try again!";
-                    }
-                    console.log(table);
-                    selectedCount = deselectCards(cards);
-                    tableIndices = [];
-                }
-            }
-            
-        });
+    cardsOnTable = document.querySelectorAll(".card");
+    console.log(cardsOnTable);
+    for (var i = 0; i < cardsOnTable.length; i++) {
+        cardsOnTable[i].addEventListener("click", clickCard);
     }
 }
 
-function click() {
-    
+function clickCard(click) {
+    console.log(click.target);
+    console.log(this);
+    if (this.classList.contains("selected")) { // If deselecting a card
+        this.classList.remove("selected");
+        removeTableIndex(tableIndices, getTableIndex(cardsOnTable, this));
+        console.log(tableIndices);
+    }
+    else { // If selecting a card
+        if (this.classList.contains("hint")) {
+            this.classList.remove("hint");
+        }
+        this.classList.add("selected");
+        tableIndices.push(getTableIndex(cardsOnTable, this));
+        console.log(tableIndices);
+        if (tableIndices.length == 3) {
+            var aSet = false;
+            aSet = isASet(tableIndices);
+            console.log(table);
+            if (aSet) {
+                var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
+                removeSetFromTable(set);
+                document.getElementById("message").innerHTML = "You have found a set!";
+                setTableForNextRound();
+            }
+            else {
+                document.getElementById("message").innerHTML = "That is not a set. Try again!";
+            }
+            console.log(table);
+            selectedCount = deselectCards(cardsOnTable);
+            tableIndices = [];
+        }
+    }
 }
 
-function deselectCards(cards) {
-    for (var i = 0; i < cards.length; i++) {
-        if (cards[i].classList.contains("selected")) {
-            cards[i].classList.remove("selected");
+function deselectCards(cardsOnTable) {
+    for (var i = 0; i < cardsOnTable.length; i++) {
+        if (cardsOnTable[i].classList.contains("selected")) {
+            cardsOnTable[i].classList.remove("selected");
         }
     }
     return 0;
 }
 
-function getTableIndex(cards, clicked) {
+function getTableIndex(cardsOnTable, clicked) {
     var tableIndex;
-    cards.forEach(function(card, i) {
+    cardsOnTable.forEach(function(card, i) {
         if (clicked == card) {
             tableIndex = i;
         }
