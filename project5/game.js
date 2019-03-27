@@ -109,6 +109,8 @@ function createCardListeners() {
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
 
+            document.getElementById("message").innerHTML = "";
+
             if (this.classList.contains("selected")) { // If deselecting a card
                 this.classList.remove("selected");
                 removeTableIndex(tableIndices, getTableIndex(cards, this));
@@ -132,6 +134,7 @@ function createCardListeners() {
                         removeTable();
                         add3Cards();
                         createTable();
+                        createCardListeners();
                     }
                     else {
                         document.getElementById("message").innerHTML = "That is not a set. Try again!";
