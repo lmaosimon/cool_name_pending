@@ -44,7 +44,7 @@ function startGame() {
     initializeTable();
     updateTableDisplay();
     createResetAndHintEventListeners();
-    createCardListeners();
+    cardListeners.create();
 }
 
 function createDeck(deck) {
@@ -122,6 +122,7 @@ function createResetAndHintEventListeners() {
 
     // Reset button event listener
     document.getElementById("reset").addEventListener("click", function(){
+        cardListeners.remove();
         removeTable();
         startGame();
         document.getElementById("message").innerHTML = "You have reset the game.";
@@ -143,7 +144,69 @@ function createResetAndHintEventListeners() {
     });
 }
 
-function createCardListeners() {
+
+var cardListeners = (function() {
+
+    var cards = document.querySelectorAll(".card");
+    tableIndices = [];
+
+    function cardActions() {
+        document.getElementById("message").innerHTML = "";
+
+        if (this.classList.contains("selected")) { // If deselecting a card
+            this.classList.remove("selected");
+            removeTableIndex(tableIndices, getTableIndex(cards, this));
+            console.log(tableIndices);
+        }
+        else { // If selecting a card
+            if (this.classList.contains("hint")) {
+                this.classList.remove("hint");
+            }
+            this.classList.add("selected");
+            tableIndices.push(getTableIndex(cards, this));
+            console.log(tableIndices);
+            if (tableIndices.length == 3) {
+                var aSet = false;
+                aSet = isASet(tableIndices);
+                console.log(table);
+                if (aSet) {
+                    var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
+                    removeSetAdd3ToTable(set);
+                    document.getElementById("message").innerHTML = "You have found a set!";
+                    removeTable();
+                    updateTableDisplay();
+                    cardListeners.remove()
+                    cardListeners.create();
+                }
+                else {
+                    document.getElementById("message").innerHTML = "That is not a set. Try again!";
+                }
+                console.log(table);
+                deselectCards(cards);
+                tableIndices = [];
+            }
+        }
+    }
+
+    return {
+
+        create: function (){
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].addEventListener("click", cardActions);
+            }
+        },
+
+        remove: function (){
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].removeEventListener("click", cardActions);
+            }
+        }
+
+    }
+})();
+
+
+/* function createCardListeners() {
 
     var cards = document.querySelectorAll(".card");
     tableIndices = [];
@@ -188,7 +251,7 @@ function createCardListeners() {
             
         });
     }
-}
+} */
 
 function deselectCards(cards) {
     for (var i = 0; i < cards.length; i++) {
