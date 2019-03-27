@@ -1,12 +1,17 @@
 //TODO: Add three cards to table (physical and visual table) when there is not a set in the table.
 //TODO: Be able to detect when the game is over.
-//TODO: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
+//FINISHED: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
 //TODO: (Optional) Add player functionality.
 //TODO: (Optional) Add a timer.
+
+/* THE GAME OF SET RELOADED
+ * Authors: Patrick Hubbell, Gino Detore, and Sean Bower
+ */
 
 var numCards = 12;
 var deck;
 var table;
+var tableIndices;
 var colorCode = ["R", "G", "B"];
 var shapeCode = ["C", "S", "T"];
 var shadeCode = ["E", "F", "S"];
@@ -110,26 +115,35 @@ function add3Cards() {
 
 function createResetAndHintEventListeners() {
 
-    var hintCount = 3;
+    var hintCount = 1;
 
+    // Reset button event listener
     document.getElementById("reset").addEventListener("click", function(){
         removeTable();
         startGame();
         document.getElementById("message").innerHTML = "You have reset the game.";
     });
     
+    // Hint button event listener
     document.getElementById("hint").addEventListener("click", function(){
+        if (hintCount === 4) {
+            hintCount = 1;
+        }
+        console.log("Hint count: " + hintCount);
+        tableIndices = [];
         var cards = document.querySelectorAll(".card");
+        deselectCards(cards);
         document.getElementById("message").innerHTML = "Here is a hint.";
         hintSet = findSet();
         hint(hintSet, cards, hintCount);
+        hintCount++;
     });
 }
 
 function createCardListeners() {
 
     var cards = document.querySelectorAll(".card");
-    var tableIndices = [];
+    tableIndices = [];
     console.log(cards);
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
@@ -165,7 +179,7 @@ function createCardListeners() {
                         document.getElementById("message").innerHTML = "That is not a set. Try again!";
                     }
                     console.log(table);
-                    selectedCount = deselectCards(cards);
+                    deselectCards(cards);
                     tableIndices = [];
                 }
             }
@@ -255,13 +269,8 @@ function findSet() {
 function hint(hintSet, cards, hintCount) {
     i = 0;
     while (i < hintCount) {
-        if (cards[hintSet[i]].classList.contains("selected")) {
-            document.getElementById("message").innerHTML("You must deselect all cards before getting a hint.");
-        }
-        else {
-            cards[hintSet[i]].classList.add("hint");
-            i++;
-        }
+        cards[hintSet[i]].classList.add("hint");
+        i++;
     }
 }
   
