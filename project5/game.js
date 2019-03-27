@@ -85,5 +85,6 @@ function createDeck(deck) {
 
 }
 
+createCardListeners();
 createDeck(deck);
 console.log(deck);
