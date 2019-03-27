@@ -1,6 +1,13 @@
+//TODO: Add three cards to table (physical and visual table) when there is not a set in the table.
 //TODO: Be able to detect when the game is over.
-//TODO: Reset player scores when the game is reset.
-//TODO: Add comments.
+//FINISHED: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
+//TODO: Edit hint functionality to allow dynamically-added hints, also fix hint/select overlap
+//TODO: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
+//TODO: (Optional) Add player functionality.
+
+/* THE GAME OF SET RELOADED
+ * Authors: Patrick Hubbell, Gino Detore, and Sean Bower
+ */
 
 var numCards = 12;
 var deck;
@@ -36,7 +43,8 @@ function startGame() {
     createDeck(deck);
     initializeTable();
     updateTableDisplay();
-    createCardListeners();
+    createResetAndHintEventListeners();
+    cardListeners.create();
 }
 
 function createDeck(deck) {
@@ -52,6 +60,7 @@ function createDeck(deck) {
         }
     }
     shuffleDeck(deck);
+
 }
 
 function shuffleDeck(deck) {
@@ -88,7 +97,6 @@ function updateTableDisplay() {
     var i = 0;
     while (i < numCards) {
         var img = document.createElement("img");
-        console.log(table);
         img.src = "card_images/" + table[i].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
@@ -105,9 +113,7 @@ function removeTable() {
 }
 
 function add3Cards() {
-    for (var i = 0; i < 3; i++) {
-        table.push(deck.splice(0, 1)[0]);
-    }
+    table.push(deck.splice(0, 3));
 }
 
 function createResetAndHintEventListeners() {
@@ -116,6 +122,7 @@ function createResetAndHintEventListeners() {
 
     // Reset button event listener
     document.getElementById("reset").addEventListener("click", function(){
+        cardListeners.remove();
         removeTable();
         startGame();
         document.getElementById("message").innerHTML = "You have reset the game.";
@@ -137,7 +144,69 @@ function createResetAndHintEventListeners() {
     });
 }
 
-function createCardListeners() {
+
+var cardListeners = (function() {
+
+    var cards = document.querySelectorAll(".card");
+    tableIndices = [];
+
+    function cardActions() {
+        document.getElementById("message").innerHTML = "";
+
+        if (this.classList.contains("selected")) { // If deselecting a card
+            this.classList.remove("selected");
+            removeTableIndex(tableIndices, getTableIndex(cards, this));
+            console.log(tableIndices);
+        }
+        else { // If selecting a card
+            if (this.classList.contains("hint")) {
+                this.classList.remove("hint");
+            }
+            this.classList.add("selected");
+            tableIndices.push(getTableIndex(cards, this));
+            console.log(tableIndices);
+            if (tableIndices.length == 3) {
+                var aSet = false;
+                aSet = isASet(tableIndices);
+                console.log(table);
+                if (aSet) {
+                    var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
+                    removeSetAdd3ToTable(set);
+                    document.getElementById("message").innerHTML = "You have found a set!";
+                    removeTable();
+                    updateTableDisplay();
+                    cardListeners.remove()
+                    cardListeners.create();
+                }
+                else {
+                    document.getElementById("message").innerHTML = "That is not a set. Try again!";
+                }
+                console.log(table);
+                deselectCards(cards);
+                tableIndices = [];
+            }
+        }
+    }
+
+    return {
+
+        create: function (){
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].addEventListener("click", cardActions);
+            }
+        },
+
+        remove: function (){
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].removeEventListener("click", cardActions);
+            }
+        }
+
+    }
+})();
+
+
+/* function createCardListeners() {
 
     var cards = document.querySelectorAll(".card");
     tableIndices = [];
@@ -164,7 +233,6 @@ function createCardListeners() {
                     aSet = isASet(tableIndices);
                     console.log(table);
                     if (aSet) {
-                        updateScore();
                         var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
                         removeSetAdd3ToTable(set);
                         document.getElementById("message").innerHTML = "You have found a set!";
@@ -183,7 +251,7 @@ function createCardListeners() {
             
         });
     }
-}
+} */
 
 function deselectCards(cards) {
     for (var i = 0; i < cards.length; i++) {
@@ -244,13 +312,12 @@ function removeSetAdd3ToTable (set) {
 function checkTableForSet() {
     var setExist = findSet();
     if (setExist.length == 0) {
-        removeTable();
         add3Cards();
         numCards += 3;
+        removeTable();
+        updateTableDisplay();
         createCardListeners();
-        return false;
     }
-    return true;
     // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
 }
 
@@ -293,26 +360,9 @@ function findSet() {
 function hint(hintSet, cards, hintCount) {
     i = 0;
     while (i < hintCount) {
-        if (cards[hintSet[i]].classList.contains("selected")) {
-            document.getElementById("message").innerHTML("You must deselect all cards before getting a hint.");
-        }
-        else {
-            cards[hintSet[i]].classList.add("hint");
-            i++;
-        }
+        cards[hintSet[i]].classList.add("hint");
+        i++;
     }
 }
-
-function updateScore() {
-    var player = prompt("Please enter your player number:", 1);
-    if (player == "1" || player == "2" || player == "3" || player == "4") {
-        var scoreTxt = document.getElementById("score" + player).innerHTML;
-        var score = Number(scoreTxt) + 1;
-        document.getElementById("score" + player).innerHTML = score.toString();
-    } else {
-        alert("The player number you entered was invalid. Point was not recorded.");
-    }
-}
-
-createResetAndHintEventListeners();
+  
 startGame();
