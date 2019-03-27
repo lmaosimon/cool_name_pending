@@ -1,8 +1,5 @@
-//TODO: Add three cards to table (physical and visual table) when there is not a set in the table.
 //TODO: Be able to detect when the game is over.
-//TODO: Edit hint functionality to allow dynamically-added hints, also fix hint/select overlap
-//TODO: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
-//TODO: (Optional) Add player functionality.
+//TODO: Add comments
 
 var numCards = 12;
 var deck;
@@ -54,7 +51,6 @@ function createDeck(deck) {
         }
     }
     shuffleDeck(deck);
-
 }
 
 function shuffleDeck(deck) {
@@ -155,6 +151,7 @@ function createCardListeners() {
                     aSet = isASet(tableIndices);
                     console.log(table);
                     if (aSet) {
+                        updateScore();
                         var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
                         removeSetAdd3ToTable(set);
                         document.getElementById("message").innerHTML = "You have found a set!";
@@ -291,5 +288,16 @@ function hint(hintSet, cards, hintCount) {
         }
     }
 }
-  
+
+function updateScore() {
+    var player = prompt("Please enter your player number:", 1);
+    if (player == "1" || player == "2" || player == "3" || player == "4") {
+        var scoreTxt = document.getElementById("score" + player).innerHTML;
+        var score = Number(scoreTxt) + 1;
+        document.getElementById("score" + player).innerHTML = score.toString();
+    } else {
+        alert("The player number you entered was invalid. Point was not recorded.");
+    }
+}
+
 startGame();
