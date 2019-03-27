@@ -1,8 +1,8 @@
 //TODO: Add three cards to table (physical and visual table) when there is not a set in the table.
 //TODO: Be able to detect when the game is over.
+//TODO: Edit hint functionality to allow dynamically-added hints, also fix hint/select overlap
 //TODO: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
 //TODO: (Optional) Add player functionality.
-//TODO: (Optional) Add a timer.
 
 var numCards = 12;
 var deck;
@@ -77,11 +77,13 @@ function shuffleDeck(deck) {
 }
 
 function initializeTable() {
+    // Add the initially desired number of cards to the table
     var i = 0;
     while (i < numCards) {
         table[i] = deck.pop(); // Move card from deck to table
         i++;
     }
+    checkTableForSet();
 }
 
 // Currently written to display the first 12 cards in the cardImages deck
@@ -105,7 +107,7 @@ function removeTable() {
 }
 
 function add3Cards() {
-    deck.splice(0, 3).push(table);
+    table.push(deck.splice(0, 3));
 }
 
 function createResetAndHintEventListeners() {
@@ -157,7 +159,6 @@ function createCardListeners() {
                         removeSetAdd3ToTable(set);
                         document.getElementById("message").innerHTML = "You have found a set!";
                         removeTable();
-                        //add3Cards();
                         updateTableDisplay();
                         createCardListeners();
                     }
@@ -165,7 +166,7 @@ function createCardListeners() {
                         document.getElementById("message").innerHTML = "That is not a set. Try again!";
                     }
                     console.log(table);
-                    selectedCount = deselectCards(cards);
+                    deselectCards(cards);
                     tableIndices = [];
                 }
             }
@@ -180,7 +181,6 @@ function deselectCards(cards) {
             cards[i].classList.remove("selected");
         }
     }
-    return 0;
 }
 
 function getTableIndex(cards, clicked) {
@@ -202,18 +202,45 @@ function removeTableIndex(tableIndices, tableIndex) {
     });
 }
 
+// Add a new card for each card on table that was part of a set, or only removes set cards if table size > 12
 function removeSetAdd3ToTable (set) {
-    //var spliceI;
     var i = 0;
-    while (i < 3) {
-        table.forEach(function(elem, j) {
-            if (set[i] == table[j]) {
-                table[j] = deck.pop();
-            }
-        });
-        //table.splice(spliceI, 1);
-        i++;
+    if (numCards > 12) {
+        // Only removes 3 cards from the table, does not replace; decreases number of cards on table by 3
+        while (i < 3) {
+            table.forEach(function(elem, j) {
+                if (set[i] == table[j]) {
+                    table.splice(j, 1)
+                }
+            });
+            i++;
+        }
+        numCards -= 3;
+    } else {
+        // Replaces the 3 cards removed for the set
+        while (i < 3) {
+            table.forEach(function(elem, j) {
+                if (set[i] == table[j]) {
+                    table[j] = deck.pop();
+                }
+            });
+            i++;
+        }
     }
+    checkTableForSet();
+}
+
+// Check that some set does exist on the table, add 3 cards if not
+function checkTableForSet() {
+    var setExist = findSet();
+    if (setExist.length == 0) {
+        add3Cards();
+        numCards += 3;
+        removeTable();
+        updateTableDisplay();
+        createCardListeners();
+    }
+    // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
 }
 
 function isASet(tableIndices) {
