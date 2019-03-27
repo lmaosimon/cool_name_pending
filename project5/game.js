@@ -1,16 +1,14 @@
 //TODO: Add three cards to table (physical and visual table) when there is not a set in the table.
 //TODO: Be able to detect when the game is over.
-<<<<<<< HEAD
 //FINISHED: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
 //TODO: Edit hint functionality to allow dynamically-added hints, also fix hint/select overlap
-=======
->>>>>>> parent of c32d0af... Fixed hints
 //TODO: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
 //TODO: (Optional) Add player functionality.
 
 var numCards = 12;
 var deck;
 var table;
+var tableIndices;
 var colorCode = ["R", "G", "B"];
 var shapeCode = ["C", "S", "T"];
 var shadeCode = ["E", "F", "S"];
@@ -41,7 +39,6 @@ function startGame() {
     createDeck(deck);
     initializeTable();
     updateTableDisplay();
-    createResetAndHintEventListeners();
     createCardListeners();
 }
 
@@ -95,6 +92,7 @@ function updateTableDisplay() {
     var i = 0;
     while (i < numCards) {
         var img = document.createElement("img");
+        console.log(table);
         img.src = "card_images/" + table[i].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
@@ -111,31 +109,42 @@ function removeTable() {
 }
 
 function add3Cards() {
-    table.push(deck.splice(0, 3));
+    for (var i = 0; i < 3; i++) {
+        table.push(deck.splice(0, 1)[0]);
+    }
 }
 
 function createResetAndHintEventListeners() {
 
-    var hintCount = 3;
+    var hintCount = 1;
 
+    // Reset button event listener
     document.getElementById("reset").addEventListener("click", function(){
         removeTable();
         startGame();
         document.getElementById("message").innerHTML = "You have reset the game.";
     });
     
+    // Hint button event listener
     document.getElementById("hint").addEventListener("click", function(){
+        if (hintCount === 4) {
+            hintCount = 1;
+        }
+        console.log("Hint count: " + hintCount);
+        tableIndices = [];
         var cards = document.querySelectorAll(".card");
+        deselectCards(cards);
         document.getElementById("message").innerHTML = "Here is a hint.";
         hintSet = findSet();
         hint(hintSet, cards, hintCount);
+        hintCount++;
     });
 }
 
 function createCardListeners() {
 
     var cards = document.querySelectorAll(".card");
-    var tableIndices = [];
+    tableIndices = [];
     console.log(cards);
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
@@ -170,7 +179,7 @@ function createCardListeners() {
                         document.getElementById("message").innerHTML = "That is not a set. Try again!";
                     }
                     console.log(table);
-                    selectedCount = deselectCards(cards);
+                    deselectCards(cards);
                     tableIndices = [];
                 }
             }
@@ -206,6 +215,20 @@ function removeTableIndex(tableIndices, tableIndex) {
     });
 }
 
+/* // Add a new card for each card on table that was part of a set, or only removes set cards if table size > 12
+function removeSetAdd3ToTable (set) {
+    var i = 0;
+    // Replaces the 3 cards removed for the set
+    while (i < 3) {
+        table.forEach(function(elem, j) {
+            if (set[i] == table[j]) {
+                table[j] = deck.pop();
+            }
+        });
+        i++;
+    }
+} */
+
 // Add a new card for each card on table that was part of a set, or only removes set cards if table size > 12
 function removeSetAdd3ToTable (set) {
     var i = 0;
@@ -238,12 +261,13 @@ function removeSetAdd3ToTable (set) {
 function checkTableForSet() {
     var setExist = findSet();
     if (setExist.length == 0) {
+        removeTable();
         add3Cards();
         numCards += 3;
-        removeTable();
-        updateTableDisplay();
         createCardListeners();
+        return false;
     }
+    return true;
     // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
 }
 
@@ -295,5 +319,6 @@ function hint(hintSet, cards, hintCount) {
         }
     }
 }
-  
+
+createResetAndHintEventListeners();
 startGame();
