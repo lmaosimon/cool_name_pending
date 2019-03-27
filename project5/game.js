@@ -1,3 +1,9 @@
+//TODO: Add three cards to table (physical and visual table) when there is not a set in the table.
+//TODO: Be able to detect when the game is over.
+//TODO: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
+//TODO: (Optional) Add player functionality.
+//TODO: (Optional) Add a timer.
+
 var numCards = 12;
 var deck;
 var table;
@@ -13,18 +19,7 @@ var shadeCode = ["E", "F", "S"];
       "RSE2.png", "RSE3.png", "RSF1.png", "RSF2.png", "RSF3.png", "RSS1.png", "RSS2.png", "RSS3.png", "RTE1.png", "RTE2.png", "RTE3.png",
        "RTF1.png", "RTF2.png", "RTF3.png", "RTS1.png", "RTS2.png", "RTS3.png"];*/
 
-document.getElementById("reset").addEventListener("click", function(){
-    removeTable();
-    startGame();
-    document.getElementById("message").innerHTML = "You have reset the game.";
-});
 
-document.getElementById("hint").addEventListener("click", function(){
-    var cards = document.querySelectorAll(".card");
-    document.getElementById("message").innerHTML = "Here is a hint.";
-    hintSet = findSet();
-    hint(hintSet, cards);
-});
 
 // Function that creates a Card object
 function Card(color, shape, shading, number, png) {
@@ -42,6 +37,7 @@ function startGame() {
     createDeck(deck);
     initializeTable();
     updateTableDisplay();
+    createResetAndHintEventListeners();
     createCardListeners();
 }
 
@@ -110,6 +106,24 @@ function removeTable() {
 
 function add3Cards() {
     deck.splice(0, 3).push(table);
+}
+
+function createResetAndHintEventListeners() {
+
+    var hintCount = 3;
+
+    document.getElementById("reset").addEventListener("click", function(){
+        removeTable();
+        startGame();
+        document.getElementById("message").innerHTML = "You have reset the game.";
+    });
+    
+    document.getElementById("hint").addEventListener("click", function(){
+        var cards = document.querySelectorAll(".card");
+        document.getElementById("message").innerHTML = "Here is a hint.";
+        hintSet = findSet();
+        hint(hintSet, cards, hintCount);
+    });
 }
 
 function createCardListeners() {
@@ -238,11 +252,16 @@ function findSet() {
     return [];
 }
 
-function hint(set, cards) {
+function hint(hintSet, cards, hintCount) {
     i = 0;
-    while (i < set.length) {
-        cards[set[i]].classList.add("hint");
-        i++;
+    while (i < hintCount) {
+        if (cards[hintSet[i]].classList.contains("selected")) {
+            document.getElementById("message").innerHTML("You must deselect all cards before getting a hint.");
+        }
+        else {
+            cards[hintSet[i]].classList.add("hint");
+            i++;
+        }
     }
 }
   
