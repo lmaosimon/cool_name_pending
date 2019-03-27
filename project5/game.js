@@ -20,7 +20,10 @@ document.getElementById("reset").addEventListener("click", function(){
 });
 
 document.getElementById("hint").addEventListener("click", function(){
+    var cards = document.querySelectorAll(".card");
     document.getElementById("message").innerHTML = "Here is a hint.";
+    hintSet = findSet();
+    hint(hintSet, cards);
 });
 
 // Function that creates a Card object
@@ -37,7 +40,8 @@ function startGame() {
     deck = [];
     table = [];
     createDeck(deck);
-    createTable();
+    initializeTable();
+    updateTableDisplay();
     createCardListeners();
 }
 
@@ -76,16 +80,23 @@ function shuffleDeck(deck) {
     return deck;
 }
 
+function initializeTable() {
+    var i = 0;
+    while (i < numCards) {
+        table[i] = deck.pop(); // Move card from deck to table
+        i++;
+    }
+}
+
 // Currently written to display the first 12 cards in the cardImages deck
-function createTable() {
+function updateTableDisplay() {
     var i = 0;
     while (i < numCards) {
         var img = document.createElement("img");
-        img.src = "card_images/" + deck[0].png;
+        img.src = "card_images/" + table[i].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
         src.appendChild(img);
-        table[i] = deck.shift(); // Move card from deck to table
         i++;
     }
 }
@@ -124,16 +135,16 @@ function createCardListeners() {
                 tableIndices.push(getTableIndex(cards, this));
                 console.log(tableIndices);
                 if (tableIndices.length == 3) {
-                    var aaSetSet = false;
+                    var aSet = false;
                     aSet = isASet(tableIndices);
                     console.log(table);
                     if (aSet) {
                         var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
-                        removeSetFromTable(set);
+                        removeSetAdd3ToTable(set);
                         document.getElementById("message").innerHTML = "You have found a set!";
                         removeTable();
-                        add3Cards();
-                        createTable();
+                        //add3Cards();
+                        updateTableDisplay();
                         createCardListeners();
                     }
                     else {
@@ -147,10 +158,6 @@ function createCardListeners() {
             
         });
     }
-}
-
-function click() {
-    
 }
 
 function deselectCards(cards) {
@@ -181,16 +188,16 @@ function removeTableIndex(tableIndices, tableIndex) {
     });
 }
 
-function removeSetFromTable (set) {
-    var spliceI;
+function removeSetAdd3ToTable (set) {
+    //var spliceI;
     var i = 0;
     while (i < 3) {
         table.forEach(function(elem, j) {
             if (set[i] == table[j]) {
-                spliceI = j;
+                table[j] = deck.pop();
             }
         });
-        table.splice(spliceI, 1);
+        //table.splice(spliceI, 1);
         i++;
     }
 }
@@ -204,6 +211,39 @@ function isASet(tableIndices) {
         isASet = true;
     } 
     return isASet;
+}
+
+// Returns an empty set if the table does not contain a set.
+function findSet() {
+    var set = [];
+    i = 0;
+
+    while (i < table.length) {
+        set[0] = i;
+        var j = i + 1;
+        while (j < table.length) {
+            set[1] = j;
+            var k = j + 1;
+            while (k < table.length) {
+                set[2] = k;
+                if (isASet(set)) {
+                    return set;
+                }
+                k++;
+            }
+            j++;
+        }
+        i++;
+    }
+    return [];
+}
+
+function hint(set, cards) {
+    i = 0;
+    while (i < set.length) {
+        cards[set[i]].classList.add("hint");
+        i++;
+    }
 }
   
 startGame();
