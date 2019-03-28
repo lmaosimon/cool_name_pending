@@ -1,13 +1,6 @@
-//TODO: Add three cards to table (physical and visual table) when there is not a set in the table.
 //TODO: Be able to detect when the game is over.
-//FINISHED: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
-//TODO: Edit hint functionality to allow dynamically-added hints, also fix hint/select overlap
-//TODO: (Optional) Change hint to display one hint first, then two if clicked again, then 3 if clicked again.
-//TODO: (Optional) Add player functionality.
-
-/* THE GAME OF SET RELOADED
- * Authors: Patrick Hubbell, Gino Detore, and Sean Bower
- */
+//TODO: Reset player scores when the game is reset.
+//TODO: Add comments.
 
 var numCards = 12;
 var deck;
@@ -16,16 +9,6 @@ var tableIndices;
 var colorCode = ["R", "G", "B"];
 var shapeCode = ["C", "S", "T"];
 var shadeCode = ["E", "F", "S"];
-/*var cardImages = ["BCE1.png", "BCE2.png", "BCE3.png", "BCF1.png", "BCF2.png", "BCF3.png", "BCS1.png", "BCS2.png", "BCS3.png",
- "BSE1.png", "BSE2.png", "BSE3.png", "BSF1.png", "BSF2.png", "BSF3.png", "BSS1.png", "BSS2.png", "BSS3.png", "BTE1.png", "BTE2.png",
-  "BTE3.png", "BTF1.png", "BTF2.png", "BTF3.png", "BTS1.png", "BTS2.png", "BTS3.png", "GCE1.png", "GCE2.png", "GCE3.png", "GCF1.png",
-   "GCF2.png", "GCF3.png", "GCS1.png", "GCS2.png", "GCS3.png", "GSE1.png", "GSE2.png", "GSE3.png", "GSF1.png", "GSF2.png", "GSF3.png",
-    "GSS1.png", "GSS2.png", "GSS3.png", "GTE1.png", "GTE2.png", "GTE3.png", "GTF1.png", "GTF2.png", "GTF3.png", "GTS1.png", "GTS2.png",
-     "GTS3.png", "RCE1.png", "RCE2.png", "RCE3.png", "RCF1.png", "RCF2.png", "RCF3.png", "RCS1.png", "RCS2.png", "RCS3.png", "RSE1.png",
-      "RSE2.png", "RSE3.png", "RSF1.png", "RSF2.png", "RSF3.png", "RSS1.png", "RSS2.png", "RSS3.png", "RTE1.png", "RTE2.png", "RTE3.png",
-       "RTF1.png", "RTF2.png", "RTF3.png", "RTS1.png", "RTS2.png", "RTS3.png"];*/
-
-
 
 // Function that creates a Card object
 function Card(color, shape, shading, number, png) {
@@ -43,8 +26,7 @@ function startGame() {
     createDeck(deck);
     initializeTable();
     updateTableDisplay();
-    createResetAndHintEventListeners();
-    cardListeners.create();
+    createCardListeners();
 }
 
 function createDeck(deck) {
@@ -60,7 +42,6 @@ function createDeck(deck) {
         }
     }
     shuffleDeck(deck);
-
 }
 
 function shuffleDeck(deck) {
@@ -97,6 +78,7 @@ function updateTableDisplay() {
     var i = 0;
     while (i < numCards) {
         var img = document.createElement("img");
+        console.log(table);
         img.src = "card_images/" + table[i].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
@@ -113,7 +95,9 @@ function removeTable() {
 }
 
 function add3Cards() {
-    table.push(deck.splice(0, 3));
+    for (var i = 0; i < 3; i++) {
+        table.push(deck.splice(0, 1)[0]);
+    }
 }
 
 function createResetAndHintEventListeners() {
@@ -122,7 +106,6 @@ function createResetAndHintEventListeners() {
 
     // Reset button event listener
     document.getElementById("reset").addEventListener("click", function(){
-        cardListeners.remove();
         removeTable();
         startGame();
         document.getElementById("message").innerHTML = "You have reset the game.";
@@ -144,69 +127,7 @@ function createResetAndHintEventListeners() {
     });
 }
 
-
-var cardListeners = (function() {
-
-    var cards = document.querySelectorAll(".card");
-    tableIndices = [];
-
-    function cardActions() {
-        document.getElementById("message").innerHTML = "";
-
-        if (this.classList.contains("selected")) { // If deselecting a card
-            this.classList.remove("selected");
-            removeTableIndex(tableIndices, getTableIndex(cards, this));
-            console.log(tableIndices);
-        }
-        else { // If selecting a card
-            if (this.classList.contains("hint")) {
-                this.classList.remove("hint");
-            }
-            this.classList.add("selected");
-            tableIndices.push(getTableIndex(cards, this));
-            console.log(tableIndices);
-            if (tableIndices.length == 3) {
-                var aSet = false;
-                aSet = isASet(tableIndices);
-                console.log(table);
-                if (aSet) {
-                    var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
-                    removeSetAdd3ToTable(set);
-                    document.getElementById("message").innerHTML = "You have found a set!";
-                    removeTable();
-                    updateTableDisplay();
-                    cardListeners.remove()
-                    cardListeners.create();
-                }
-                else {
-                    document.getElementById("message").innerHTML = "That is not a set. Try again!";
-                }
-                console.log(table);
-                deselectCards(cards);
-                tableIndices = [];
-            }
-        }
-    }
-
-    return {
-
-        create: function (){
-            for (var i = 0; i < cards.length; i++) {
-                cards[i].addEventListener("click", cardActions);
-            }
-        },
-
-        remove: function (){
-            for (var i = 0; i < cards.length; i++) {
-                cards[i].removeEventListener("click", cardActions);
-            }
-        }
-
-    }
-})();
-
-
-/* function createCardListeners() {
+function createCardListeners() {
 
     var cards = document.querySelectorAll(".card");
     tableIndices = [];
@@ -233,6 +154,7 @@ var cardListeners = (function() {
                     aSet = isASet(tableIndices);
                     console.log(table);
                     if (aSet) {
+                        updateScore();
                         var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
                         removeSetAdd3ToTable(set);
                         document.getElementById("message").innerHTML = "You have found a set!";
@@ -251,7 +173,7 @@ var cardListeners = (function() {
             
         });
     }
-} */
+}
 
 function deselectCards(cards) {
     for (var i = 0; i < cards.length; i++) {
@@ -312,12 +234,13 @@ function removeSetAdd3ToTable (set) {
 function checkTableForSet() {
     var setExist = findSet();
     if (setExist.length == 0) {
+        removeTable();
         add3Cards();
         numCards += 3;
-        removeTable();
-        updateTableDisplay();
         createCardListeners();
+        return false;
     }
+    return true;
     // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
 }
 
@@ -360,9 +283,26 @@ function findSet() {
 function hint(hintSet, cards, hintCount) {
     i = 0;
     while (i < hintCount) {
-        cards[hintSet[i]].classList.add("hint");
-        i++;
+        if (cards[hintSet[i]].classList.contains("selected")) {
+            document.getElementById("message").innerHTML("You must deselect all cards before getting a hint.");
+        }
+        else {
+            cards[hintSet[i]].classList.add("hint");
+            i++;
+        }
     }
 }
-  
+
+function updateScore() {
+    var player = prompt("Please enter your player number:", 1);
+    if (player == "1" || player == "2" || player == "3" || player == "4") {
+        var scoreTxt = document.getElementById("score" + player).innerHTML;
+        var score = Number(scoreTxt) + 1;
+        document.getElementById("score" + player).innerHTML = score.toString();
+    } else {
+        alert("The player number you entered was invalid. Point was not recorded.");
+    }
+}
+
+createResetAndHintEventListeners();
 startGame();
