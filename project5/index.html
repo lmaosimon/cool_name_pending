@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- Sets up the title for the page in the browser and links the HTML to the CSS file -->
 	<title>The Game of Set</title>
 	<meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="site.css">
@@ -10,14 +11,17 @@
 </head>
 <body>
 
+	<!-- Creates a styled title within at the top of the game -->
 	<h1>The Game of Set</h1>
 
+	<!-- Builds a ribbon at the top of the game that has 2 buttons (reset and hint) as well as a line for in-game messages -->
 	<div id="stripe">
 		<button id="reset">Reset</button>
 		<span id="message"></span>
 		<button id="hint">Hint</button>
 	</div>
 
+	<!-- Builds the scoreboard on the left side of the page that keeps track of sets found for up to 4 players -->
 	<div id="scoreboard">
 		<p class="player">Player 1</p>
 		<p class="score" id="score1"></p>
@@ -29,10 +33,12 @@
 		<p class="score" id="score4"></p>
 	</div>
 
+		<!-- Creates a grid where the cards will displayed in the game -->
 		<div id="table-grid">
 			
 		</div>
-
+	
+		<!-- Links this structured HTML page to the associated script that runs the game -->
 	<script type="text/javascript" src="game.js"></script>
 </body>
 </html>
