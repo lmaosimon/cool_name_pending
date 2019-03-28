@@ -1,22 +1,17 @@
-//TODO: Be able to detect when the game is over and avoid undefined values.
-//TODO: Add comments.
+
+/* THE GAME OF SET RELOADED
+ * Authors: Patrick Hubbell, Gino Detore, and Sean Bower
+ */
 
 var numCards = 12;
 var deck;
 var table;
 var tableIndices;
+
+// Possible values for each attribute of a Card (does not include number)
 var colorCode = ["R", "G", "B"];
 var shapeCode = ["C", "S", "T"];
 var shadeCode = ["E", "F", "S"];
-/*var cardImages = ["BCE1.png", "BCE2.png", "BCE3.png", "BCF1.png", "BCF2.png", "BCF3.png", "BCS1.png", "BCS2.png", "BCS3.png",
- "BSE1.png", "BSE2.png", "BSE3.png", "BSF1.png", "BSF2.png", "BSF3.png", "BSS1.png", "BSS2.png", "BSS3.png", "BTE1.png", "BTE2.png",
-  "BTE3.png", "BTF1.png", "BTF2.png", "BTF3.png", "BTS1.png", "BTS2.png", "BTS3.png", "GCE1.png", "GCE2.png", "GCE3.png", "GCF1.png",
-   "GCF2.png", "GCF3.png", "GCS1.png", "GCS2.png", "GCS3.png", "GSE1.png", "GSE2.png", "GSE3.png", "GSF1.png", "GSF2.png", "GSF3.png",
-    "GSS1.png", "GSS2.png", "GSS3.png", "GTE1.png", "GTE2.png", "GTE3.png", "GTF1.png", "GTF2.png", "GTF3.png", "GTS1.png", "GTS2.png",
-     "GTS3.png", "RCE1.png", "RCE2.png", "RCE3.png", "RCF1.png", "RCF2.png", "RCF3.png", "RCS1.png", "RCS2.png", "RCS3.png", "RSE1.png",
-      "RSE2.png", "RSE3.png", "RSF1.png", "RSF2.png", "RSF3.png", "RSS1.png", "RSS2.png", "RSS3.png", "RTE1.png", "RTE2.png", "RTE3.png",
-       "RTF1.png", "RTF2.png", "RTF3.png", "RTS1.png", "RTS2.png", "RTS3.png"];*/
-
 
 // Constructor function to create a Card object
 function Card(color, shape, shading, number, png) {
@@ -44,7 +39,7 @@ function startGame() {
     createCardListeners();
 }
 
-//
+// Sets all scores to 0 in the HTML
 function setScoresZero() {
     var scores = document.getElementsByClassName("score");
     i = 0;
@@ -54,20 +49,21 @@ function setScoresZero() {
     }
 }
 
-//
+// Creates a prompt window where the Player can enter their associated numbers to keep track of the number of sets they find
 function updateScore() {
     var player = prompt("Please enter your player number:", 1);
     if (player == "1" || player == "2" || player == "3" || player == "4") {
+        // Updates the score in the HTML accordingly if a valid player name is given
         var scoreTxt = document.getElementById("score" + player).innerHTML;
         var score = Number(scoreTxt) + 1;
         document.getElementById("score" + player).innerHTML = score.toString();
     } else {
+        // If an invalid number is given (not 1 through 4) the point is lost and this alert is displayed
         alert("The player number you entered was invalid. Point was not recorded.");
     }
 }
 
-
-//FIXME: right now this will detect when the game is over but does nothing to stop game from trying to pull from empty deck
+// Detects when the game is over; looks for no possible set left on the Table and an empty deck
 function isGameOver() {
     var gameOver = false;
     var aSet = findSet();
@@ -82,22 +78,24 @@ function isGameOver() {
     The following set of functions manipulate the Deck for the Game model.
 */
 
-//
+// Builds an array of all 81 Card objects for each possible combination of color, shape, shade, and number
 function createDeck(deck) {
     for (var i = 0; i <= 2; i++) {
         for (var j = 0; j <= 2; j++) {
             for (var k = 0; k <= 2; k++) {
                 for (var l = 1; l <= 3; l++) {
+                    // Creates the png code per Card that will be used to find its associated picture file
                     var png = colorCode[i] + shapeCode[j] + shadeCode[k] + l + ".png";
                     deck.push(new Card(i, j, k, l, png));
                 }
             }
         }
     }
+    // Removes the inherent ordering in the Deck
     shuffleDeck(deck);
 }
 
-//
+// Randomly shuffles the current Cards in the Deck array to avoid any ordering
 function shuffleDeck(deck) {
     var currentI = deck.length, tempVal, randI;
   
@@ -113,7 +111,6 @@ function shuffleDeck(deck) {
       deck[currentI] = deck[randI];
       deck[randI] = tempVal;
     }
-  
     return deck;
 }
 
@@ -122,7 +119,7 @@ function shuffleDeck(deck) {
     The following set of functions manipulate the Table for the Game model.
 */
 
-//
+// Adds a number of Cards to the Table array representing the Cards in play to start the Game; draws from the Deck
 function initializeTable() {
     // Add the initially desired number of cards to the table
     var i = 0;
@@ -133,21 +130,24 @@ function initializeTable() {
     checkTableForSet();
 }
 
-// Currently written to display the first 12 cards in the cardImages deck
+// Updates the images for the current Cards on the table by referring to the Table array
 function updateTableDisplay() {
     var i = 0;
     while (i < numCards) {
         var img = document.createElement("img");
-        FIXME:console.log(table);
+
+        // Uses the png code in each Card object to find the associated image
         img.src = "card_images/" + table[i].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
+
+        // Adds the image to the table grid in the HTML
         src.appendChild(img);
         i++;
     }
 }
 
-//
+// Clears all Card images from the table grid in the HTML
 function removeTable() {
     var imgDiv = document.getElementById("table-grid");
     while (imgDiv.firstChild) {
@@ -155,14 +155,14 @@ function removeTable() {
     }
 }
 
-//
+// Adds 3 Cards from the Deck to the Table
 function add3Cards() {
     for (var i = 0; i < 3; i++) {
         table.push(deck.splice(0, 1)[0]);
     }
 }
 
-//
+// Adds a Card's index in the Table array to the array that tracks indices of selected Cards; needed for select event
 function getTableIndex(cards, clicked) {
     var tableIndex;
     cards.forEach(function(card, i) {
@@ -173,11 +173,10 @@ function getTableIndex(cards, clicked) {
     return tableIndex;
 }
 
-//
+// Removes a Card's index in the Table array from the array that tracks indices of selected Cards; needed for deselect event
 function removeTableIndex(tableIndices, tableIndex) {
     tableIndices.forEach(function(elem, i) {
         if (elem == tableIndex) {
-            FIXME:console.log(i);
             tableIndices.splice(i, 1);
         }
     });
@@ -208,10 +207,11 @@ function removeSetAdd3ToTable (set) {
             i++;
         }
     }
+    // Ensures that there is some possible Set on the Table once Cards have been replaced or added
     checkTableForSet();
 }
 
-// Check that some set does exist on the table, add 3 cards if not
+// Checks that some set does exist on the table, adds 3 cards if not
 function checkTableForSet() {
     var setExist = findSet();
     if (setExist.length == 0) {
@@ -219,10 +219,7 @@ function checkTableForSet() {
         add3Cards();
         numCards += 3;
         createCardListeners();
-        return false;
     }
-    return true;
-    // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
 }
 
 
@@ -230,7 +227,7 @@ function checkTableForSet() {
     The following set of functions create event listeners for specific scenarios in the Game interface.
 */
 
-//
+// Adds event listeners for the buttons corresponding to Reset and Hint events
 function createResetAndHintEventListeners() {
 
     var hintCount = 1;
@@ -244,12 +241,25 @@ function createResetAndHintEventListeners() {
     
     // Hint button event listener
     document.getElementById("hint").addEventListener("click", function(){
+
+        // If hints are continually requested, resets the hint count to 1 and starts again
         if (hintCount === 4) {
             hintCount = 1;
         }
-        FIXME:console.log("Hint count: " + hintCount);
+
+        // Resets hint counter if a possible Set is selected or the Game is reset
+        if (document.getElementById("message").innerHTML == "You have found a set!") {
+            hintCount = 1;
+        } else if (document.getElementById("message").innerHTML == "That is not a set. Try again!") {
+            hintCount = 1;
+        } else if (document.getElementById("message").innerHTML == "You have reset the game.") {
+            hintCount = 1;
+        }
+
         tableIndices = [];
         var cards = document.querySelectorAll(".card");
+
+        // Any Cards selected on the Table when a hint is requested are deselected
         deselectCards(cards);
         document.getElementById("message").innerHTML = "Here is a hint.";
         hintSet = findSet();
@@ -258,12 +268,11 @@ function createResetAndHintEventListeners() {
     });
 }
 
-//
+// Creates listeners for each Card on Table, updates appropriately and reacts to all possible events with Cards
 function createCardListeners() {
-
     var cards = document.querySelectorAll(".card");
     tableIndices = [];
-    FIXME:console.log(cards);
+    
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
 
@@ -272,7 +281,6 @@ function createCardListeners() {
             if (this.classList.contains("selected")) { // If deselecting a card
                 this.classList.remove("selected");
                 removeTableIndex(tableIndices, getTableIndex(cards, this));
-                FIXME:console.log(tableIndices);
             }
             else { // If selecting a card
                 if (this.classList.contains("hint")) {
@@ -280,12 +288,12 @@ function createCardListeners() {
                 }
                 this.classList.add("selected");
                 tableIndices.push(getTableIndex(cards, this));
-                FIXME:console.log(tableIndices);
+
+                // Checks for a Set once 3 Cards are selected
                 if (tableIndices.length == 3) {
                     var aSet = false;
                     aSet = isASet(tableIndices);
-                    FIXME:console.log(table);
-                    if (aSet) {
+                    if (aSet) { // If a Set is found
                         updateScore();
                         var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
                         removeSetAdd3ToTable(set);
@@ -294,20 +302,18 @@ function createCardListeners() {
                         updateTableDisplay();
                         createCardListeners();
                     }
-                    else {
+                    else { // If the 3 selected Cards are not a Set
                         document.getElementById("message").innerHTML = "That is not a set. Try again!";
                     }
-                    FIXME:console.log(table);
                     deselectCards(cards);
                     tableIndices = [];
                 }
-            }
-            
+            } 
         });
     }
 }
 
-//
+// Removes the styling for selected Cards if they are deselected
 function deselectCards(cards) {
     for (var i = 0; i < cards.length; i++) {
         if (cards[i].classList.contains("selected")) {
@@ -333,7 +339,7 @@ function isASet(tableIndices) {
     return isASet;
 }
 
-// Returns an empty set if the table does not contain a set.
+// Returns some Set that exists on the Table; returns an empty array if the Table does not contain a Set
 function findSet() {
     var set = [];
     i = 0;
@@ -358,7 +364,7 @@ function findSet() {
     return [];
 }
 
-//
+// Incrementally highlights a possible Set on the Table when the Hint button is clicked
 function hint(hintSet, cards, hintCount) {
     i = 0;
     while (i < hintCount) {
