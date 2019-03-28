@@ -86,8 +86,6 @@ function createDeck(deck) {
         }
     }
     shuffleDeck(deck);
-    //FIXME:
-    deck.splice(0, 69);
 }
 
 //

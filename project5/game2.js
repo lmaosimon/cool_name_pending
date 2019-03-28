@@ -1,5 +1,4 @@
-//TODO: Be able to detect when the game is over.
-//TODO: Reset player scores when the game is reset.
+//TODO: Be able to detect when the game is over and avoid undefined values.
 //TODO: Add comments.
 
 var numCards = 12;
@@ -19,6 +18,12 @@ function Card(color, shape, shading, number, png) {
     this.png = png;
 }
 
+
+/*
+    The following set of functions determine the start, end, and updates necessary for the Game to be actively played.
+*/
+
+// Calls all necessary functions to begin a new iteration of the game
 function startGame() {
     numCards = 12;
     deck = [];
@@ -26,11 +31,50 @@ function startGame() {
     createDeck(deck);
     initializeTable();
     updateTableDisplay();
+    setScoresZero();
     createCardListeners();
 }
 
-function createDeck(deck) {
+//
+function setScoresZero() {
+    var scores = document.getElementsByClassName("score");
+    i = 0;
+    while (i < scores.length) {
+        scores[i].innerHTML = "0";
+        i++;
+    }
+}
 
+//
+function updateScore() {
+    var player = prompt("Please enter your player number:", 1);
+    if (player == "1" || player == "2" || player == "3" || player == "4") {
+        var scoreTxt = document.getElementById("score" + player).innerHTML;
+        var score = Number(scoreTxt) + 1;
+        document.getElementById("score" + player).innerHTML = score.toString();
+    } else {
+        alert("The player number you entered was invalid. Point was not recorded.");
+    }
+}
+
+
+//FIXME: right now this will detect when the game is over but does nothing to stop game from trying to pull from empty deck
+function isGameOver() {
+    var gameOver = false;
+    var aSet = findSet();
+    if (deck.length == 0 && aSet.length == 0) {
+        gameOver = true;
+    }
+    return gameOver;
+}
+
+
+/*
+    The following set of functions manipulate the Deck for the Game model.
+*/
+
+//
+function createDeck(deck) {
     for (var i = 0; i <= 2; i++) {
         for (var j = 0; j <= 2; j++) {
             for (var k = 0; k <= 2; k++) {
@@ -44,6 +88,7 @@ function createDeck(deck) {
     shuffleDeck(deck);
 }
 
+//
 function shuffleDeck(deck) {
     var currentI = deck.length, tempVal, randI;
   
@@ -63,6 +108,12 @@ function shuffleDeck(deck) {
     return deck;
 }
 
+
+/*
+    The following set of functions manipulate the Table for the Game model.
+*/
+
+//
 function initializeTable() {
     // Add the initially desired number of cards to the table
     var i = 0;
@@ -76,9 +127,9 @@ function initializeTable() {
 // Currently written to display the first 12 cards in the cardImages deck
 function updateTableDisplay() {
     var i = 0;
-    while (i < numCards) {
+    console.log(table);
+    while (i < table.length) {
         var img = document.createElement("img");
-        console.log(table);
         img.src = "card_images/" + table[i].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
@@ -87,6 +138,7 @@ function updateTableDisplay() {
     }
 }
 
+//
 function removeTable() {
     var imgDiv = document.getElementById("table-grid");
     while (imgDiv.firstChild) {
@@ -94,12 +146,96 @@ function removeTable() {
     }
 }
 
+//
 function add3Cards() {
     for (var i = 0; i < 3; i++) {
         table.push(deck.splice(0, 1)[0]);
     }
 }
 
+//
+function getTableIndex(cards, clicked) {
+    var tableIndex;
+    cards.forEach(function(card, i) {
+        if (clicked == card) {
+            tableIndex = i;
+        }
+    });
+    return tableIndex;
+}
+
+//
+function removeTableIndex(tableIndices, tableIndex) {
+    tableIndices.forEach(function(elem, i) {
+        if (elem == tableIndex) {
+            tableIndices.splice(i, 1);
+        }
+    });
+}
+
+// Add a new card for each card on table that was part of a set, or only removes set cards if table size > 12
+function removeSetAdd3ToTable (set) {
+    console.log("Hello World!");
+    var i = 0;
+    if (numCards > 12) {
+        // Only removes 3 cards from the table, does not replace; decreases number of cards on table by 3
+        while (i < 3) {
+            table.forEach(function(elem, j) {
+                if (set[i] == table[j]) {
+                    table.splice(j, 1)
+                }
+            });
+            i++;
+        }
+        numCards -= 3;
+    } else if (deck.length > 0) {
+        // Replaces the 3 cards removed for the set
+        while (i < 3) {
+            table.forEach(function(elem, j) {
+                if (set[i] == table[j]) {
+                    table[j] = deck.pop();
+                }
+            });
+            i++;
+        }
+    }
+    else {
+        var temp = [];
+        for (var k = 0; k < table.length; k++) {
+            if (set[0] != table[k] && set[1] != table[k] && set[2] != table[k]) {
+                temp.push(table[k]);
+            }
+        }
+        table.length -= 3;
+        numCards -= 3;
+        for (var l = 0; l < table.length; l++) {
+            table[l] = temp[l];
+        }
+        console.log(table);
+    }
+    checkTableForSet();
+}
+
+// Check that some set does exist on the table, add 3 cards if not
+function checkTableForSet() {
+    var setExist = findSet();
+    if (setExist.length == 0 && deck.length > 0) {
+        removeTable();
+        add3Cards();
+        numCards += 3;
+        createCardListeners();
+        return false;
+    }
+    return true;
+    // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
+}
+
+
+/*
+    The following set of functions create event listeners for specific scenarios in the Game interface.
+*/
+
+//
 function createResetAndHintEventListeners() {
 
     var hintCount = 1;
@@ -116,7 +252,6 @@ function createResetAndHintEventListeners() {
         if (hintCount === 4) {
             hintCount = 1;
         }
-        console.log("Hint count: " + hintCount);
         tableIndices = [];
         var cards = document.querySelectorAll(".card");
         deselectCards(cards);
@@ -127,11 +262,11 @@ function createResetAndHintEventListeners() {
     });
 }
 
+//
 function createCardListeners() {
 
     var cards = document.querySelectorAll(".card");
     tableIndices = [];
-    console.log(cards);
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
 
@@ -140,7 +275,6 @@ function createCardListeners() {
             if (this.classList.contains("selected")) { // If deselecting a card
                 this.classList.remove("selected");
                 removeTableIndex(tableIndices, getTableIndex(cards, this));
-                console.log(tableIndices);
             }
             else { // If selecting a card
                 if (this.classList.contains("hint")) {
@@ -148,11 +282,9 @@ function createCardListeners() {
                 }
                 this.classList.add("selected");
                 tableIndices.push(getTableIndex(cards, this));
-                console.log(tableIndices);
                 if (tableIndices.length == 3) {
                     var aSet = false;
                     aSet = isASet(tableIndices);
-                    console.log(table);
                     if (aSet) {
                         updateScore();
                         var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
@@ -161,11 +293,16 @@ function createCardListeners() {
                         removeTable();
                         updateTableDisplay();
                         createCardListeners();
+                        console.log(isGameOver());
+                        if (isGameOver()) {
+                            if (window.confirm("GAME OVER! Confirm to reset the game.")) {
+                                startGame();
+                            }
+                        }
                     }
                     else {
                         document.getElementById("message").innerHTML = "That is not a set. Try again!";
                     }
-                    console.log(table);
                     deselectCards(cards);
                     tableIndices = [];
                 }
@@ -175,6 +312,7 @@ function createCardListeners() {
     }
 }
 
+//
 function deselectCards(cards) {
     for (var i = 0; i < cards.length; i++) {
         if (cards[i].classList.contains("selected")) {
@@ -183,67 +321,12 @@ function deselectCards(cards) {
     }
 }
 
-function getTableIndex(cards, clicked) {
-    var tableIndex;
-    cards.forEach(function(card, i) {
-        if (clicked == card) {
-            tableIndex = i;
-        }
-    });
-    return tableIndex;
-}
 
-function removeTableIndex(tableIndices, tableIndex) {
-    tableIndices.forEach(function(elem, i) {
-        if (elem == tableIndex) {
-            console.log(i);
-            tableIndices.splice(i, 1);
-        }
-    });
-}
+/*
+    The following set of functions are helper methods for the Game model.
+*/
 
-// Add a new card for each card on table that was part of a set, or only removes set cards if table size > 12
-function removeSetAdd3ToTable (set) {
-    var i = 0;
-    if (numCards > 12) {
-        // Only removes 3 cards from the table, does not replace; decreases number of cards on table by 3
-        while (i < 3) {
-            table.forEach(function(elem, j) {
-                if (set[i] == table[j]) {
-                    table.splice(j, 1)
-                }
-            });
-            i++;
-        }
-        numCards -= 3;
-    } else {
-        // Replaces the 3 cards removed for the set
-        while (i < 3) {
-            table.forEach(function(elem, j) {
-                if (set[i] == table[j]) {
-                    table[j] = deck.pop();
-                }
-            });
-            i++;
-        }
-    }
-    checkTableForSet();
-}
-
-// Check that some set does exist on the table, add 3 cards if not
-function checkTableForSet() {
-    var setExist = findSet();
-    if (setExist.length == 0) {
-        removeTable();
-        add3Cards();
-        numCards += 3;
-        createCardListeners();
-        return false;
-    }
-    return true;
-    // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
-}
-
+// Takes a set of Card indices on the Table and determines whether or not they are a Set
 function isASet(tableIndices) {
     var isASet = false;
     if (((table[tableIndices[0]].color + table[tableIndices[1]].color + table[tableIndices[2]].color) % 3 == 0) && 
@@ -280,6 +363,7 @@ function findSet() {
     return [];
 }
 
+//
 function hint(hintSet, cards, hintCount) {
     i = 0;
     while (i < hintCount) {
@@ -293,16 +377,10 @@ function hint(hintSet, cards, hintCount) {
     }
 }
 
-function updateScore() {
-    var player = prompt("Please enter your player number:", 1);
-    if (player == "1" || player == "2" || player == "3" || player == "4") {
-        var scoreTxt = document.getElementById("score" + player).innerHTML;
-        var score = Number(scoreTxt) + 1;
-        document.getElementById("score" + player).innerHTML = score.toString();
-    } else {
-        alert("The player number you entered was invalid. Point was not recorded.");
-    }
-}
+
+/*
+    The Game begins.
+*/
 
 createResetAndHintEventListeners();
 startGame();
