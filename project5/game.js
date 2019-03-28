@@ -1,5 +1,4 @@
-//TODO: Be able to detect when the game is over.
-//TODO: Reset player scores when the game is reset.
+//TODO: Be able to detect when the game is over and avoid undefined values.
 //TODO: Add comments.
 
 var numCards = 12;
@@ -19,8 +18,7 @@ var shadeCode = ["E", "F", "S"];
        "RTF1.png", "RTF2.png", "RTF3.png", "RTS1.png", "RTS2.png", "RTS3.png"];*/
 
 
-
-// Function that creates a Card object
+// Constructor function to create a Card object
 function Card(color, shape, shading, number, png) {
     this.color = color;
     this.shape = shape;
@@ -29,6 +27,12 @@ function Card(color, shape, shading, number, png) {
     this.png = png;
 }
 
+
+/*
+    The following set of functions determine the start, end, and updates necessary for the Game to be actively played.
+*/
+
+// Calls all necessary functions to begin a new iteration of the game
 function startGame() {
     numCards = 12;
     deck = [];
@@ -36,11 +40,50 @@ function startGame() {
     createDeck(deck);
     initializeTable();
     updateTableDisplay();
+    setScoresZero();
     createCardListeners();
 }
 
-function createDeck(deck) {
+//
+function setScoresZero() {
+    var scores = document.getElementsByClassName("score");
+    i = 0;
+    while (i < scores.length) {
+        scores[i].innerHTML = "0";
+        i++;
+    }
+}
 
+//
+function updateScore() {
+    var player = prompt("Please enter your player number:", 1);
+    if (player == "1" || player == "2" || player == "3" || player == "4") {
+        var scoreTxt = document.getElementById("score" + player).innerHTML;
+        var score = Number(scoreTxt) + 1;
+        document.getElementById("score" + player).innerHTML = score.toString();
+    } else {
+        alert("The player number you entered was invalid. Point was not recorded.");
+    }
+}
+
+
+//FIXME: right now this will detect when the game is over but does nothing to stop game from trying to pull from empty deck
+function isGameOver() {
+    var gameOver = false;
+    var aSet = findSet();
+    if (deck.length == 0 && aSet.length == 0) {
+        gameOver = true;
+    }
+    return gameOver;
+}
+
+
+/*
+    The following set of functions manipulate the Deck for the Game model.
+*/
+
+//
+function createDeck(deck) {
     for (var i = 0; i <= 2; i++) {
         for (var j = 0; j <= 2; j++) {
             for (var k = 0; k <= 2; k++) {
@@ -54,6 +97,7 @@ function createDeck(deck) {
     shuffleDeck(deck);
 }
 
+//
 function shuffleDeck(deck) {
     var currentI = deck.length, tempVal, randI;
   
@@ -73,6 +117,12 @@ function shuffleDeck(deck) {
     return deck;
 }
 
+
+/*
+    The following set of functions manipulate the Table for the Game model.
+*/
+
+//
 function initializeTable() {
     // Add the initially desired number of cards to the table
     var i = 0;
@@ -88,7 +138,7 @@ function updateTableDisplay() {
     var i = 0;
     while (i < numCards) {
         var img = document.createElement("img");
-        console.log(table);
+        FIXME:console.log(table);
         img.src = "card_images/" + table[i].png;
         img.classList.add("card");
         var src = document.getElementById("table-grid");
@@ -97,6 +147,7 @@ function updateTableDisplay() {
     }
 }
 
+//
 function removeTable() {
     var imgDiv = document.getElementById("table-grid");
     while (imgDiv.firstChild) {
@@ -104,95 +155,14 @@ function removeTable() {
     }
 }
 
+//
 function add3Cards() {
     for (var i = 0; i < 3; i++) {
         table.push(deck.splice(0, 1)[0]);
     }
 }
 
-function createResetAndHintEventListeners() {
-
-    var hintCount = 1;
-
-    // Reset button event listener
-    document.getElementById("reset").addEventListener("click", function(){
-        removeTable();
-        startGame();
-        document.getElementById("message").innerHTML = "You have reset the game.";
-    });
-    
-    // Hint button event listener
-    document.getElementById("hint").addEventListener("click", function(){
-        if (hintCount === 4) {
-            hintCount = 1;
-        }
-        console.log("Hint count: " + hintCount);
-        tableIndices = [];
-        var cards = document.querySelectorAll(".card");
-        deselectCards(cards);
-        document.getElementById("message").innerHTML = "Here is a hint.";
-        hintSet = findSet();
-        hint(hintSet, cards, hintCount);
-        hintCount++;
-    });
-}
-
-function createCardListeners() {
-
-    var cards = document.querySelectorAll(".card");
-    tableIndices = [];
-    console.log(cards);
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener("click", function() {
-
-            document.getElementById("message").innerHTML = "";
-
-            if (this.classList.contains("selected")) { // If deselecting a card
-                this.classList.remove("selected");
-                removeTableIndex(tableIndices, getTableIndex(cards, this));
-                console.log(tableIndices);
-            }
-            else { // If selecting a card
-                if (this.classList.contains("hint")) {
-                    this.classList.remove("hint");
-                }
-                this.classList.add("selected");
-                tableIndices.push(getTableIndex(cards, this));
-                console.log(tableIndices);
-                if (tableIndices.length == 3) {
-                    var aSet = false;
-                    aSet = isASet(tableIndices);
-                    console.log(table);
-                    if (aSet) {
-                        updateScore();
-                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
-                        removeSetAdd3ToTable(set);
-                        document.getElementById("message").innerHTML = "You have found a set!";
-                        removeTable();
-                        updateTableDisplay();
-                        createCardListeners();
-                    }
-                    else {
-                        document.getElementById("message").innerHTML = "That is not a set. Try again!";
-                    }
-                    console.log(table);
-                    deselectCards(cards);
-                    tableIndices = [];
-                }
-            }
-            
-        });
-    }
-}
-
-function deselectCards(cards) {
-    for (var i = 0; i < cards.length; i++) {
-        if (cards[i].classList.contains("selected")) {
-            cards[i].classList.remove("selected");
-        }
-    }
-}
-
+//
 function getTableIndex(cards, clicked) {
     var tableIndex;
     cards.forEach(function(card, i) {
@@ -203,10 +173,11 @@ function getTableIndex(cards, clicked) {
     return tableIndex;
 }
 
+//
 function removeTableIndex(tableIndices, tableIndex) {
     tableIndices.forEach(function(elem, i) {
         if (elem == tableIndex) {
-            console.log(i);
+            FIXME:console.log(i);
             tableIndices.splice(i, 1);
         }
     });
@@ -254,6 +225,103 @@ function checkTableForSet() {
     // As the game of set is played, 3 extra cards will now be present on the table until the game concludes
 }
 
+
+/*
+    The following set of functions create event listeners for specific scenarios in the Game interface.
+*/
+
+//
+function createResetAndHintEventListeners() {
+
+    var hintCount = 1;
+
+    // Reset button event listener
+    document.getElementById("reset").addEventListener("click", function(){
+        removeTable();
+        startGame();
+        document.getElementById("message").innerHTML = "You have reset the game.";
+    });
+    
+    // Hint button event listener
+    document.getElementById("hint").addEventListener("click", function(){
+        if (hintCount === 4) {
+            hintCount = 1;
+        }
+        FIXME:console.log("Hint count: " + hintCount);
+        tableIndices = [];
+        var cards = document.querySelectorAll(".card");
+        deselectCards(cards);
+        document.getElementById("message").innerHTML = "Here is a hint.";
+        hintSet = findSet();
+        hint(hintSet, cards, hintCount);
+        hintCount++;
+    });
+}
+
+//
+function createCardListeners() {
+
+    var cards = document.querySelectorAll(".card");
+    tableIndices = [];
+    FIXME:console.log(cards);
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener("click", function() {
+
+            document.getElementById("message").innerHTML = "";
+
+            if (this.classList.contains("selected")) { // If deselecting a card
+                this.classList.remove("selected");
+                removeTableIndex(tableIndices, getTableIndex(cards, this));
+                FIXME:console.log(tableIndices);
+            }
+            else { // If selecting a card
+                if (this.classList.contains("hint")) {
+                    this.classList.remove("hint");
+                }
+                this.classList.add("selected");
+                tableIndices.push(getTableIndex(cards, this));
+                FIXME:console.log(tableIndices);
+                if (tableIndices.length == 3) {
+                    var aSet = false;
+                    aSet = isASet(tableIndices);
+                    FIXME:console.log(table);
+                    if (aSet) {
+                        updateScore();
+                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
+                        removeSetAdd3ToTable(set);
+                        document.getElementById("message").innerHTML = "You have found a set!";
+                        removeTable();
+                        updateTableDisplay();
+                        createCardListeners();
+                    }
+                    else {
+                        document.getElementById("message").innerHTML = "That is not a set. Try again!";
+                    }
+                    FIXME:console.log(table);
+                    deselectCards(cards);
+                    tableIndices = [];
+                }
+            }
+            
+        });
+    }
+}
+
+//
+function deselectCards(cards) {
+    for (var i = 0; i < cards.length; i++) {
+        if (cards[i].classList.contains("selected")) {
+            cards[i].classList.remove("selected");
+        }
+    }
+}
+
+
+/*
+    The following set of functions are helper methods for the Game model.
+*/
+
+// Takes a set of Card indices on the Table and determines whether or not they are a Set
 function isASet(tableIndices) {
     var isASet = false;
     if (((table[tableIndices[0]].color + table[tableIndices[1]].color + table[tableIndices[2]].color) % 3 == 0) && 
@@ -290,6 +358,7 @@ function findSet() {
     return [];
 }
 
+//
 function hint(hintSet, cards, hintCount) {
     i = 0;
     while (i < hintCount) {
@@ -303,16 +372,10 @@ function hint(hintSet, cards, hintCount) {
     }
 }
 
-function updateScore() {
-    var player = prompt("Please enter your player number:", 1);
-    if (player == "1" || player == "2" || player == "3" || player == "4") {
-        var scoreTxt = document.getElementById("score" + player).innerHTML;
-        var score = Number(scoreTxt) + 1;
-        document.getElementById("score" + player).innerHTML = score.toString();
-    } else {
-        alert("The player number you entered was invalid. Point was not recorded.");
-    }
-}
+
+/*
+    The Game begins.
+*/
 
 createResetAndHintEventListeners();
 startGame();
