@@ -1,3 +1,4 @@
+//TODO: Fix a bug where Game breaks when 3 Cards are added and no Set exists
 
 /* THE GAME OF SET RELOADED
  * Authors: Patrick Hubbell, Gino Detore, and Sean Bower
