@@ -4,12 +4,13 @@
  * Authors: Patrick Hubbell, Gino Detore, and Sean Bower
  */
 
-var numCards = 12;
-var deck;
-var table;
-var tableIndices;
+/* GLOBALS */
+var numCards = 12; // Keeps track of number of cards throughout game
+var deck;          // Array that holds the card objects
+var table;         // Holds the card objects that are currently displayed in the HTML document
+var tableIndices;  // When a card is selected, its index in the table array is added to this array, and removed when deselected
 
-// Possible values for each attribute of a Card (does not include number)
+// Possible values for each attribute of a Card (does not include number attribute).
 var colorCode = ["R", "G", "B"];
 var shapeCode = ["C", "S", "T"];
 var shadeCode = ["E", "F", "S"];
@@ -33,11 +34,11 @@ function startGame() {
     numCards = 12;
     deck = [];
     table = [];
-    createDeck(deck);
-    initializeTable();
-    updateTableDisplay();
-    setScoresZero();
-    createCardListeners();
+    createDeck(deck);      // Create card objects, add to deck array, shuffle array
+    initializeTable();     // Take 12 cards out of deck and put in table array
+    updateTableDisplay();  // Corresponding images to cards in the table array are displayed in HTML document
+    setScoresZero();       // Player scores on the scoreboard are set to 0
+    createCardListeners(); // Card listeners for each card being displayed are made
 }
 
 // Sets all scores to 0 in the HTML
@@ -50,7 +51,7 @@ function setScoresZero() {
     }
 }
 
-// Creates a prompt window where the Player can enter their associated numbers to keep track of the number of sets they find
+// Creates a prompt window where the Players can enter their associated numbers to keep track of the number of sets they find
 function updateScore() {
     var player = prompt("Please enter your player number:", 1);
     if (player == "1" || player == "2" || player == "3" || player == "4") {
@@ -85,7 +86,7 @@ function createDeck(deck) {
         for (var j = 0; j <= 2; j++) {
             for (var k = 0; k <= 2; k++) {
                 for (var l = 1; l <= 3; l++) {
-                    // Creates the png code per Card that will be used to find its associated picture file
+                    // Creates the png file name per Card that will be used to find the card's associated picture file
                     var png = colorCode[i] + shapeCode[j] + shadeCode[k] + l + ".png";
                     deck.push(new Card(i, j, k, l, png));
                 }
@@ -100,14 +101,14 @@ function createDeck(deck) {
 function shuffleDeck(deck) {
     var currentI = deck.length, tempVal, randI;
   
-    // While there remain elements to shuffle...
+    // While there are cards in the deck to shuffle
     while (0 !== currentI) {
   
-      // Pick a remaining element...
+      // Pick one of those cards
       randI = Math.floor(Math.random() * currentI);
       currentI -= 1;
   
-      // And swap it with the current element.
+      // Swap it with the current card
       tempVal = deck[currentI];
       deck[currentI] = deck[randI];
       deck[randI] = tempVal;
@@ -128,19 +129,19 @@ function initializeTable() {
         table[i] = deck.pop(); // Move card from deck to table
         i++;
     }
-    checkTableForSet();
+    checkTableForSet(); // Add three cards to the table if there is not a set
 }
 
 // Updates the images for the current Cards on the table by referring to the Table array
 function updateTableDisplay() {
     var i = 0;
-    while (i < numCards) {
+    while (i < table.length) {
         var img = document.createElement("img");
 
-        // Uses the png code in each Card object to find the associated image
+        // Uses the png file name in each Card object to find the card's associated image
         img.src = "card_images/" + table[i].png;
-        img.classList.add("card");
-        var src = document.getElementById("table-grid");
+        img.classList.add("card"); // Add card class for css styling purposes
+        var src = document.getElementById("table-grid"); // Retrieve the table grid div which holds the cards
 
         // Adds the image to the table grid in the HTML
         src.appendChild(img);
@@ -183,10 +184,11 @@ function removeTableIndex(tableIndices, tableIndex) {
     });
 }
 
-// Add a new card for each card on table that was part of a set, or only removes set cards if table size > 12
+// Add a new card for each card on table that was part of a set, or only removes set cards if table size > 12 or deck size = 0
 function removeSetAdd3ToTable (set) {
+    console.log("Hello World!");
     var i = 0;
-    if (numCards > 12) {
+    if (numCards > 12 || deck.length == 0) {
         // Only removes 3 cards from the table, does not replace; decreases number of cards on table by 3
         while (i < 3) {
             table.forEach(function(elem, j) {
@@ -197,7 +199,7 @@ function removeSetAdd3ToTable (set) {
             i++;
         }
         numCards -= 3;
-    } else {
+    } else if (deck.length > 0) {
         // Replaces the 3 cards removed for the set
         while (i < 3) {
             table.forEach(function(elem, j) {
@@ -215,7 +217,7 @@ function removeSetAdd3ToTable (set) {
 // Checks that some set does exist on the table, adds 3 cards if not
 function checkTableForSet() {
     var setExist = findSet();
-    if (setExist.length == 0) {
+    if (setExist.length == 0 && deck.length > 0) {
         removeTable();
         add3Cards();
         numCards += 3;
@@ -233,7 +235,7 @@ function createResetAndHintEventListeners() {
 
     var hintCount = 1;
 
-    // Reset button event listener
+    // Reset button event listener. If reset button clicked, remove table display and call startGame()
     document.getElementById("reset").addEventListener("click", function(){
         removeTable();
         startGame();
@@ -257,6 +259,7 @@ function createResetAndHintEventListeners() {
             hintCount = 1;
         }
 
+        // When hint is clicked, all selected cards are deselected, so tableIndices must be empty since no more cards are selected
         tableIndices = [];
         var cards = document.querySelectorAll(".card");
 
@@ -264,7 +267,7 @@ function createResetAndHintEventListeners() {
         deselectCards(cards);
         document.getElementById("message").innerHTML = "Here is a hint.";
         hintSet = findSet();
-        hint(hintSet, cards, hintCount);
+        hint(hintSet, cards, hintCount); // With the given hintSet, give a border outline of yellow for each card in the given hint
         hintCount++;
     });
 }
@@ -272,42 +275,47 @@ function createResetAndHintEventListeners() {
 // Creates listeners for each Card on Table, updates appropriately and reacts to all possible events with Cards
 function createCardListeners() {
     var cards = document.querySelectorAll(".card");
-    tableIndices = [];
+    tableIndices = []; // When a card is selected, its index in the table array is added to this array, and removed when deselected
     
     for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener("click", function() {
+        cards[i].addEventListener("click", function() { // Anonymous function supports all possible actions that could occur when a card is clicked
 
-            document.getElementById("message").innerHTML = "";
+            document.getElementById("message").innerHTML = ""; // Take message off of screen
 
             if (this.classList.contains("selected")) { // If deselecting a card
                 this.classList.remove("selected");
-                removeTableIndex(tableIndices, getTableIndex(cards, this));
+                removeTableIndex(tableIndices, getTableIndex(cards, this)); // Remove index of this card in the table from tableIndices
             }
             else { // If selecting a card
-                if (this.classList.contains("hint")) {
+                if (this.classList.contains("hint")) { // Remove hint card border if a hint card is selected
                     this.classList.remove("hint");
                 }
-                this.classList.add("selected");
-                tableIndices.push(getTableIndex(cards, this));
+                this.classList.add("selected"); // Outline the card in red to show it is selected
+                tableIndices.push(getTableIndex(cards, this)); // Get the index of where the card is in the table array and push it in tableIndices
 
                 // Checks for a Set once 3 Cards are selected
                 if (tableIndices.length == 3) {
-                    var aSet = false;
+                    var aSet;
                     aSet = isASet(tableIndices);
                     if (aSet) { // If a Set is found
-                        updateScore();
-                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]];
-                        removeSetAdd3ToTable(set);
+                        updateScore(); // Update the scoreboard
+                        var set = [table[tableIndices[0]], table[tableIndices[1]], table[tableIndices[2]]]; // Get the card objects of the selected cards
+                        removeSetAdd3ToTable(set); // Remove these cards from the table array and add 3 two it depending on stipulations mentioned in function comments
                         document.getElementById("message").innerHTML = "You have found a set!";
-                        removeTable();
-                        updateTableDisplay();
-                        createCardListeners();
+                        removeTable(); // Remove the table display from the HTML document to be able to add the new one to the screen without stacking
+                        updateTableDisplay(); // Add the new table display to the HTML document
+                        createCardListeners(); // Set up new card listeners for the cards just added back to the table display
+                        if (isGameOver()) { // If the game is over, alert this to the users and reset the game once they click the confirmation
+                            window.alert("GAME OVER! Click to reset the game.");
+                            removeTable();
+                            startGame();
+                        }
                     }
                     else { // If the 3 selected Cards are not a Set
                         document.getElementById("message").innerHTML = "That is not a set. Try again!";
                     }
-                    deselectCards(cards);
-                    tableIndices = [];
+                    deselectCards(cards); // Remove select css styling from cards if cards in display are not replaced
+                    tableIndices = []; // Set tableIndices back to empty to be filled with new card selections
                 }
             } 
         });
@@ -369,13 +377,8 @@ function findSet() {
 function hint(hintSet, cards, hintCount) {
     i = 0;
     while (i < hintCount) {
-        if (cards[hintSet[i]].classList.contains("selected")) {
-            document.getElementById("message").innerHTML("You must deselect all cards before getting a hint.");
-        }
-        else {
-            cards[hintSet[i]].classList.add("hint");
-            i++;
-        }
+        cards[hintSet[i]].classList.add("hint");
+        i++;
     }
 }
 
