@@ -217,11 +217,12 @@ function removeSetAdd3ToTable (set) {
 // Checks that some set does exist on the table, adds 3 cards if not
 function checkTableForSet() {
     var setExist = findSet();
-    if (setExist.length == 0 && deck.length > 0) {
+    while (setExist.length == 0 && deck.length > 0) {
         removeTable();
         add3Cards();
         numCards += 3;
         createCardListeners();
+        setExist = findSet();
     }
 }
 
