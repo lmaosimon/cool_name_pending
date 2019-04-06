@@ -18,6 +18,3 @@
     
     * Contributions: All three authors collaborated on the game.rb file. Gino and Patrick both collaborated
       on the CSS and HTML files. Patrick created the card images.
-
-## Test Cases
-

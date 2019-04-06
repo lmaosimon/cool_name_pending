@@ -1,3 +1,4 @@
+//TODO: Fix a bug where Game breaks when 3 Cards are added and no Set exists
 
 /* THE GAME OF SET RELOADED
  * Authors: Patrick Hubbell, Gino Detore, and Sean Bower
@@ -216,11 +217,12 @@ function removeSetAdd3ToTable (set) {
 // Checks that some set does exist on the table, adds 3 cards if not
 function checkTableForSet() {
     var setExist = findSet();
-    if (setExist.length == 0 && deck.length > 0) {
+    while (setExist.length == 0 && deck.length > 0) {
         removeTable();
         add3Cards();
         numCards += 3;
         createCardListeners();
+        setExist = findSet();
     }
 }
 
