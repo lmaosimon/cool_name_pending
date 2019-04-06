@@ -1,0 +1,26 @@
+Grade for Project 3 Cool Name Pending
+============================
+88/100
+
+## Implementation ##
+Graded based on how well your project works. Takes into account things such as amount of features, useability of the program, and a lack of bugs.
+* Good Project implementation with ok useablility
+* Data Obtained is fairly useable although not alot done with it
+* Code will rarely crash on a few inputs might be due to website ex "3901"
+* Would be nice to get data without having to email it
+
+## Style ##
+Includes cleanliness of code, organization of code, and efficient use of the language.
+* Book Class is separated but more could be separated to improve readability such as email and console
+* Overall code is readable and clean.
+* Good use of ruby.
+
+
+## Documentation ##
+How well your code is documented. Includes things such as comments, file headers describing who wrote what and what the file is, and a useful readme.
+
+* Good comments throughout that improve readability
+* Each method has a helpful comment
+* File headers are present but scraper.rb is missing a description
+* Inclusion of how the project was tested is good
+* Good Readme contains helpful info
