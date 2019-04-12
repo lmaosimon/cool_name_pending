@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 23616f5ff9faecc899b3fc6cbe3427f09aa284b5 pat-hubbs <hubbell.64@osu.edu> 1554824955 -0400	branch: Created from HEAD
+23616f5ff9faecc899b3fc6cbe3427f09aa284b5 d507dd98271f1b3c50587eac63e4107c5c0599c2 pat-hubbs <hubbell.64@osu.edu> 1554826926 -0400	commit: Working on title for layout and homepage
+d507dd98271f1b3c50587eac63e4107c5c0599c2 5d34e88b62d98005397661ccd72b7549f51f3362 pat-hubbs <hubbell.64@osu.edu> 1554830945 -0400	commit: Create and test first version of home page
+5d34e88b62d98005397661ccd72b7549f51f3362 f595ca12eacfead030b2c630db6430a75b0d59cb pat-hubbs <hubbell.64@osu.edu> 1554832238 -0400	commit: Create about page, add links for about link and osu cse grader's portal link
+f595ca12eacfead030b2c630db6430a75b0d59cb 893c6f603b31022e92a982ca9e624b21e495dd0f pat-hubbs <hubbell.64@osu.edu> 1554938570 -0400	commit: Committing to merge static-pages branch with master

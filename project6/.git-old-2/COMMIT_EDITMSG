@@ -1,0 +1,1 @@
+Changed isStudent, isTeacher, and isAdmin to just status where string of credential will be held
