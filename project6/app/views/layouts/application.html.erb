@@ -11,9 +11,29 @@
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
+    <% if logged_in? %>
+      <% if isStudent?(current_user) %>
+        <%= render 'layouts/student_header' %>
+      <% elsif isTeacher?(current_user) %>
+        <!-- TODO: Make a partial for the teacher navbar --!>
+      <% elsif isAdmin?(current_user) %>
+        <!-- TODO: Make a partial for the admin navbar --!>
+      <% end %>
+    <% else %>
+      <%= render 'layouts/header' %>
+    <% end %>
 
-    <%= yield %>
+    <div class="container">
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
+
+      <%= yield %>
+
+      <%= render 'layouts/footer' %>
+    </div>
+
+    <%= debug(params) if Rails.env.development? %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

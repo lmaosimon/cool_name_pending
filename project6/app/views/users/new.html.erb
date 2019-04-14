@@ -1,2 +1,45 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<% provide(:title, 'Sign Up') %>
+
+
+<h1>Sign Up</h1>
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <%= form_for(@user) do |f| %>
+            <%= render 'shared/error_messages' %>
+
+            <div class="form-group">
+                <%= f.label :name, "First and Last Name:" %>
+                <%= f.text_field :name, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :email, "OSU Email:" %>
+                <%= f.text_field :email, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <%= f.radio_button :status, "Student" %>
+                    <%= f.label :status, "Student" %>
+                </div>
+                <div class="form-check form-check-inline">
+                    <%= f.radio_button :status, "Faculty Employee" %>
+                    <%= f.label :status, "Teacher" %>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :password, "Password:" %>
+                <%= f.text_field :password, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :password_confirmation, "Confirm Password:" %>
+                <%= f.text_field :password_confirmation, class: "form-control" %>
+            </div>
+
+            <%= f.submit "Create my account", class: "btn btn-danger btn-block" %>
+        <% end %>
+    </div>
+</div>
+        

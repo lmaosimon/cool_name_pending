@@ -8,4 +8,30 @@ class User < ApplicationRecord
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }
     validates :status, presence: true
+    validate :status_auth
+
+    private
+        def status_auth
+            agent = Mechanize.new;
+            page = agent.get('https://www.osu.edu/findpeople/');
+            form = page.form_with(:id => 'myform');
+
+            atIndex = self.email.index("@");
+            nameDotNum = self.email[0...atIndex];
+
+            form.name_n = nameDotNum;
+
+            result_page = form.submit;
+
+            if (!result_page.search(".notification.success").empty?)
+                if (result_page.search(".results-affiliation").text.include?(self.status))
+                    return true;
+                else
+                    errors.add(:status, "is not valid for given OSU name.number in email");
+                end
+            else
+                errors.add(:email, "does not contain a valid name.number");
+            end
+
+        end
 end
