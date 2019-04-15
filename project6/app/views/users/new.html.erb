@@ -1,11 +1,10 @@
 <% provide(:title, 'Sign Up') %>
 
-
 <h1>Sign Up</h1>
 <div class="row justify-content-md-center">
     <div class="col-md-6">
         <%= form_for(@user) do |f| %>
-            <%= render 'shared/error_messages' %>
+            <%= render 'shared/error_messages_users' %>
 
             <div class="form-group">
                 <%= f.label :name, "First and Last Name:" %>

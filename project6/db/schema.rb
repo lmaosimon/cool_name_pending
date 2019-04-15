@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_174151) do
+ActiveRecord::Schema.define(version: 2019_04_15_145352) do
+
+  create_table "courses", force: :cascade do |t|
+    t.string "course_name"
+    t.boolean "monday"
+    t.boolean "tuesday"
+    t.boolean "wednesday"
+    t.boolean "thursday"
+    t.boolean "friday"
+    t.string "instructor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "section"
+    t.string "start_time"
+    t.string "end_time"
+    t.string "email"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_courses_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"

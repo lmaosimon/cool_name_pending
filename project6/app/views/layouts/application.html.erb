@@ -15,7 +15,7 @@
       <% if isStudent?(current_user) %>
         <%= render 'layouts/student_header' %>
       <% elsif isTeacher?(current_user) %>
-        <!-- TODO: Make a partial for the teacher navbar --!>
+        <%= render 'layouts/teacher_header' %>
       <% elsif isAdmin?(current_user) %>
         <!-- TODO: Make a partial for the admin navbar --!>
       <% end %>

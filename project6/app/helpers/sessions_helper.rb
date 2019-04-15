@@ -14,12 +14,20 @@ module SessionsHelper
 
     # Returns true if the user is a student, false otherwise
     def isStudent?(user)
-        user.status == "Student";
+        if (user.status == "Student")
+            return true;
+        else
+            return false;
+        end
     end
 
     # Returns true if the user is a teacher, false otherwise
     def isTeacher?(user)
-        user.status == "Faculty Employee";
+        if (user.status == "Faculty Employee")
+            return true;
+        else
+            return false;
+        end
     end
 
     # Returns true if the user is an admin, false otherwise
