@@ -1,0 +1,19 @@
+<% provide(:title, "All your submitted courses") %>
+<h1>All your Submitted Courses</h1>
+
+<ul class="courses">
+    <% if @courses.empty? %>
+        <p>You have not submitted any courses for graders to apply to.</p>
+        <p><%= link_to "Click here", newcourse_path %> to submit a course.</p>
+    <% else %>
+        <% @courses.each do |course| %>
+            <li>
+                <strong>Course:</strong> <%= course.course_name %> 
+                <strong>Section:</strong> <%= course.section %>
+                <strong>Instructor:</strong> <%= course.instructor %>
+                <strong>Days:</strong> <%= course_days(course) %>
+                <strong>Time:</strong> <%= course.start_time %> - <%= course.end_time %>
+            </li>
+        <% end %>
+    <% end %>
+</ul>

@@ -3,12 +3,16 @@ class CoursesController < ApplicationController
     @course = Course.new;
   end
 
+  def index
+    @courses = current_user.courses;
+  end
+
   def create
     @course = Course.new(course_params);
     if @course.save
       flash[:success] = "Course successfully added to list of courses!"
       current_user.courses << @course;
-      redirect_to current_user;
+      redirect_to courses_url;
     else
       render 'new'
     end

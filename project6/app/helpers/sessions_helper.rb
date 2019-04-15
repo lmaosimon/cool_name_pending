@@ -23,7 +23,7 @@ module SessionsHelper
 
     # Returns true if the user is a teacher, false otherwise
     def isTeacher?(user)
-        if (user.status == "Faculty Employee")
+        if (user.status == "Employee")
             return true;
         else
             return false;
