@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'recommendations/new'
   root 'static_pages#home'
   get 'sessions/new'
   get '/signup', to: 'users#new'
@@ -10,7 +11,11 @@ Rails.application.routes.draw do
   get '/newcourse', to: 'courses#new'
   get '/courses', to: 'courses#index'
   get '/allcourses', to: 'courses#admin_index'
+  get '/newrecommendation', to: 'recommendations#new'
+  get '/recommendations', to: 'recommendations#index'
+  get '/allrecommendations', to: 'recommendations#admin_index'
   resources :users
   resources :courses
+  resources :recommendations
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,0 +1,37 @@
+<h1>Recommendations#new</h1>
+<p>Find me in app/views/recommendations/new.html.erb</p>
+
+<% provide(:title, 'Submit a Recommendation') %>
+
+<h1>Submit a new Recommendation</h1>
+<p>Looking to recommend a student to grade a course? Fill out the form to recommend a student for
+ a course and add it to the list of student recommendations.</p>
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <%= form_for(@recommendation) do |f| %>
+            <%= render 'shared/error_messages_recommendations' %>
+
+            <div class="form-group">
+                <%= f.label :name, "First and Last Name:" %>
+                <%= f.text_field :name, class: "form-control", value: current_user.name %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :email, "OSU Email:" %>
+                <%= f.text_field :email, class: "form-control", value: current_user.email %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :course, "Course:" %>
+                <%= f.text_field :course, class: "form-control", placeholder: "Ex: CSE 3901" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :section, "Section:" %>
+                <%= f.text_field :section, class: "form-control", placeholder: "Ex: 33151" %>
+            </div>
+
+            <%= f.submit "Submit Course", class: "btn btn-danger btn-block" %>
+        <% end %>
+    </div>
+</div>

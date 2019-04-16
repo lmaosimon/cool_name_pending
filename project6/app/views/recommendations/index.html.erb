@@ -1,0 +1,42 @@
+<% provide(:title, "All your submitted recommendations") %>
+<h1>All your Submitted Recommendations</h1>
+
+<ul class="recommendations">
+    <% if @recommendations.empty? %>
+        <p>There are no recommendations for courses.</p>
+        <p><%= link_to "Click here", newrecommendation_path %> to submit a course.</p>
+    <% else %>
+        <table class="table">
+            <% @courses.each do |course| %>
+                <tr>
+                    <td>
+                        <strong>Course:</strong><br /><%= course.course_name %>
+                    </td>
+                    <td>
+                        <strong>Section:</strong><br /><%= course.section %>
+                    </td>
+                    <td>
+                        <strong>Instructor:</strong><br /><%= course.instructor %>
+                                                    <br /><%= course.email %>
+                    </td>
+                    <td>
+                        <strong>Days:</strong><br /><%= course_days(course) %>
+                    </td>
+                    <td>
+                        <strong>Time:</strong><br /><%= course.start_time %> - <%= course.end_time %>
+                    </td>
+                    <td>
+                        <strong>Assignment:</strong>
+                        
+                    </td>
+                    <td>
+                        <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
+                    </td>
+                    <td>
+                        <%= link_to "Delete", course, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm delete-btn" %>
+                    </td>
+                </tr>
+            <% end %>
+        </table>
+    <% end %>
+</ul>
