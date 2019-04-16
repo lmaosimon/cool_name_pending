@@ -19,7 +19,7 @@
 
             <div class="field">
                 <%= f.label "Current CSE Courses Seeking a Grader:" %><br />
-                <%= f.collection_check_boxes :course_ids, Course.all, :id, :name do |b| %>
+                <%= f.collection_check_boxes Course.all, :instructor, :email, :course_name do |b| %>
                     <div class="collection-check-box">
                         <%= b.check_box %>
                         <%= b.label %>
