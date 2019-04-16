@@ -40,6 +40,14 @@ aside {
     @include box_sizing;
 }
 
+/* Application Layout */
+.container.page-content {
+    margin-top: 45px;
+}
+
+/* Home Page */
+
+
 /* Sign-up Page */
 
 .form-group input[type="text"] {
