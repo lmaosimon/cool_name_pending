@@ -13,6 +13,10 @@
                 <strong>Instructor:</strong> <%= course.instructor %>
                 <strong>Days:</strong> <%= course_days(course) %>
                 <strong>Time:</strong> <%= course.start_time %> - <%= course.end_time %>
+                <span class="group-btn">
+                    <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
+                    <%= link_to "Delete", course, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm delete-btn" %>
+                </span>
             </li>
         <% end %>
     <% end %>
