@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-    has_many :courses # Can have many courses if status is Faculty Employee
+    has_many :courses, dependent: :destroy # Can have many courses if status is Faculty Employee
     before_save { self.email = email.downcase }
     validates :name, presence: true, length: { maximum: 50 }
     VALID_EMAIL_REGEX = /\A[a-zA-Z]+\.\d+@[oO][sS][uU]\.[eE][dD][uU]\z/;
@@ -8,7 +8,7 @@ class User < ApplicationRecord
                       uniqueness: { case_sensitive: false }
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }
-    validates :status, presence: true
+    validates :status, presence: true   
     validate :status_auth
 
     private

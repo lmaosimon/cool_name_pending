@@ -9,6 +9,10 @@ class CoursesController < ApplicationController
     @courses = current_user.courses;
   end
 
+  def admin_index
+    @courses = Course.all;
+  end
+
   def create
     @course = Course.new(course_params);
     if @course.save
@@ -29,7 +33,7 @@ class CoursesController < ApplicationController
   def edit
     @course = Course.find(params[:id]);
     # Stops one teacher from updating another teacher's courses
-    if (@course.user_id != current_user.id)
+    if (@course.user_id != current_user.id && !current_user.admin?)
       redirect_to current_user;
       flash[:danger] = "You are not authorized to access another teacher's courses."
     end
