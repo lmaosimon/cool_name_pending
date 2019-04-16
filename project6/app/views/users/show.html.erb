@@ -1,11 +1,10 @@
 <% provide(:title, @user.name) %>
-<div class="row">
-    <aside class="col-md-4">
-        <section class="user_info">
-            <h1>
-                <%= @user.name %>
-                <%= @user.email %>
-            </h1>
-        </section>
-    </aside>
+<h1>User Profile</h1>
+<br />
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-2 user-cell"><strong>Name:</strong><br /><%= @user.name %></div>
+        <div class="col-lg-2 user-cell"><strong>Email:</strong><br /><%= @user.email %></div>
+        <div class="col-lg-2 user-cell"><strong>Status:</strong><br /><%= @user.status %></div>
+    </div>
 </div>

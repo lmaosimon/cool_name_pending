@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
-  before_action :logged_in_teacher, only: [:index, :create, :destroy, :edit, :update ]
-  before_action :correct_user, only: [:index, :create, :destroy, :edit, :update ]
+  before_action :logged_in_teacher, only: [:new, :index, :create, :destroy, :edit, :update ]
+  before_action :correct_user, only: [:new, :index, :create, :destroy, :edit, :update ]
   def new
     @course = Course.new;
   end

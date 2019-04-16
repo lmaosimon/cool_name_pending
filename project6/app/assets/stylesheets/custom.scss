@@ -45,11 +45,12 @@ aside {
     margin-top: 45px;
 }
 
-/* Home Page */
-
+/* User Profile Page */
+.row .user-cell {
+    text-align: center;
+}
 
 /* Sign-up Page */
-
 .form-group input[type="text"] {
     width: 100%;
 }
