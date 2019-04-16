@@ -1,2 +1,17 @@
-<h1>GraderApplications#new</h1>
-<p>Find me in app/views/grader_applications/new.html.erb</p>
+<% provide(:title, 'Submit a Grader Application') %>
+
+<h1>Add a Grader Application</h1>
+<p>Would you like to be a student grader for a CSE course? Fill out the application to put your name in consideration for a position.</p>
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <%= form_for(@applications) do |f| %>
+            <%= render 'shared/error_messages_applications' %>
+
+            <div class="form-group">
+                <%= f.label :name, "First and Last Name:" %>
+                <%= f.text_field :name, class: "form-control", value: current_user.name, :readonly => true %>
+            </div>
+
+        <% end %>
+    </div>
+</div>

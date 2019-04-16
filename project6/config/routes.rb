@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   get '/newcourse', to: 'courses#new'
   get '/courses', to: 'courses#index'
   get '/allcourses', to: 'courses#admin_index'
+  get '/newapplication', to: 'grader_applications#new'
   resources :users
   resources :courses
+  resources :grader_applications
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
