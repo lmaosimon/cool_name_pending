@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  before_action :logged_in_teacher, only: [:index, :create, :destroy, :edit, :update ]
+  before_action :correct_user, only: [:index, :create, :destroy, :edit, :update ]
   def new
     @course = Course.new;
   end
@@ -26,6 +28,11 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id]);
+    # Stops one teacher from updating another teacher's courses
+    if (@course.user_id != current_user.id)
+      redirect_to current_user;
+      flash[:danger] = "You are not authorized to access another teacher's courses."
+    end
   end
 
   def update
@@ -42,5 +49,21 @@ class CoursesController < ApplicationController
     def course_params
       params.require(:course).permit(:instructor, :email, :course_name, :section, :monday, :tuesday,
         :wednesday, :thursday, :friday, :start_time, :end_time);
+    end
+
+    def logged_in_teacher
+      unless logged_in? && isTeacher?(current_user)
+        if (isStudent?(current_user))
+          flash[:danger] = "Students are not authorized to access this page.";
+          redirect_to current_user;
+        else
+          flash[:danger] = "You must be logged in as a teacher to view this page."
+          redirect_to login_url
+        end
+      end
+    end
+
+    def correct_user
+      redirect_to(current_user) unless current_user?(current_user)
     end
 end
