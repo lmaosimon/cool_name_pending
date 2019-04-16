@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_many :courses # Can have many courses if status is Faculty Employee
+    has_one :grader_application, required: false
     before_save { self.email = email.downcase }
     validates :name, presence: true, length: { maximum: 50 }
     VALID_EMAIL_REGEX = /\A[a-zA-Z]+\.\d+@[oO][sS][uU]\.[eE][dD][uU]\z/;

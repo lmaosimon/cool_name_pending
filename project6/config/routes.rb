@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'grader_applications/new'
   root 'static_pages#home'
   get 'sessions/new'
   get '/signup', to: 'users#new'
