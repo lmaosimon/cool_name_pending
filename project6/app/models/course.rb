@@ -1,5 +1,7 @@
 class Course < ApplicationRecord
     belongs_to :user, required: false
+    has_and_belongs_to_many :grader_application, required: false
+
     validates :instructor, presence: true, length: { maximum: 50 }
     VALID_EMAIL_REGEX = /\A[a-zA-Z]+\.\d+@[oO][sS][uU]\.[eE][dD][uU]\z/;
     validates :email, presence: true, length: { maximum: 255 },
@@ -17,8 +19,6 @@ class Course < ApplicationRecord
     validates :end_time, presence: true, length: { maximum: 8 },
                          format: { with: VALID_TIME_REGEX }
     validate :valid_time_range
-    
-    #FIXME: has_and_belongs_to_many :grader_application, required: false
 
     private
         # Function to validate that a valid time range was given

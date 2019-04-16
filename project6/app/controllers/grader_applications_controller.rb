@@ -35,7 +35,7 @@ class GraderApplicationsController < ApplicationController
 
   private
     def application_params
-      params.require(:grader_application).permit(:name, :email, :qualifications);
+      params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]);
     end
 
     def logged_in_student

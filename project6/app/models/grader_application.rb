@@ -1,5 +1,5 @@
 class GraderApplication < ApplicationRecord
-    belongs_to :user, required: false
+    belongs_to :user, required: false, dependent: :destroy
     validates :name, presence: true, length: { maximum: 50 }
 
     VALID_EMAIL_REGEX = /\A[a-zA-Z]+\.\d+@[oO][sS][uU]\.[eE][dD][uU]\z/;

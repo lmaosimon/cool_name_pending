@@ -12,6 +12,26 @@
                 <%= f.text_field :name, class: "form-control", value: current_user.name, :readonly => true %>
             </div>
 
+            <div class="form-group">
+                <%= f.label :email, "OSU Email:" %>
+                <%= f.text_field :email, class: "form-control", value: current_user.email, :readonly => true %>
+            </div>
+
+            <div class="field">
+                <%= f.label "Current CSE Courses Seeking a Grader:" %><br />
+                <%= f.collection_check_boxes :course_ids, Course.all, :id, :name do |b| %>
+                    <div class="collection-check-box">
+                        <%= b.check_box %>
+                        <%= b.label %>
+                     </div>
+                <% end %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :qualifications, "Which courses have you taken that qualify you as a grader?" %>
+                <%= f.text_field :qualifications, class: "form-control" %>
+            </div>
+
         <% end %>
     </div>
 </div>
