@@ -20,9 +20,12 @@
     <li class="nav-item">
       <%= link_to "Submitted Courses", courses_path, class: "nav-link" %>
     </li>
+    <% if current_user.admin? %>
+      <%= render 'layouts/admin_links' %>
+    <% end %>
     <li class="nav-item">
         <%= link_to "Log Out", logout_path, class: "nav-link", method: :delete %>
-    </li> 
+    </li>
   </ul>
 </div> 
 

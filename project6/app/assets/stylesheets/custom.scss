@@ -40,8 +40,17 @@ aside {
     @include box_sizing;
 }
 
-/* Sign-up Page */
+/* Application Layout */
+.container.page-content {
+    margin-top: 45px;
+}
 
+/* User Profile Page */
+.row .user-cell {
+    text-align: center;
+}
+
+/* Sign-up Page */
 .form-group input[type="text"] {
     width: 100%;
 }
@@ -106,3 +115,7 @@ footer ul li {
         border-bottom: 1px solid #888888;
     }
 }
+
+.courses .group-btn {
+    float: right;
+  }

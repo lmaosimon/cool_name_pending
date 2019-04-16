@@ -12,6 +12,10 @@ module SessionsHelper
         end
     end
 
+    def current_user?(user)
+        user == current_user;
+    end
+
     # Returns true if the user is a student, false otherwise
     def isStudent?(user)
         if (user.status == "Student")

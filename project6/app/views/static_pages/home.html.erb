@@ -1,12 +1,16 @@
 <% provide(:title, "Home") %>
 
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron">
     <div class="container">
         <h1>Welcome to the OSU CSE Grader's Portal!</h1>
         <p>Click 'Sign Up' to create a CSE Grader profile and submit an application.
          If you've already submitted an application, click 'Log In' to view your application.
          </p>
-         <%= link_to "Sign Up", signup_path, class: "btn btn-danger" %>
-         <%= link_to "Log In", login_path, class: "btn btn-danger" %>
+         <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                <%= link_to "Sign Up", signup_path, class: "btn btn-danger btn-block" %>
+                <%= link_to "Log In", login_path, class: "btn btn-danger btn-block" %>
+            </div>
+        </div>
     </div>
 </div>

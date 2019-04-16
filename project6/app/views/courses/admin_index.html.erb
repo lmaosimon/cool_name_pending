@@ -1,9 +1,9 @@
 <% provide(:title, "All your submitted courses") %>
-<h1>All your Submitted Courses</h1>
+<h1>All Submitted Courses</h1>
 
 <ul class="courses">
     <% if @courses.empty? %>
-        <p>You have not submitted any courses for graders to apply to.</p>
+        <p>There are not any courses to assign a grader to.</p>
         <p><%= link_to "Click here", newcourse_path %> to submit a course.</p>
     <% else %>
         <table class="table">
