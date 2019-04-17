@@ -20,6 +20,12 @@
     <li class="nav-item">
       <%= link_to "Submitted Courses", courses_path, class: "nav-link" %>
     </li>
+    <li class="nav-item">
+      <%= link_to "Submit a Recommendation", newrecommendation_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Submitted Recommendations", recommendations_path, class: "nav-link" %>
+    </li>
     <% if current_user.admin? %>
       <%= render 'layouts/admin_links' %>
     <% end %>

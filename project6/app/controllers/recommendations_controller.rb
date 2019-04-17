@@ -6,7 +6,7 @@ class RecommendationsController < ApplicationController
   end
 
   def index
-    @recommendations = current_user.courses;
+    @recommendations = current_user.recommendations;
   end
 
   def admin_index
@@ -41,7 +41,7 @@ class RecommendationsController < ApplicationController
 
   def update
     @recommendation = Recommendation.find(params[:id]);
-    if (@recommendation.update_attributes(recommendatione_params))
+    if (@recommendation.update_attributes(recommendation_params))
       flash[:success] = "Recommendation updated";
       redirect_to recommendations_url;
     else
@@ -51,7 +51,7 @@ class RecommendationsController < ApplicationController
 
   private
     def recommendation_params
-      params.require(:recommentaions).permit(:name, :email, :course, :section);
+      params.require(:recommendation).permit(:name, :email, :course, :section);
     end
 
     def logged_in_teacher
@@ -69,5 +69,4 @@ class RecommendationsController < ApplicationController
     def correct_user
       redirect_to(current_user) unless current_user?(current_user)
     end
-end
 end

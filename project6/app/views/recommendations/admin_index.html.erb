@@ -1,10 +1,10 @@
-<% provide(:title, "All your submitted Recommendations") %>
+<% provide(:title, "All submitted Recommendations") %>
 <h1>All Submitted Recommendations</h1>
 
 <ul class="recommendations">
     <% if @recommendations.empty? %>
-        <p>There are no student recommendations for courses.</p>
-        <p><%= link_to "Click here", newcourse_path %> to submit a recommendation.</p>
+        <p>There are no student recommendations for any courses.</p>
+        <p><%= link_to "Click here", newrecommendation_path %> to submit a recommendation.</p>
     <% else %>
         <table class="table">
             <% @recommendations.each do |recommendation| %>
@@ -13,7 +13,7 @@
                         <strong>Course:</strong><br /><%= recommendation.course %>
                     </td>
                     <td>
-                        <strong>Section:</strong><br /><%= courecommendationrse.section %>
+                        <strong>Section:</strong><br /><%= recommendation.section %>
                     </td>
                     <td>
                         <strong>Name:</strong><br /><%= recommendation.name %>

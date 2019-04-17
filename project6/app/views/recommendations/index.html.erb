@@ -3,37 +3,31 @@
 
 <ul class="recommendations">
     <% if @recommendations.empty? %>
-        <p>There are no recommendations for courses.</p>
+        <p>There are no student recommendations for any courses.</p>
         <p><%= link_to "Click here", newrecommendation_path %> to submit a course.</p>
     <% else %>
         <table class="table">
-            <% @courses.each do |course| %>
+            <% @recommendations.each do |recommendation| %>
                 <tr>
                     <td>
-                        <strong>Course:</strong><br /><%= course.course_name %>
+                        <strong>Course:</strong><br /><%= recommendation.course %>
                     </td>
                     <td>
-                        <strong>Section:</strong><br /><%= course.section %>
+                        <strong>Section:</strong><br /><%= recommendation.section %>
                     </td>
                     <td>
-                        <strong>Instructor:</strong><br /><%= course.instructor %>
-                                                    <br /><%= course.email %>
-                    </td>
-                    <td>
-                        <strong>Days:</strong><br /><%= course_days(course) %>
-                    </td>
-                    <td>
-                        <strong>Time:</strong><br /><%= course.start_time %> - <%= course.end_time %>
+                        <strong>Student:</strong><br /><%= recommendation.name %>
+                                                    <br /><%= recommendation.email %>
                     </td>
                     <td>
                         <strong>Assignment:</strong>
                         
                     </td>
                     <td>
-                        <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
+                        <%= link_to "Edit", edit_recommendation_path(recommendation), class: "btn btn-danger btn-sm edit-btn" %>
                     </td>
                     <td>
-                        <%= link_to "Delete", course, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm delete-btn" %>
+                        <%= link_to "Delete", recommendation, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm delete-btn" %>
                     </td>
                 </tr>
             <% end %>

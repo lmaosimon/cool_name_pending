@@ -1,21 +1,19 @@
-<% provide(:title, 'Submit a Recommendation') %>
+<% provide(:title, 'Edit a Recommendation') %>
 
-<h1>Submit a new Recommendation</h1>
-<p>Looking to recommend a student to grade a course? Fill out the form to recommend a student for
- a course and add it to the list of student recommendations.</p>
+<h1>Edit a Recommendation</h1>
 <div class="row justify-content-md-center">
     <div class="col-md-6">
         <%= form_for(@recommendation) do |f| %>
             <%= render 'shared/error_messages_recommendations' %>
 
             <div class="form-group">
-                <%= f.label :name, "Student First and Last Name:" %>
-                <%= f.text_field :name, class: "form-control", placeholder: "Ex: Becky Buckeye" %>
+                <%= f.label :name, "First and Last Name:" %>
+                <%= f.text_field :name, class: "form-control" %>
             </div>
 
             <div class="form-group">
                 <%= f.label :email, "OSU Email:" %>
-                <%= f.text_field :email, class: "form-control", placeholder: "Ex: Buckeye.1@osu.edu" %>
+                <%= f.text_field :email, class: "form-control" %>
             </div>
 
             <div class="form-group">
@@ -28,7 +26,7 @@
                 <%= f.text_field :section, class: "form-control", placeholder: "Ex: 33151" %>
             </div>
 
-            <%= f.submit "Submit Recommendation", class: "btn btn-danger btn-block" %>
+            <%= f.submit "Save Changes", class: "btn btn-danger btn-block" %>
         <% end %>
     </div>
 </div>
