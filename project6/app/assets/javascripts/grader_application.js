@@ -6,3 +6,8 @@ $(document).on('turbolinks:load', function() {
      
 });
 
+$(document).on("ready page:change", function() {
+    $("[data-toggle='tooltip']")
+      .tooltip("destroy")
+      .tooltip();
+  });

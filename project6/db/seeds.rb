@@ -7,7 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(name: "Patrick Hubbell", email: "hubbell.64@osu.edu", status: "Student", password: "foobar", password_confirmation: "foobar");
-User.create(name: "Scott Sharkey", email: "sharkey.30@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
+User.create(name: "Gino Detore", email: "detore.4@osu.edu", status: "Student", password: "foobar", password_confirmation: "foobar");
+User.create(name: "Scott Sharkey", email: "sharkey.30@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar", admin: true);
 User.create(name: "Jayson Boubin", email: "boubin.2@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
 
 Course.create(course_name: "CSE 3901", instructor: "Scott Sharkey", email: "sharkey.30@osu.edu", section: "11111", monday: true, tuesday: false, wednesday: true, thursday: false, friday: false, start_time: "3:00 PM", end_time: "4:00 PM");

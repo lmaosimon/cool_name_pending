@@ -1,0 +1,28 @@
+<% provide(:title, 'Your Application') %>
+<h1>Your Grader Application</h1>
+<br />
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Name: </strong><%= @application.name %></li>
+        <li class="list-group-item"><strong>Email: </strong><%= @application.email %></li>
+        <li class="list-group-item"><strong>Courses: </strong>
+            <% @application.courses.each do |course| %>
+                <p class="text-left">
+                    <%= course.course_name %>
+                    <%= course.section %>
+                    <%= course.instructor %>
+                    <%= course_days(course) %>
+                    <%= course.start_time %> - <%= course.end_time %>
+                </p>
+            <% end %>
+        </li>
+        <li class="list-group-item"><strong>Qualifications: </strong><%= @application.qualifications %></li>
+    </ul>
+
+    <br />
+    <span>
+        <%= link_to "Edit", edit_grader_application_path(@application), class: "btn btn-danger edit-btn" %>
+        <%= link_to "Delete", @application, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger delete-btn" %>
+    </span>
+
+</div>
