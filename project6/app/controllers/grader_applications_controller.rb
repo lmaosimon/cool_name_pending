@@ -1,6 +1,6 @@
 class GraderApplicationsController < ApplicationController
-  before_action :logged_in_student, only: [:new, :index, :create, :destroy, :edit, :update ]
-  before_action :correct_user, only: [:new, :index, :create, :destroy, :edit, :update ]
+  before_action :logged_in_student, only: [:new, :show, :index, :create, :destroy, :edit, :update ]
+  before_action :correct_user, only: [:new, :show, :index, :create, :destroy, :edit, :update ]
   
   def new
     @application = GraderApplication.new
@@ -15,27 +15,40 @@ class GraderApplicationsController < ApplicationController
     if @application.save
       flash[:success] = "Application successfully submitted!"
       current_user.grader_application = @application;
-      redirect_to current_user; #FIXME:
+      redirect_to current_user;
     else
       render 'new'
     end
   end
 
   def destroy
-
+    GraderApplication.find(params[:id]).destroy;
+    flash[:success] = "Application deleted";
+    redirect_to current_user;
   end
 
   def edit
-
+    @application = GraderApplication.find(params[:id]);
+    # Stops one student from editing another student's application
+    if (@application.user_id != current_user.id && !current_user.admin?)
+      redirect_to current_user;
+      flash[:danger] = "You are not authorized to access another student's application."
+    end
   end
 
   def update
-
+    @application = GraderApplication.find(params[:id]);
+    if (@application.update_attributes(application_params))
+      flash[:success] = "Application updated";
+      redirect_to current_user;
+    else
+      render 'edit'
+    end
   end
 
   private
     def application_params
-      params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]);
+      params.require(:grader_application).permit(:name, :email, :checkbox_value, :qualifications, course_ids:[]);
     end
 
     def logged_in_student

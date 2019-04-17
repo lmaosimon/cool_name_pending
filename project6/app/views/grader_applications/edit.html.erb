@@ -1,11 +1,7 @@
-<% provide(:title, 'Submit a Grader Application') %>
+<% provide(:title, 'Edit your Grader Application') %>
 
-<h1>Add a Grader Application</h1>
-<p>Would you like to be a student grader for a CSE course? Fill out the application to put your name in consideration for a position.</p>
+<h1>Edit your Grader Application</h1>
 <div class="row justify-content-md-center">
-<% if Course.count == 0 %>
-    <p>Sorry, there are currently no CSE courses seeking a grader. Check again later to submit an application.</p>
-<% else %>
     <div class="col-md-6">
         <%= form_for(@application) do |f| %>
             <%= render 'shared/error_messages_applications' %>
@@ -39,8 +35,7 @@
 
             <br />
             <%= f.submit "Submit my application", class: "btn btn-danger btn-block" %>
-            
+
         <% end %>
     </div>
 </div>
-<% end %>
