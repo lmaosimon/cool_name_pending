@@ -15,7 +15,7 @@ class GraderApplicationsController < ApplicationController
     if @application.save
       flash[:success] = "Application successfully submitted!"
       current_user.grader_application = @application;
-      redirect_to current_user; #FIXME:
+      redirect_to current_user;
     else
       render 'new'
     end
