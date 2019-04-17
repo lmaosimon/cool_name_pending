@@ -48,7 +48,7 @@ class GraderApplicationsController < ApplicationController
 
   private
     def application_params
-      params.require(:grader_application).permit(:name, :email, :checkbox_value, :qualifications, course_ids:[]);
+      params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]); #FIXME: Add some param to track selected courses
     end
 
     def logged_in_student
