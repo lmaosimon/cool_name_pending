@@ -30,6 +30,11 @@ ActiveRecord::Schema.define(version: 2019_04_17_143540) do
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
+  create_table "courses_grader_applications", id: false, force: :cascade do |t|
+    t.integer "grader_application_id", null: false
+    t.integer "course_id", null: false
+  end
+
   create_table "grader_applications", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -40,11 +45,6 @@ ActiveRecord::Schema.define(version: 2019_04_17_143540) do
     t.integer "user_id"
     t.index ["courses_id"], name: "index_grader_applications_on_courses_id"
     t.index ["user_id"], name: "index_grader_applications_on_user_id"
-  end
-  
-  create_table "courses_grader_applications", id: false, force: :cascade do |t|
-    t.integer "grader_application_id", null: false
-    t.integer "course_id", null: false
   end
 
   create_table "recommendations", force: :cascade do |t|
