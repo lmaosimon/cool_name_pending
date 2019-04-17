@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <title><%= yield(:title) %> | OSU CSE Grader's Portal</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -17,7 +18,7 @@
       <% elsif isTeacher?(current_user) %>
         <%= render 'layouts/teacher_header' %>
       <% elsif isAdmin?(current_user) %>
-        <!-- TODO: Make a partial for the admin navbar --!>
+        <!-- TODO: Make a partial for the admin navbar -->
       <% end %>
     <% else %>
       <%= render 'layouts/header' %>
