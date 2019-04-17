@@ -7,6 +7,5 @@ class GraderApplication < ApplicationRecord
     validates :email, presence: true, length: { maximum: 255 },
                       format: { with: VALID_EMAIL_REGEX }
     validates :qualifications, presence: true, length: { maximum: 240 }
-    validate :course_selected
             
 end
