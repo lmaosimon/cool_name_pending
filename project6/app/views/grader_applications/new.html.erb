@@ -2,45 +2,45 @@
 
 <h1>Add a Grader Application</h1>
 <p>Would you like to be a student grader for a CSE course? Fill out the application to put your name in consideration for a position.</p>
-<div class="row justify-content-md-center">
 <% if Course.count == 0 %>
-    <p>Sorry, there are currently no CSE courses seeking a grader. Check again later to submit an application.</p>
-<% else %>
-    <div class="col-md-6">
-        <%= form_for(@application) do |f| %>
-            <%= render 'shared/error_messages_applications' %>
+    <p>Sorry, there are no courses to apply to. Please check later to submit an application.</p>
+<% else %>    
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <%= form_for(@application) do |f| %>
+                <%= render 'shared/error_messages_applications' %>
 
-            <div class="form-group">
-                <%= f.label :name, "First and Last Name:" %>
-                <%= f.text_field :name, class: "form-control", value: current_user.name, :readonly => true %>
-            </div>
+                <div class="form-group">
+                    <%= f.label :name, "First and Last Name:" %>
+                    <%= f.text_field :name, class: "form-control", value: current_user.name, :readonly => true %>
+                </div>
 
-            <div class="form-group">
-                <%= f.label :email, "OSU Email:" %>
-                <%= f.text_field :email, class: "form-control", value: current_user.email, :readonly => true %>
-            </div>
-            
-            <div class="form-group">
-                <% i = 1 %>
-                <%= f.label :courses_id, "Current CSE Courses Seeking a Grader:" %><br />
-                <%= f.collection_check_boxes :courses_id, Course.all, :instructor, :course_name do |b| %>
-                    <div class="collection-check-box">
-                        <%= b.check_box %>
-                        <%= course_info(Course.find(i)) %>
-                        <% i += 1 %>
-                    </div>
-                <% end %>
-            </div>
-            
-            <div class="form-group">
-                <%= f.label :qualifications, "Which courses have you taken that qualify you as a grader?" %>
-                <%= f.text_field :qualifications, class: "form-control" %>
-            </div>
+                <div class="form-group">
+                    <%= f.label :email, "OSU Email:" %>
+                    <%= f.text_field :email, class: "form-control", value: current_user.email, :readonly => true %>
+                </div>
+                
+                <div class="form-group">
+                    <% i = 1 %>
+                    <%= f.label :courses_id, "Current CSE Courses Seeking a Grader:" %><br />
+                    <%= f.collection_check_boxes :course_ids, Course.all, :id, :course_name do |b| %>
+                        <div class="collection-check-box">
+                            <%= b.check_box %>
+                            <%= course_info(Course.find(i)) %>
+                            <% i += 1 %>
+                        </div>
+                    <% end %>
+                </div>
+                
+                <div class="form-group">
+                    <%= f.label :qualifications, "Which courses have you taken that qualify you as a grader?" %>
+                    <%= f.text_field :qualifications, class: "form-control" %>
+                </div>
 
-            <br />
-            <%= f.submit "Submit my application", class: "btn btn-danger btn-block" %>
-            
-        <% end %>
+                <br />
+                <%= f.submit "Submit", class: "btn btn-danger btn-block submit" %>
+
+            <% end %>
+        </div>
     </div>
-</div>
 <% end %>
