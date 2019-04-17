@@ -6,6 +6,10 @@ class GraderApplicationsController < ApplicationController
     @application = GraderApplication.new
   end
 
+  def show
+    @application = GraderApplication.find(current_user.grader_application.id);
+  end
+
   def index
     @applications = GraderApplication.all
   end
@@ -28,7 +32,7 @@ class GraderApplicationsController < ApplicationController
   end
 
   def edit
-    @application = GraderApplication.find(params[:id]);
+    @application = GraderApplication.find(current_user.grader_application.id);
     # Stops one student from editing another student's application
     if (@application.user_id != current_user.id && !current_user.admin?)
       redirect_to current_user;
@@ -48,7 +52,7 @@ class GraderApplicationsController < ApplicationController
 
   private
     def application_params
-      params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]); #FIXME: Add some param to track selected courses
+      params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]);
     end
 
     def logged_in_student

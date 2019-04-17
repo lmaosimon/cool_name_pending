@@ -21,14 +21,10 @@
                 </div>
                 
                 <div class="form-group">
-                    <% i = 1 %>
-                    <%= f.label :courses_id, "Current CSE Courses Seeking a Grader:" %><br />
-                    <%= f.collection_check_boxes :course_ids, Course.all, :id, :course_name do |b| %>
-                        <div class="collection-check-box">
-                            <%= b.check_box %>
-                            <%= course_info(Course.find(i)) %>
-                            <% i += 1 %>
-                        </div>
+                    <%= hidden_field_tag "grader_application[course_ids][]", nil %>
+                    <% Course.all.each do |course| %>
+                        <%= check_box_tag "grader_application[course_ids][]", course.id, @application.course_ids.include?(course.id) %>
+                        <%= course_info(course) %><br />
                     <% end %>
                 </div>
                 

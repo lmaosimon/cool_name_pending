@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     has_many :recommendations, dependent: :destroy # Can have many submitted recommendations if status is Faculty Employee
-    has_one :grader_application, required: false
+    has_one :grader_application, required: false, dependent: :destroy
     has_many :courses, dependent: :destroy # Can have many courses if status is Faculty Employee
     before_save { self.email = email.downcase }
     validates :name, presence: true, length: { maximum: 50 }
