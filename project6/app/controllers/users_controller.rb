@@ -33,7 +33,11 @@ class UsersController < ApplicationController
     end
 
     def correct_user
-      @user = User.find(params[:id]);
-      redirect_to(current_user) unless @user == current_user;
+      if (User.exists?(params[:id]))
+        @user = User.find(params[:id]);
+        redirect_to(current_user) unless @user == current_user;
+      else
+        redirect_to(current_user);
+      end
     end
 end           

@@ -1,0 +1,32 @@
+<% provide(:title, 'Edit a Recommendation') %>
+
+<h1>Edit a Recommendation</h1>
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <%= form_for(@recommendation) do |f| %>
+            <%= render 'shared/error_messages_recommendations' %>
+
+            <div class="form-group">
+                <%= f.label :name, "First and Last Name:" %>
+                <%= f.text_field :name, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :email, "OSU Email:" %>
+                <%= f.text_field :email, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :course, "Course:" %>
+                <%= f.text_field :course, class: "form-control", placeholder: "Ex: CSE 3901" %>
+            </div>
+
+            <div class="form-group">
+                <%= f.label :section, "Section:" %>
+                <%= f.text_field :section, class: "form-control", placeholder: "Ex: 33151" %>
+            </div>
+
+            <%= f.submit "Save Changes", class: "btn btn-danger btn-block" %>
+        <% end %>
+    </div>
+</div>

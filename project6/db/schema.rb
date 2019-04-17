@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 2019_04_17_014957) do
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
+  create_table "recommendations", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "course"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "section"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_recommendations_on_user_id"
+  end
+  
   create_table "grader_applications", force: :cascade do |t|
     t.string "name"
     t.string "email"
