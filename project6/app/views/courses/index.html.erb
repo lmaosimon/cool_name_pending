@@ -7,33 +7,34 @@
         <p><%= link_to "Click here", newcourse_path %> to submit a course.</p>
     <% else %>
         <table class="table">
+            <tr class="table-danger">
+                <td><strong>Course:</strong><br /></td>
+                <td><strong>Section:</strong><br /></td>
+                <td><strong>Instructor:</strong></td>
+                <td><strong>Days:</strong></td>
+                <td><strong>Time:</strong></td>
+                <td><strong>Assignment:</strong></td>
+                <td><strong>Actions:</strong></td>
+            </tr>
             <% @courses.each do |course| %>
                 <tr>
                     <td>
-                        <strong>Course:</strong><br /><%= course.course_name %>
+                        <%= course.course_name %>
                     </td>
                     <td>
-                        <strong>Section:</strong><br /><%= course.section %>
+                        <%= course.section %>
                     </td>
                     <td>
-                        <strong>Instructor:</strong><br /><%= course.instructor %>
-                                                    <br /><%= course.email %>
+                        <%= course.instructor %><br /><%= course.email %>
                     </td>
+                    <td><%= course_days(course) %></td>
+                    <td><%= course.start_time %> - <%= course.end_time %></td>
+                    <td></td>
                     <td>
-                        <strong>Days:</strong><br /><%= course_days(course) %>
-                    </td>
-                    <td>
-                        <strong>Time:</strong><br /><%= course.start_time %> - <%= course.end_time %>
-                    </td>
-                    <td>
-                        <strong>Assignment:</strong>
-                        
-                    </td>
-                    <td>
-                        <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
-                    </td>
-                    <td>
-                        <%= link_to "Delete", course, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm delete-btn" %>
+                        <span>
+                            <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
+                            <%= link_to "Delete", course, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm delete-btn" %>
+                        </span>
                     </td>
                 </tr>
             <% end %>

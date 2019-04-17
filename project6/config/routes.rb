@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
   get 'recommendations/new'
+=======
+  get 'grader_applications/new'
+>>>>>>> origin/master
   root 'static_pages#home'
   get 'sessions/new'
   get '/signup', to: 'users#new'

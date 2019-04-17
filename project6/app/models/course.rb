@@ -17,6 +17,8 @@ class Course < ApplicationRecord
     validates :end_time, presence: true, length: { maximum: 8 },
                          format: { with: VALID_TIME_REGEX }
     validate :valid_time_range
+    
+    #has_and_belongs_to_many :grader_application, required: false
 
     private
         # Function to validate that a valid time range was given
