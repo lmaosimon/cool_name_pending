@@ -4,7 +4,7 @@
 <p>Would you like to be a student grader for a CSE course? Fill out the application to put your name in consideration for a position.</p>
 <div class="row justify-content-md-center">
     <div class="col-md-6">
-        <%= form_for(@applications) do |f| %>
+        <%= form_for(@application) do |f| %>
             <%= render 'shared/error_messages_applications' %>
 
             <div class="form-group">
@@ -16,21 +16,26 @@
                 <%= f.label :email, "OSU Email:" %>
                 <%= f.text_field :email, class: "form-control", value: current_user.email, :readonly => true %>
             </div>
-
-            <div class="field">
-                <%= f.label "Current CSE Courses Seeking a Grader:" %><br />
-                <%= f.collection_check_boxes Course.all, :instructor, :email, :course_name do |b| %>
+            
+            <div class="form-group">
+                <% i = 1 %>
+                <%= f.label :courses_id, "Current CSE Courses Seeking a Grader:" %><br />
+                <%= f.collection_check_boxes :courses_id, Course.all, :instructor, :course_name do |b| %>
                     <div class="collection-check-box">
                         <%= b.check_box %>
-                        <%= b.label %>
-                     </div>
+                        <%= course_info(Course.find(i)) %>
+                        <% i += 1 %>
+                    </div>
                 <% end %>
             </div>
-
+            
             <div class="form-group">
                 <%= f.label :qualifications, "Which courses have you taken that qualify you as a grader?" %>
                 <%= f.text_field :qualifications, class: "form-control" %>
             </div>
+
+            <br />
+            <div class="action"><%= f.submit "Submit" %></div>
 
         <% end %>
     </div>

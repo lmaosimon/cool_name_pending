@@ -18,4 +18,9 @@ module CoursesHelper
         end
         return daysStr;
     end
+
+    def course_info(c)
+        courseInfo = c.course_name + ", " + c.section + ", " + c.instructor + ", " + course_days(c) + " " + c.start_time + " - " + c.end_time;
+        return courseInfo;
+    end
 end

@@ -3,7 +3,7 @@ class GraderApplicationsController < ApplicationController
   before_action :correct_user, only: [:new, :index, :create, :destroy, :edit, :update ]
   
   def new
-    @applications = GraderApplication.new
+    @application = GraderApplication.new
   end
 
   def index
@@ -14,7 +14,7 @@ class GraderApplicationsController < ApplicationController
     @application = GraderApplication.new(application_params);
     if @application.save
       flash[:success] = "Application successfully submitted!"
-      current_user.grader_application << @application;
+      current_user.grader_application = @application;
       redirect_to current_user; #FIXME:
     else
       render 'new'
