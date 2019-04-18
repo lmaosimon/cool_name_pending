@@ -2,6 +2,7 @@ class User < ApplicationRecord
     has_many :recommendations, dependent: :destroy # Can have many submitted recommendations if status is Faculty Employee
     has_one :grader_application, required: false, dependent: :destroy
     has_many :courses, dependent: :destroy # Can have many courses if status is Faculty Employee
+    belongs_to :course, required: false
     before_save { self.email = email.downcase }
     validates :name, presence: true, length: { maximum: 50 }
     VALID_EMAIL_REGEX = /\A[a-zA-Z]+\.\d+@[oO][sS][uU]\.[eE][dD][uU]\z/;
@@ -9,7 +10,7 @@ class User < ApplicationRecord
                       format: { with: VALID_EMAIL_REGEX },
                       uniqueness: { case_sensitive: false }
     has_secure_password
-    validates :password, presence: true, length: { minimum: 6 }
+    validates :password, presence: true, length: { minimum: 6 }, :if => :password
     validates :status, presence: true   
     validate :status_auth
 

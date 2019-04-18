@@ -59,6 +59,10 @@ class GraderApplicationsController < ApplicationController
       params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]);
     end
 
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :status);
+    end
+
     def logged_in_student
       unless logged_in? && isStudent?(current_user)
         if (!isStudent?(current_user) && !current_user.admin?)

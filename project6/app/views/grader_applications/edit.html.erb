@@ -5,7 +5,6 @@
     <div class="col-md-6">
         <%= form_for(@application) do |f| %>
             <%= render 'shared/error_messages_applications' %>
-
             <div class="form-group">
                 <%= f.label :name, "First and Last Name:" %>
                 <%= f.text_field :name, class: "form-control", value: current_user.name, :readonly => true %>
