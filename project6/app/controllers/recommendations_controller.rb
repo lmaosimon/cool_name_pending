@@ -27,7 +27,11 @@ class RecommendationsController < ApplicationController
   def destroy
     Recommendation.find(params[:id]).destroy;
     flash[:success] = "Recommendation deleted";
-    redirect_to recommendations_url;
+    if (current_user.admin?)
+      redirect_to allrecommendations_url;
+    else
+      redirect_to recommendations_url;
+    end
   end
 
   def edit

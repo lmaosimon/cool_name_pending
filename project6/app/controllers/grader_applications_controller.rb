@@ -50,6 +50,9 @@ class GraderApplicationsController < ApplicationController
     end
   end
 
+  def assign
+  end
+
   private
     def application_params
       params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]);
