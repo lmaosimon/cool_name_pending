@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id]);
     if (@user.update_attributes(user_params))
       flash[:success] = "User assigned to course";
-      @user.grader_application.assignment = @user.course.course_name + ", " + @user.course.section;
+      @user.grader_application.assignment = course_info(@user.course);
       @user.grader_application.save;
       redirect_to allapplications_url;
     else
