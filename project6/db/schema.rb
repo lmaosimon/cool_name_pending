@@ -67,9 +67,11 @@ ActiveRecord::Schema.define(version: 2019_04_18_032737) do
     t.string "password_digest"
     t.string "status"
     t.boolean "admin", default: false
+    t.integer "grader_applications_id"
     t.integer "course_id"
     t.index ["course_id"], name: "index_users_on_course_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["grader_applications_id"], name: "index_users_on_grader_applications_id"
   end
 
 end

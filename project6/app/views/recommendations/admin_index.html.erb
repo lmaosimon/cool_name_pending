@@ -1,5 +1,5 @@
 <% provide(:title, "All submitted recommendations") %>
-<h1>All Submitted Recommendations</h1>
+<h1>All Submitted Recommendations</h1><br />
 
 <ul class="recommendations">
     <% if @recommendations.empty? %>
@@ -16,7 +16,13 @@
             <% @recommendations.each do |recommendation| %>
                 <tr>
                     <td><%= recommendation.course %></td>
-                    <td><%= recommendation.section %></td>
+                    <td>
+                        <% if recommendation.section == "" %>
+                            <p>N/A</p>
+                        <% else %>
+                            <%= recommendation.section %>
+                        <% end %>
+                    </td>
                     <td><%= recommendation.name %><br /><%= recommendation.email %></td>
                     <td>
                         <span>

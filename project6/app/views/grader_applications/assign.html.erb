@@ -1,6 +1,6 @@
 <% provide(:title, 'Assign a Grader') %>
 
-<h1>Assign a Grader</h1>
+<h1>Assign a Grader</h1><br />
 <div class="row">
     <div class="col-lg-6 offset-lg-3">
         <strong>Choose a course to assign <%= @application.name %> to:</strong><br />
@@ -10,7 +10,7 @@
                 <%= f.radio_button :course_id, course.id %>
                 <%= f.label :course_id, course_info(course) %>
                 <br />
-            <% end %>
+            <% end %><br />
             <div class="row">
                 <div class="col-lg-4 offset-lg-4">
                     <%= f.submit "Assign", class: "btn btn-danger btn-block" %>
