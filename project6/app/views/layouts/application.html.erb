@@ -11,13 +11,6 @@
   </head>
 
   <body>
-    <script src="content/js/jquery.min.js"></script>
-    <script src="content/js/bootstrap.min.js"></script>
-    <script>
-      $(document).ready(function () {
-          $('.dropdown-toggle').dropdown();
-      });
-    </script>
     <% if logged_in? %>
       <% if isStudent?(current_user) %>
         <%= render 'layouts/student_header' %>
