@@ -17,8 +17,6 @@
         <%= render 'layouts/student_header' %>
       <% elsif isTeacher?(current_user) %>
         <%= render 'layouts/teacher_header' %>
-      <% elsif isAdmin?(current_user) %>
-        <!-- TODO: Make a partial for the admin navbar -->
       <% end %>
     <% else %>
       <%= render 'layouts/header' %>
@@ -34,7 +32,7 @@
       <%= render 'layouts/footer' %>
     </div>
 
-    <%= debug(params) if Rails.env.development? %>
+    <!--<%= debug(params) if Rails.env.development? %>-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
