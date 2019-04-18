@@ -20,9 +20,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    if (params[:password].blank?)
+      params.delete(:password);
+    end
+    @user = User.find(params[:id]);
+    if (@user.update_attributes(user_params))
+      flash[:success] = "User assigned to course";
+      @user.grader_application.assignment = @user.course.course_name + ", " + @user.course.section;
+      @user.grader_application.save;
+      redirect_to allapplications_url;
+    else
+      flash[:danger] = "User could not be assigned to course"
+      redirect_to allapplications_url;
+    end
+  end
+
   private
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :status);
+      params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :status, :course_id);
     end
 
     def logged_in_user

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get '/editapplication', to: 'grader_applications#edit'
   delete '/deleteapplication', to: 'grader_applications#destroy'
   get '/allapplications', to: 'grader_applications#index'
+  get '/grader_applications/:id', to: 'grader_applications#assign', as: 'assign'
   get '/newrecommendation', to: 'recommendations#new'
   get '/recommendations', to: 'recommendations#index'
   get '/allrecommendations', to: 'recommendations#admin_index'

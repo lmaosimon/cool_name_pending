@@ -51,11 +51,16 @@ class GraderApplicationsController < ApplicationController
   end
 
   def assign
+    @application = GraderApplication.find(params[:id]);
   end
 
   private
     def application_params
       params.require(:grader_application).permit(:name, :email, :qualifications, course_ids:[]);
+    end
+
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :status);
     end
 
     def logged_in_student

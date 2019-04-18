@@ -21,7 +21,8 @@
             <% if @application.assignment.nil? %>
                 Pending
             <% else %>
-                You have been assigned to grade for @application.assignment
+                Assigned to 
+                <%= @application.assignment %>
             <% end %>
         </li>
     </ul>

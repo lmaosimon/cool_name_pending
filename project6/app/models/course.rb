@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
     belongs_to :user, required: false
     has_and_belongs_to_many :grader_application, required: false
+    has_one :user, dependent: :destroy
 
     validates :instructor, presence: true, length: { maximum: 50 }
     VALID_EMAIL_REGEX = /\A[a-zA-Z]+\.\d+@[oO][sS][uU]\.[eE][dD][uU]\z/;

@@ -25,11 +25,12 @@
                     <% if app.assignment.nil? %>
                         Pending
                     <% else %>
-                        Assigned to grade for app.assignment
+                        Assigned to 
+                        <%= app.assignment %>
                     <% end %>
                 </li>
             </ul><br />
-            <%= link_to "Assign", assign_grader_application(app), class: "btn btn-danger edit-btn" %><br/>
+            <%= link_to "Assign", assign_path(app), class: "btn btn-danger edit-btn" %><br/>
         <% end %>
     <% end %>
 </div>
