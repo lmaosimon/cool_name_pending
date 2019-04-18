@@ -43,7 +43,11 @@ class RecommendationsController < ApplicationController
     @recommendation = Recommendation.find(params[:id]);
     if (@recommendation.update_attributes(recommendation_params))
       flash[:success] = "Recommendation updated";
-      redirect_to recommendations_url;
+      if (current_user.admin?)
+        redirect_to allrecommendations_url;
+      else
+        redirect_to recommendations_url;
+      end
     else
       render 'edit'
     end

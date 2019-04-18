@@ -1,9 +1,10 @@
-    <li class="nav-item">
-        <a href="#" class="nav-link">Applications</a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">Recommendations</a>
-    </li>
-    <li class="nav-item">
-        <%= link_to "All Courses", allcourses_path, class: "nav-link" %>
-    </li>
+<div class="dropdown">
+    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Admin Actions
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <%= link_to "All Applications", "#", class: "dropdown-item" %>
+        <%= link_to "All Courses", allcourses_path, class: "dropdown-item" %>
+        <%= link_to "All Recommendations", allrecommendations_path, class: "dropdown-item" %>
+    </div>
+</div>

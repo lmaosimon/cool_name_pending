@@ -10,4 +10,4 @@ $(document).on("ready page:change", function() {
     $("[data-toggle='tooltip']")
       .tooltip("destroy")
       .tooltip();
-  });
+});

@@ -39,6 +39,10 @@ aside {
     margin-top: 45px;
     @include box_sizing;
 }
+/* Navbar */
+#dropdownMenuButton {
+    margin-top: 2px;
+}
 
 /* Application Layout */
 .container.page-content {

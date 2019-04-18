@@ -11,5 +11,5 @@ User.create(name: "Gino Detore", email: "detore.4@osu.edu", status: "Student", p
 User.create(name: "Scott Sharkey", email: "sharkey.30@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar", admin: true);
 User.create(name: "Jayson Boubin", email: "boubin.2@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
 
-Course.create(course_name: "CSE 3901", instructor: "Scott Sharkey", email: "sharkey.30@osu.edu", section: "11111", monday: true, tuesday: false, wednesday: true, thursday: false, friday: false, start_time: "3:00 PM", end_time: "4:00 PM");
-Course.create(course_name: "CSE 2431", instructor: "Jayson Boubin", email: "boubin.2@osu.edu", section: "12345", monday: true, tuesday: false, wednesday: true, thursday: false, friday: true, start_time: "12:00 PM", end_time: "12:55 PM");
+Course.create(course_name: "CSE 3901", instructor: "Scott Sharkey", email: "sharkey.30@osu.edu", section: "11111", monday: true, tuesday: false, wednesday: true, thursday: false, friday: false, start_time: "3:00 PM", end_time: "4:00 PM", user_id: 3);
+Course.create(course_name: "CSE 2431", instructor: "Jayson Boubin", email: "boubin.2@osu.edu", section: "12345", monday: true, tuesday: false, wednesday: true, thursday: false, friday: true, start_time: "12:00 PM", end_time: "12:55 PM", user_id: 4);

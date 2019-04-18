@@ -7,8 +7,8 @@ class Recommendation < ApplicationRecord
     VALID_COURSE_NAME_REGEX = /\A[cC][sS][eE] \d{4}(\.01)?\z/;
     validates :course, presence: true, length: { maximum: 15 },
                             format: { with: VALID_COURSE_NAME_REGEX }
-    VALID_SECTION_REGEX = /\A\d+\z/;
-    validates :section, presence: true, length: { maximum: 20 },
+    VALID_SECTION_REGEX = /(\A\z|\d+\z)/;
+    validates :section, length: { maximum: 20 },
                         format: { with: VALID_SECTION_REGEX },
                         uniqueness: true
 end

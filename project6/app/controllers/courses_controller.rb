@@ -43,7 +43,11 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id]);
     if (@course.update_attributes(course_params))
       flash[:success] = "Course updated";
-      redirect_to courses_url;
+      if (current_user.admin?)
+        redirect_to allcourses_url;
+      else
+        redirect_to courses_url;
+      end
     else
       render 'edit'
     end
