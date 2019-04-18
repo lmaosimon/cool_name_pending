@@ -51,6 +51,7 @@ class GraderApplicationsController < ApplicationController
   end
 
   def assign
+    @application = GraderApplication.find(params[:id]);
   end
 
   private
