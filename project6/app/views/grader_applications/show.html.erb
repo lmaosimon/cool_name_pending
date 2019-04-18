@@ -17,6 +17,13 @@
             <% end %>
         </li>
         <li class="list-group-item"><strong>Qualifications: </strong><%= @application.qualifications %></li>
+        <li class="list-group-item"><strong>Status: </strong>
+            <% if @application.assignment.nil? %>
+                Pending
+            <% else %>
+                You have been assigned to grade for @application.assignment
+            <% end %>
+        </li>
     </ul>
 
     <br />

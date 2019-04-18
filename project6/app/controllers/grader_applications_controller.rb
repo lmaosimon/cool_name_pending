@@ -57,9 +57,11 @@ class GraderApplicationsController < ApplicationController
 
     def logged_in_student
       unless logged_in? && isStudent?(current_user)
-        if (!isStudent?(current_user))
+        if (!isStudent?(current_user) && !current_user.admin?)
           flash[:danger] = "Only students may apply for grader positions.";
           redirect_to current_user;
+        elsif (current_user.admin?)
+          render 'index'
         else
           flash[:danger] = "You must be logged in as a student to view this page."
           redirect_to login_url

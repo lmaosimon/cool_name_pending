@@ -1,0 +1,36 @@
+<% provide(:title, "All submitted applications") %>
+<h1>All Submitted Applications</h1>
+
+<div class="container">
+    <% if GraderApplication.all.length == 0 %>
+        <p>There are no submitted applications at this time.</p>
+    <% else %>
+        <% GraderApplication.all.each do |app| %><br />
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Name: </strong><%= app.name %></li>
+                <li class="list-group-item"><strong>Email: </strong><%= app.email %></li>
+                <li class="list-group-item"><strong>Courses: </strong>
+                    <% app.courses.each do |course| %>
+                        <p class="text-left">
+                            <%= course.course_name %>
+                            <%= course.section %>
+                            <%= course.instructor %>
+                            <%= course_days(course) %>
+                            <%= course.start_time %> - <%= course.end_time %>
+                        </p>
+                    <% end %>
+                </li>
+                <li class="list-group-item"><strong>Qualifications: </strong><%= app.qualifications %></li>
+                <li class="list-group-item"><strong>Status: </strong>    
+                    <% if app.assignment.nil? %>
+                        Pending
+                    <% else %>
+                        Assigned to grade for app.assignment
+                    <% end %>
+                    <!-- TODO: Add a button for assignment -->
+                </li>
+                <hr>
+            </ul>
+        <% end %>
+    <% end %>
+</div>
