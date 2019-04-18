@@ -30,11 +30,11 @@
                 
                 <div class="form-group">
                     <%= f.label :qualifications, "Which courses have you taken that qualify you as a grader?" %>
-                    <%= f.text_field :qualifications, class: "form-control" %>
+                    <%= f.text_field :qualifications, class: "form-control", size: "50" %>
                 </div>
 
                 <br />
-                <%= f.submit "Submit", class: "btn btn-danger btn-block submit" %>
+                <%= f.submit "Submit", class: "btn btn-danger btn-block submit", disabled: true %>
 
             <% end %>
         </div>

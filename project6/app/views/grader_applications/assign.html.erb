@@ -1,0 +1,22 @@
+<% provide(:title, 'Assign a Grader') %>
+
+<h1>Assign a Grader</h1>
+<div class="row">
+    <div class="col-lg-6 offset-lg-3">
+        <strong>Choose a course to assign <%= @application.name %> to:</strong><br />
+        <%= form_for(@application.user) do |f| %>
+            <%= f.hidden_field :id, value: @application.user.id %>
+            <% @application.courses.each do |course| %>
+                <%= f.radio_button :course_id, course.id %>
+                <%= f.label :course_id, course_info(course) %>
+                <br />
+            <% end %>
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4">
+                    <%= f.submit "Assign", class: "btn btn-danger btn-block" %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+
