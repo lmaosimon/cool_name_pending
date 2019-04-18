@@ -1,5 +1,5 @@
 <% provide(:title, "All your submitted courses") %>
-<h1>All your Submitted Courses</h1>
+<h1>All your Submitted Courses</h1><br />
 
 <ul class="courses">
     <% if @courses.empty? %>
@@ -29,7 +29,14 @@
                     </td>
                     <td><%= course_days(course) %></td>
                     <td><%= course.start_time %> - <%= course.end_time %></td>
-                    <td></td>
+                    <td>
+                        <% if course.user.nil? %>
+                            <p>Open</p>
+                        <% else %>
+                            <%= course.user.name %><br />
+                            <%= course.user.email %>
+                        <% end %>
+                    </td>
                     <td>
                         <span>
                             <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
