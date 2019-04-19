@@ -9,7 +9,8 @@
 * Enter the command 'bundle install --without production' to install all gems necessary for the
   development environment of the application.
 * Enter the command 'rails db:migrate' to make sure the schema is up to date.
-* Enter the command 'rails db:reset' to clear any possible lingering resources in the database and       re-seed it with content from the seed file.
+* Enter the command 'rails db:reset' to clear any possible lingering resources in the sqlite database
+  and re-seed it with content from the seed file.
 * Enter the command 'rails server' to be able to host the application.
 * Open Firefox and enter '0.0.0.0:3000' in the website search bar to use the application.
 
@@ -44,3 +45,8 @@
   add those in version 2 of the app.
 * Likewise, being a group of 3, we struggled to have enough time to be able to comment our code when we
   finished version 1 of the app, so we plan to add comments in version 2 of the app.
+
+# Authors
+
+* Patrick Hubbell, Gino Detore, and Sean Bower
+

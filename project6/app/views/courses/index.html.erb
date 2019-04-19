@@ -13,7 +13,7 @@
                 <td><strong>Instructor:</strong></td>
                 <td><strong>Days:</strong></td>
                 <td><strong>Time:</strong></td>
-                <td><strong>Assignment:</strong></td>
+                <!-- <td><strong>Assignment:</strong></td> -->
                 <td><strong>Actions:</strong></td>
             </tr>
             <% @courses.each do |course| %>
@@ -29,14 +29,16 @@
                     </td>
                     <td><%= course_days(course) %></td>
                     <td><%= course.start_time %> - <%= course.end_time %></td>
-                    <td>
-                        <% if course.user.nil? %>
+                    <!-- <td>
+                    <% GraderApplication.all.each do |app| %>
+                        <% if(app.assignment.nil?) %>
                             <p>Open</p>
-                        <% else %>
-                            <%= course.user.name %><br />
-                            <%= course.user.email %>
+                        <% elsif(app.assignment.include?(course.course_name + ", " + course.section)) %>
+                            <%= app.name %><br />
+                            <%= app.email %>
                         <% end %>
-                    </td>
+                    <% end %>
+                    </td> -->
                     <td>
                         <span>
                             <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>

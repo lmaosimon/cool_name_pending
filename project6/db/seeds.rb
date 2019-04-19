@@ -6,16 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(name: "Patrick Hubbell", email: "hubbell.64@osu.edu", status: "Student", password: "foobar", password_confirmation: "foobar");
 User.create(name: "Gino Detore", email: "detore.4@osu.edu", status: "Student", password: "foobar", password_confirmation: "foobar");
+User.create(name: "Patrick Hubbell", email: "hubbell.64@osu.edu", status: "Student", password: "foobar", password_confirmation: "foobar");
 User.create(name: "Sean Bower", email: "bower.205@osu.edu", status: "Student", password: "foobar", password_confirmation: "foobar");
 User.create(name: "Scott Sharkey", email: "sharkey.30@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar", admin: true);
 User.create(name: "Diego Zaccai", email: "zaccai.1@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
 User.create(name: "Michael Fritz", email: "fritz.26@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
 User.create(name: "Michael Green", email: "green.25@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
-User.create(name: "Jayson Boubin", email: "boubin.2@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
+User.create(name: "Janis Jones", email: "jones.5684@osu.edu", status: "Employee", password: "foobar", password_confirmation: "foobar");
 
-Course.create(course_name: "CSE 2431", instructor: "Jayson Boubin", email: "boubin.2@osu.edu", section: "21111", monday: true, tuesday: false, wednesday: true, thursday: false, friday: true, start_time: "12:00 PM", end_time: "12:55 PM", user_id: 8);
+Course.create(course_name: "CSE 2431", instructor: "Janis Jones", email: "jones.5684@osu.edu", section: "21111", monday: true, tuesday: false, wednesday: true, thursday: false, friday: true, start_time: "12:00 PM", end_time: "12:55 PM", user_id: 8);
 
 Course.create(course_name: "CSE 3901", instructor: "Scott Sharkey", email: "sharkey.30@osu.edu", section: "11111", monday: true, tuesday: false, wednesday: true, thursday: false, friday: true, start_time: "3:00 PM", end_time: "4:20 PM", user_id: 4);
 

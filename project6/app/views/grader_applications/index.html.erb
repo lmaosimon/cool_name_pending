@@ -3,6 +3,7 @@
 
 <div class="container">
     <% if GraderApplication.all.length == 0 %>
+        <br />
         <p>There are no submitted applications at this time.</p>
     <% else %>
         <% GraderApplication.all.each do |app| %><br />
