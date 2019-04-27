@@ -28,7 +28,9 @@
                     <li class="list-group-item success"><strong>Status: </strong>Assigned to <%= app.assignment %></li>
                 <% end %>
             </ul><br />
-            <%= link_to "Assign", assign_path(app), class: "btn btn-danger edit-btn" %><br/>
+            <% if app.assignment.nil? %>
+                <%= link_to "Assign", assign_path(app), class: "btn btn-danger assign-btn" %><br/>
+            <% end %>
         <% end %>
     <% end %>
 </div>
