@@ -2,7 +2,16 @@
 
 <h1>Add a Grader Application</h1>
 <p>Would you like to be a student grader for a CSE course? Fill out the application to put your name in consideration for a position.</p>
-<% if Course.count == 0 %>
+
+<% all_assigned = true %>
+<% Course.all.each do |course| %>
+    <% if !course.assigned %>
+        <% all_assigned = false %>
+        <% break %>
+    <% end %>
+<% end %>
+
+<% if Course.count == 0 || all_assigned %>
     <p>Sorry, there are no courses to apply to. Please check later to submit an application.</p>
 <% else %>    
     <div class="row justify-content-md-center">
@@ -23,8 +32,10 @@
                 <div class="form-group">
                     <%= hidden_field_tag "grader_application[course_ids][]", nil %>
                     <% Course.all.each do |course| %>
-                        <%= check_box_tag "grader_application[course_ids][]", course.id, @application.course_ids.include?(course.id) %>
-                        <%= course_info(course) %><br />
+                        <% if !course.assigned %>
+                            <%= check_box_tag "grader_application[course_ids][]", course.id, @application.course_ids.include?(course.id) %>
+                            <%= course_info(course) %><br />
+                        <% end %>
                     <% end %>
                 </div>
                 

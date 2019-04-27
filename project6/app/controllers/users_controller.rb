@@ -29,6 +29,9 @@ class UsersController < ApplicationController
       flash[:success] = "User assigned to course";
       @user.grader_application.assignment = course_info(@user.course);
       @user.grader_application.save;
+      c = Course.find(@user.course_id);
+      c.assigned = true;
+      c.save;
       redirect_to allapplications_url;
     else
       flash[:danger] = "User could not be assigned to course"

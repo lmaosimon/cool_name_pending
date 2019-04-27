@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_18_032737) do
+ActiveRecord::Schema.define(version: 2019_04_27_163641) do
 
   create_table "courses", force: :cascade do |t|
     t.string "course_name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2019_04_18_032737) do
     t.string "end_time"
     t.string "email"
     t.integer "user_id"
+    t.boolean "assigned", default: false
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
