@@ -8,12 +8,12 @@
     <% else %>
         <table class="table">
             <tr class="table-secondary">
-                <td><strong>Course:</strong><br /></td>
-                <td><strong>Section:</strong><br /></td>
+                <td><strong>Course:</strong></td>
+                <td><strong>Section:</strong></td>
                 <td><strong>Instructor:</strong></td>
                 <td><strong>Days:</strong></td>
                 <td><strong>Time:</strong></td>
-                <!-- <td><strong>Assignment:</strong></td> -->
+                <td><strong>Assignment:</strong></td>
                 <td><strong>Actions:</strong></td>
             </tr>
             <% @courses.each do |course| %>
@@ -29,14 +29,27 @@
                     </td>
                     <td><%= course_days(course) %></td>
                     <td><%= course.start_time %> - <%= course.end_time %></td>
-                    <!-- <td>
-                        <% if course.user.nil? %>
-                            <p>Open</p>
-                        <% else %>
-                            <%= course.user.name %><br />
-                            <%= course.user.email %>
+
+                    <% found = false %>
+                    <% User.all.each do |u| %>
+                        <!-- Only students who have been assigned a course will have 
+                            a non-nil course attribute. Teachers will always have a
+                            nil course attribute since they can never be assigned a
+                            class -->
+                        <% if !u.course.nil? %>
+                            <% if u.course == course %>
+                                <td class="success">
+                                    <%= u.name %><br />
+                                    <%= u.email %>
+                                </td>
+                                <% found = true %>
+                            <% end %>
                         <% end %>
-                    </td> -->
+                    <% end %>
+                    <% if !found %>
+                        <td>Open</td>
+                    <% end %>
+
                     <td>
                         <span>
                             <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
