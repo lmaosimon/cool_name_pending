@@ -1,9 +1,11 @@
+<!-- Provide title 'Log In' to be used in application.html.erb -->
 <% provide(:title, 'Log In') %>
-
 
 <h1>Log In</h1>
 <div class="row justify-content-md-center">
     <div class="col-md-6">
+        <!-- Create a form for the log in page which, if submitted successfully, will create
+             a new session for the user -->
         <%= form_for(:session, url: login_path) do |f| %>
 
             <div class="form-group">

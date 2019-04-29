@@ -12,6 +12,7 @@ module SessionsHelper
         end
     end
 
+    # Returns true if the user argument passed is the current user who is logged in
     def current_user?(user)
         user == current_user;
     end
@@ -39,6 +40,7 @@ module SessionsHelper
         !current_user.nil?;
     end
 
+    # Logs a user out by deleting the user's id from the session
     def log_out
         session.delete(:user_id);
         @current_user = nil;
