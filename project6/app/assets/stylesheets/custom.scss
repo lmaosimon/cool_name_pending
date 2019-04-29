@@ -1,10 +1,10 @@
+/********* Development/Debug Information *********/
+
 @mixin box_sizing {
     -moz-box-sizing:    border-box;
     -webkit-box-sizing: border-box;
     box-sizing:         border-box;
 }
-
-/* Development */
 
 aside {
     section.user_info {
@@ -39,22 +39,31 @@ aside {
     margin-top: 45px;
     @include box_sizing;
 }
-/* Navbar */
+/********* Navbar *********/
+
 #dropdownMenuButton {
     margin-top: 2px;
 }
 
-/* Application Layout */
+/********* About Page *********/
+
+.container.about {
+    padding: 0 150px;
+}
+
+/********* Application Layout *********/
 .container.page-content {
     margin-top: 45px;
 }
 
-/* User Profile Page */
+/********* User Profile Page *********/
+
 .row .user-cell {
     text-align: center;
 }
 
-/* Sign-up Page */
+/********* Sign-up Page *********/
+
 .form-group input[type="text"] {
     width: 100%;
 }
@@ -63,7 +72,8 @@ aside {
     text-align: center;
 }
 
-/* Sign-up Error Messages */
+/********* Sign-up Error Messages *********/
+
 #error_explanation {
     color: red;
     ul {
@@ -78,7 +88,7 @@ aside {
     }
 }
 
-/* Footer */
+/********* Footer *********/
 
 footer {
     margin-top: 45px;
@@ -109,7 +119,8 @@ footer ul li {
     margin-left: 15px;
 }
 
-/* Courses */
+/********* Courses *********/
+
 .courses {
     list-style: none;
     margin: 0;
@@ -124,17 +135,20 @@ footer ul li {
     float: right;
   }
 
-/* Admin Grader Application Index */
+/********* Admin Grader Application Index *********/
+
 li.success {
     color: green;
 }
 
-/* Admin Courses/Courses Index */
+/********* Admin Courses/Courses Index *********/
+
 td.success {
     color: green;
 }
 
-/* Grader Application Assign Button */
+/********* Grader Application Assign Button *********/
+
 .assign-btn {
     content: "Assign";
 }

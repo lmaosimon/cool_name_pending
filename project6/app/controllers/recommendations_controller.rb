@@ -1,6 +1,9 @@
 class RecommendationsController < ApplicationController
   before_action :logged_in_teacher, only: [:new, :index, :create, :destroy, :edit, :update ]
   before_action :correct_user, only: [:new, :index, :create, :destroy, :edit, :update ]
+  # Make sure only an admin can view the admin view of all the courses submitted
+  before_action :admin_user, only: [:admin_index]
+
   def new
     @recommendation = Recommendation.new;
   end
@@ -77,4 +80,11 @@ class RecommendationsController < ApplicationController
     def correct_user
       redirect_to(current_user) unless current_user?(current_user)
     end
+
+    # Function to check if the user attempting to access an admin only page is an admin. If they
+    # are not an admin, they are redirected to their own profile page
+    def admin_user
+      redirect_to(current_user) unless current_user.admin?;
+    end
+
 end
