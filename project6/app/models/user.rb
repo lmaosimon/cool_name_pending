@@ -6,7 +6,7 @@ class User < ApplicationRecord
     has_one :grader_application, required: false, dependent: :destroy
     # Can have many courses if user status is Employee
     has_many :courses, dependent: :destroy
-    # Belongs to a course if a student user is assigned to a course
+    # Belongs to a course if a student user is assigned to a course by the admin
     belongs_to :course, required: false
 
     before_save { self.email = email.downcase }

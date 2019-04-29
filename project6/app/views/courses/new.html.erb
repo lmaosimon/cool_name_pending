@@ -1,3 +1,4 @@
+<!-- Provide title as 'Edit a Course' to be used in application.html.erb -->
 <% provide(:title, 'Add a Course') %>
 
 <h1>Add a Course</h1>
@@ -5,14 +6,18 @@
 the list of courses for students to apply to grade for.</p>
 <div class="row justify-content-md-center">
     <div class="col-md-6">
+        <!-- Create a form for creating a course for student users to apply to -->
         <%= form_for(@course) do |f| %>
+            <!-- Render error messages if user incorrectly entered any of the fields in the form -->
             <%= render 'shared/error_messages_courses' %>
 
+            <!-- Fill name field with current user's name and disable the field so they can't change it -->
             <div class="form-group">
                 <%= f.label :instructor, "First and Last Name:" %>
                 <%= f.text_field :instructor, class: "form-control", value: current_user.name, :readonly => true %>
             </div>
 
+            <!-- Fill email field with current user's email and disable the field so they can't change it -->
             <div class="form-group">
                 <%= f.label :email, "OSU Email:" %>
                 <%= f.text_field :email, class: "form-control", value: current_user.email, :readonly => true %>

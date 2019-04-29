@@ -1,7 +1,8 @@
+<!-- Provide title as 'All submitted courses' to be used in application.html.erb -->
 <% provide(:title, "All submitted courses") %>
 <h1>All Submitted Courses</h1><br />
 
-<ul class="courses">
+<div class="courses">
     <% if @courses.empty? %>
         <p>There are not any courses to assign a grader to.</p>
         <p><%= link_to "Click here", newcourse_path %> to submit a course.</p>
@@ -16,6 +17,7 @@
                 <td><strong>Assignment:</strong></td>
                 <td><strong>Actions:</strong></td>
             </tr>
+            <!-- Loop through every created course to display information in a table -->
             <% @courses.each do |course| %>
                 <tr>
                     <td>
@@ -31,6 +33,7 @@
                     <td><%= course.start_time %> - <%= course.end_time %></td>
 
                     <% found = false %>
+                    <!-- Check to see if a user has been assigned to the current course -->
                     <% User.all.each do |u| %>
                         <!-- Only students who have been assigned a course will have 
                             a non-nil course attribute. Teachers will always have a
@@ -46,11 +49,13 @@
                             <% end %>
                         <% end %>
                     <% end %>
+                    <!-- If a user has not been assigned to the current course, display 'Open' -->
                     <% if !found %>
                         <td>Open</td>
                     <% end %>
 
                     <td>
+                        <!-- Edit and Delete Buttons -->
                         <span>
                             <%= link_to "Edit", edit_course_path(course), class: "btn btn-danger btn-sm edit-btn" %>
                             <%= link_to "Delete", course, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm delete-btn" %>
@@ -60,4 +65,4 @@
             <% end %>
         </table>
     <% end %>
-</ul>
+</div>

@@ -1,6 +1,10 @@
 class Course < ApplicationRecord
+
+    # Belongs to the employee user that created the course
     belongs_to :user, required: false
+    # Can be selected in any number of times throughout all of the grader applications
     has_and_belongs_to_many :grader_application, required: false
+    # Has one user when a student user is assigned to a course by the admin
     has_one :user_assign, class_name: :User, dependent: :destroy
 
     validates :instructor, presence: true, length: { maximum: 50 }
@@ -19,6 +23,7 @@ class Course < ApplicationRecord
                            format: { with: VALID_TIME_REGEX }
     validates :end_time, presence: true, length: { maximum: 8 },
                          format: { with: VALID_TIME_REGEX }
+    # Custom validation, explained below
     validate :valid_time_range
 
     private
