@@ -2,6 +2,8 @@
 
 # OSU CSE Grader's Portal v2.0
 
+* [Check out the release notes!](./RELEASE-NOTES.md)
+
 ## To view the alpha version of the application in the production environment:
 
 * Visit: https://lit-lake-37158.herokuapp.com
