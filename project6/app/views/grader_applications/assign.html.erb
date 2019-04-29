@@ -18,6 +18,7 @@
         <%= form_for(@application.user) do |f| %>
             <%= f.hidden_field :id, value: @application.user.id %>
             <% @application.courses.each do |course| %>
+                <!-- If the course has already been assigned, don't display it as an option -->
                 <% if !course.assigned %>
                     <%= f.radio_button :course_id, course.id %>
                     <%= f.label :course_id, course_info(course) %>

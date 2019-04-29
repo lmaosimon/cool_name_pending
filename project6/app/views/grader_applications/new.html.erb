@@ -32,6 +32,7 @@
                 <div class="form-group">
                     <%= hidden_field_tag "grader_application[course_ids][]", nil %>
                     <% Course.all.each do |course| %>
+                        <!-- If the course has already been assigned, don't display it as an option -->
                         <% if !course.assigned %>
                             <%= check_box_tag "grader_application[course_ids][]", course.id, @application.course_ids.include?(course.id) %>
                             <%= course_info(course) %><br />
