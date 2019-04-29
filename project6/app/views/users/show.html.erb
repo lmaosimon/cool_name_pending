@@ -1,6 +1,9 @@
+<!-- Provide title as user's first and last name to be used in application.html.erb -->
 <% provide(:title, @user.name) %>
 <h1>User Profile</h1>
 <br />
+
+<!-- Display the user's Name, Email, and Status -->
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-lg-2 user-cell"><strong>Name:</strong><br /><%= @user.name %></div>

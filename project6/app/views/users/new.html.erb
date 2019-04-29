@@ -1,21 +1,27 @@
+<!-- Provide title 'Sign Up' to be used in application.html.erb -->
 <% provide(:title, 'Sign Up') %>
 
 <h1>Sign Up</h1>
 <div class="row justify-content-md-center">
     <div class="col-md-6">
+        <!-- Create a form for user sign up -->
         <%= form_for(@user) do |f| %>
+            <!-- Render error messages if user incorrectly entered any of the fields in the form -->
             <%= render 'shared/error_messages_users' %>
 
+            <!-- Field for first and last name -->
             <div class="form-group">
                 <%= f.label :name, "First and Last Name:" %>
                 <%= f.text_field :name, class: "form-control" %>
             </div>
 
+            <!-- Field for email -->
             <div class="form-group">
                 <%= f.label :email, "OSU Email:" %>
                 <%= f.text_field :email, class: "form-control" %>
             </div>
 
+            <!-- Radio buttons to choose Student or Employee status -->
             <div class="form-group">
                 <div class="form-check form-check-inline">
                     <%= f.radio_button :status, "Student" %>
@@ -27,16 +33,19 @@
                 </div>
             </div>
 
+            <!-- Field for password -->
             <div class="form-group">
                 <%= f.label :password, "Password:" %>
                 <%= f.text_field :password, class: "form-control", type: "password" %>
             </div>
 
+            <!-- Field for password confirmation -->
             <div class="form-group">
                 <%= f.label :password_confirmation, "Confirm Password:" %>
                 <%= f.text_field :password_confirmation, class: "form-control", type: "password" %>
             </div>
 
+            <!-- Submit button -->
             <%= f.submit "Create my account", class: "btn btn-danger btn-block" %>
         <% end %>
     </div>
